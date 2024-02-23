@@ -1,0 +1,491 @@
+RX0: 0x103c : e0000000 ,0x1040 :        0
+RX1: 0x1054 : e0000000 ,0x1058 : 0
+THIS CASE J: 0 M: 0
+adc calibration begin
+calibration begin
+RX0 cali pre ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,
+
+reg0x1180=0x21232123.
+reg0x11bc=0x25272929.
+RX1 cali pre ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 0 ,reg0x11f8=0x27272325.
+reg0x1234=0x17152121.
+rx0 tia cali begin:
+####:reg0x1270=0x5c216a17.
+tia_cnt_i : 19 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :0,absolute value dc_i : -1 , value dc_q : -1
+####:reg0x1270=0x5c21572a.
+####:reg0x1274=0x5c236619.
+tia_cnt_i : 14 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :1,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1274=0x5c235827.
+####:reg0x1278=0x5a256419.
+tia_cnt_i : 9 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :2,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1278=0x5a255b22.
+####:reg0x127c=0x5825621d.
+tia_cnt_i : 1 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :3,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x127c=0x5825611e.
+####:reg0x1280=0x4e31562b.
+tia_cnt_i : 0 ,
+tia_cnt_q : 1 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :4,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1280=0x5630562b.
+####:reg0x1284=0x4c315429.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :5,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1284=0x4c315429.
+####:reg0x1288=0x4e33542b.
+tia_cnt_i : 0 ,
+tia_cnt_q : 1 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :6,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1288=0x5432542b.
+####:reg0x128c=0x4a35522f.
+tia_cnt_i : 0 ,
+tia_cnt_q : 1 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :7,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x128c=0x5234522f.
+####:reg0x1290=0x48354c33.
+tia_cnt_i : 0 ,
+tia_cnt_q : 1 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :8,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1290=0x4c344c33.
+####:reg0x1294=0x48374c33.
+tia_cnt_i : 0 ,
+tia_cnt_q : 1 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :9,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x1294=0x4c364c33.
+####:reg0x1298=0x4a374a35.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :10,absolute value dc_i : 0 , value dc_q : 1
+####:reg0x1298=0x4a374a35.
+####:reg0x129c=0x4a354c33.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :11,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x129c=0x4a354c33.
+####:reg0x12a0=0x48354c31.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x21232123.
+Q:reg0x1154=0x25272929.
+RX0 tia case :12,absolute value dc_i : -1 , value dc_q : 1
+####:reg0x12a0=0x48354c31.
+rx1 tia cali begin:
+Q:reg0x12b0=0x4a354835.
+ RX1 :reg0x1130=0x48354a35.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :0,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12b0=0x4a354835.
+Q:reg0x12b4=0x4a374a35.
+ RX1 :reg0x1130=0x4a354a37.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :1,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12b4=0x4a374a35.
+Q:reg0x12b8=0x48374837.
+ RX1 :reg0x1130=0x48374837.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :2,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12b8=0x48374837.
+Q:reg0x12bc=0x46394639.
+ RX1 :reg0x1130=0x46394639.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :3,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12bc=0x46394639.
+Q:reg0x12c0=0x44394639.
+ RX1 :reg0x1130=0x46394439.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :4,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12c0=0x44394639.
+Q:reg0x12c4=0x3e413e43.
+ RX1 :reg0x1130=0x3e433e41.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :5,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12c4=0x3e413e43.
+Q:reg0x12c8=0x3e433e43.
+ RX1 :reg0x1130=0x3e433e43.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :6,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12c8=0x3e433e43.
+Q:reg0x12cc=0x3e433c43.
+ RX1 :reg0x1130=0x3c433e43.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :7,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12cc=0x3e433c43.
+Q:reg0x12d0=0x3a453a45.
+ RX1 :reg0x1130=0x3a453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :8,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12d0=0x3a453a45.
+Q:reg0x12d4=0x3a453a45.
+ RX1 :reg0x1130=0x3a453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :9,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12d4=0x3a453a45.
+Q:reg0x12d8=0x3c433845.
+ RX1 :reg0x1130=0x38453c43.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :10,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12d8=0x3c433845.
+Q:reg0x12dc=0x3a453a45.
+ RX1 :reg0x1130=0x3a453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :11,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12dc=0x3a453a45.
+Q:reg0x12e0=0x3a453a45.
+ RX1 :reg0x1130=0x3a453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :12,absolute value dc_i : 0 , value dc_q : 0
+RX1:reg0x12e0=0x3a453a45.
+tia calibration end!
+rx0 vga calibration begin
+reg0x1120=0x3fc100.
+vga case:1 pass.
+RX0 vga case:1 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1184=0x21212323.   Q:reg0x11c0=0x25272929.
+vga case:2 pass.
+RX0 vga case:2 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1188=0x1f232123.   Q:reg0x11c4=0x25272929.
+vga case:3 pass.
+RX0 vga case:3 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x118c=0x1f232123.   Q:reg0x11c8=0x25272929.
+vga case:4 pass.
+RX0 vga case:4 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 0 ,I:reg0x1190=0x23212323.   Q:reg0x11cc=0x25272929.
+vga case:5 pass.
+RX0 vga case:5 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1194=0x1d232123.   Q:reg0x11d0=0x25272929.
+vga case:6 pass.
+RX0 vga case:6 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1198=0x21252123.   Q:reg0x11d4=0x25272929.
+vga case:7 pass.
+RX0 vga case:7 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 0 ,I:reg0x119c=0x1f252123.   Q:reg0x11d8=0x27272929.
+vga case:8 pass.
+RX0 vga case:8 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 0 ,I:reg0x11a0=0x1f252123.   Q:reg0x11dc=0x27252929.
+vga case:9 pass.
+RX0 vga case:9 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 0 ,I:reg0x11a4=0x21252123.   Q:reg0x11e0=0x272b292b.
+vga case:10 pass.
+RX0 vga case:10 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 0 ,I:reg0x11a8=0x1b212123.   Q:reg0x11e4=0x252b272b.
+vga case:11 pass.
+RX0 vga case:11 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 0 ,I:reg0x11ac=0x1f232123.   Q:reg0x11e8=0x2723292d.
+vga case:12 pass.
+RX0 vga case:12 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x11b0=0x21232123.   Q:reg0x11ec=0x2723272d.
+vga case:13 pass.
+RX0 vga case:13 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 0 ,I:reg0x11b4=0x231f2123.   Q:reg0x11f0=0x2723272f.
+vga case:14 pass.
+RX0 vga case:14 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 0 ,I:reg0x11b8=0x1f2f1f23.   Q:reg0x11f4=0x27272331.
+rx1 vga calibration begin
+rx1 vga case:1 pass.
+RX1 vga case:1 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x11fc=0x25252125. Q:reg0x1238=0x17152121.
+rx1 vga case:2 pass.
+RX1 vga case:2 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 1 ,I:reg0x1200=0x25252125. Q:reg0x123c=0x15151f21.
+rx1 vga case:3 pass.
+RX1 vga case:3 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 0 ,I:reg0x1204=0x25252125. Q:reg0x1240=0x19152121.
+rx1 vga case:4 pass.
+RX1 vga case:4 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 1 ,I:reg0x1208=0x25252125. Q:reg0x1244=0x15151f21.
+rx1 vga case:5 pass.
+RX1 vga case:5 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x120c=0x25252125. Q:reg0x1248=0x15151f21.
+rx1 vga case:6 pass.
+RX1 vga case:6 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 1 ,I:reg0x1210=0x25252125. Q:reg0x124c=0x15151f21.
+rx1 vga case:7 pass.
+RX1 vga case:7 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1214=0x27252125. Q:reg0x1250=0x15151f21.
+rx1 vga case:8 pass.
+RX1 vga case:8 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 0 ,I:reg0x1218=0x27232125. Q:reg0x1254=0x17151f21.
+rx1 vga case:9 pass.
+RX1 vga case:9 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x121c=0x21292127. Q:reg0x1258=0x17151f21.
+rx1 vga case:10 pass.
+RX1 vga case:10 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 1 ,I:reg0x1220=0x27272127. Q:reg0x125c=0x19131f21.
+rx1 vga case:11 pass.
+RX1 vga case:11 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1224=0x23291f27. Q:reg0x1260=0x19111f21.
+rx1 vga case:12 pass.
+RX1 vga case:12 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 0 ,I:reg0x1228=0x25251f27. Q:reg0x1264=0x190f1f21.
+rx1 vga case:13 pass.
+RX1 vga case:13 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x122c=0x25291f29. Q:reg0x1268=0x15151d21.
+rx1 vga case:14 pass.
+RX1 vga case:14 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 1 ,I:reg0x1230=0x27251d29. Q:reg0x126c=0x19111f23.
+reg0x1120=0x3c0100.
+vga calibration end!
+
+RX0: 0x103c : e0004000 ,0x1040 : 10001102
+RX1: 0x1054 : e0004000 ,0x1058 : 10001100
+THIS CASE J: 0 M: 1
+adc calibration begin
+calibration begin
+RX0 cali pre ,absolute value dc_i_tmp : 8 , value dc_q_tmp : 2 ,
+
+reg0x1180=0x1f211f25.
+reg0x11bc=0x27272929.
+RX1 cali pre ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 2 ,reg0x11f8=0x25252125.
+reg0x1234=0x17152121.
+rx0 tia cali begin:
+####:reg0x1270=0x601d6c13.
+tia_cnt_i : 60 ,
+tia_cnt_q : 1 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :0,absolute value dc_i : -1 , value dc_q : -1
+####:reg0x1270=0x301e304f.
+####:reg0x1274=0x5e216a15.
+tia_cnt_i : 84 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :1,absolute value dc_i : -1 , value dc_q : -1
+####:reg0x1274=0x5e211669.
+####:reg0x1278=0x5c236619.
+tia_cnt_i : 58 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :2,absolute value dc_i : -1 , value dc_q : -1
+####:reg0x1278=0x5c232c53.
+####:reg0x127c=0x5a27621d.
+tia_cnt_i : 98 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :3,absolute value dc_i : -3 , value dc_q : -1
+####:reg0x127c=0x5a27007f.
+####:reg0x1280=0x4c315629.
+tia_cnt_i : 86 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :4,absolute value dc_i : -3 , value dc_q : -1
+####:reg0x1280=0x4c31007f.
+####:reg0x1284=0x4e335429.
+tia_cnt_i : 84 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :5,absolute value dc_i : -3 , value dc_q : 0
+####:reg0x1284=0x4e33007d.
+####:reg0x1288=0x4e33562b.
+tia_cnt_i : 84 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :6,absolute value dc_i : -3 , value dc_q : -1
+####:reg0x1288=0x4e33027f.
+####:reg0x128c=0x4a354e31.
+tia_cnt_i : 78 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :7,absolute value dc_i : -3 , value dc_q : 0
+####:reg0x128c=0x4a35007f.
+####:reg0x1290=0x48354a35.
+tia_cnt_i : 74 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :8,absolute value dc_i : -4 , value dc_q : -1
+####:reg0x1290=0x4835007f.
+####:reg0x1294=0x48374a35.
+tia_cnt_i : 74 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :9,absolute value dc_i : -3 , value dc_q : 0
+####:reg0x1294=0x4837007f.
+####:reg0x1298=0x46394c33.
+tia_cnt_i : 76 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :10,absolute value dc_i : -4 , value dc_q : -1
+####:reg0x1298=0x4639007f.
+####:reg0x129c=0x4a374a35.
+tia_cnt_i : 74 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :11,absolute value dc_i : -3 , value dc_q : 0
+####:reg0x129c=0x4a37007f.
+####:reg0x12a0=0x48374a35.
+tia_cnt_i : 74 ,
+tia_cnt_q : 0 ,
+I:reg0x1150=0x1f211f25.
+Q:reg0x1154=0x27272929.
+RX0 tia case :12,absolute value dc_i : -3 , value dc_q : 0
+####:reg0x12a0=0x4837007f.
+rx1 tia cali begin:
+Q:reg0x12b0=0x4a354c33.
+ RX1 :reg0x1130=0x4c334a35.
+tia_cnt_i : 51 ,
+tia_cnt_q : 58 ,
+RX1 tia case :0,absolute value dc_i : 2 , value dc_q : -1
+RX1:reg0x12b0=0x7f6f7f00.
+Q:reg0x12b4=0x4a354c33.
+ RX1 :reg0x1130=0x4c334a35.
+tia_cnt_i : 4 ,
+tia_cnt_q : 0 ,
+RX1 tia case :1,absolute value dc_i : 1 , value dc_q : -1
+RX1:reg0x12b4=0x4a35502f.
+Q:reg0x12b8=0x4a354a35.
+ RX1 :reg0x1130=0x4a354a35.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :2,absolute value dc_i : 1 , value dc_q : -1
+RX1:reg0x12b8=0x4a354a35.
+Q:reg0x12bc=0x46394835.
+ RX1 :reg0x1130=0x48354639.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :3,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12bc=0x46394835.
+Q:reg0x12c0=0x46394837.
+ RX1 :reg0x1130=0x48374639.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :4,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12c0=0x46394837.
+Q:reg0x12c4=0x3c413e43.
+ RX1 :reg0x1130=0x3e433c41.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :5,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12c4=0x3c413e43.
+Q:reg0x12c8=0x3c413e43.
+ RX1 :reg0x1130=0x3e433c41.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :6,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12c8=0x3c413e43.
+Q:reg0x12cc=0x3e413c43.
+ RX1 :reg0x1130=0x3c433e41.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :7,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12cc=0x3e413c43.
+Q:reg0x12d0=0x38453a47.
+ RX1 :reg0x1130=0x3a473845.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :8,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12d0=0x38453a47.
+Q:reg0x12d4=0x3a453a47.
+ RX1 :reg0x1130=0x3a473a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :9,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12d4=0x3a453a47.V
+Q:reg0x12d8=0x3a453845.
+ RX1 :reg0x1130=0x38453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :10,absolute value dc_i : 1 , value dc_q : 0
+RX1:reg0x12d8=0x3a453845.
+Q:reg0x12dc=0x3a453a45.
+ RX1 :reg0x1130=0x3a453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :11,absolute value dc_i : 1 , value dc_q : -1
+RX1:reg0x12dc=0x3a453a45.
+Q:reg0x12e0=0x3a453845.
+ RX1 :reg0x1130=0x38453a45.
+tia_cnt_i : 0 ,
+tia_cnt_q : 0 ,
+RX1 tia case :12,absolute value dc_i : 1 , value dc_q : -1
+RX1:reg0x12e0=0x3a453845.
+tia calibration end!
+rx0 vga calibration begin
+reg0x1120=0x3fc100.
+vga case:1 pass.
+RX0 vga case:1 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 4 ,I:reg0x1184=0x2123271d.   Q:reg0x11c0=0x25272b27.
+vga case:2 pass.
+RX0 vga case:2 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 2 ,I:reg0x1188=0x2123271d.   Q:reg0x11c4=0x27252d27.
+vga case:3 pass.
+RX0 vga case:3 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 3 ,I:reg0x118c=0x2123271d.   Q:reg0x11c8=0x27252d27.
+vga case:4 pass.
+RX0 vga case:4 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 3 ,I:reg0x1190=0x2123271d.   Q:reg0x11cc=0x25272b27.
+vga case:5 pass.
+RX0 vga case:5 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 3 ,I:reg0x1194=0x1f23271d.   Q:reg0x11d0=0x25272b27.
+vga case:6 pass.
+RX0 vga case:6 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 3 ,I:reg0x1198=0x1f23271d.   Q:reg0x11d4=0x25272b27.
+vga case:7 pass.
+RX0 vga case:7 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 3 ,I:reg0x119c=0x1f23271d.   Q:reg0x11d8=0x25292b27.
+vga case:8 pass.
+RX0 vga case:8 ,absolute value dc_i_tmp : 6 , value dc_q_tmp : 4 ,I:reg0x11a0=0x1f27271b.   Q:reg0x11dc=0x29232d27.
+vga case:9 pass.
+RX0 vga case:9 ,absolute value dc_i_tmp : 6 , value dc_q_tmp : 4 ,I:reg0x11a4=0x23252919.   Q:reg0x11e0=0x29252d27.
+vga case:10 pass.
+RX0 vga case:10 ,absolute value dc_i_tmp : 6 , value dc_q_tmp : 3 ,I:reg0x11a8=0x21252b17.   Q:reg0x11e4=0x27252d27.
+vga case:11 pass.
+RX0 vga case:11 ,absolute value dc_i_tmp : 7 , value dc_q_tmp : 2 ,I:reg0x11ac=0x251d3115.   Q:reg0x11e8=0x25272d27.
+vga case:12 pass.
+RX0 vga case:12 ,absolute value dc_i_tmp : 6 , value dc_q_tmp : 4 ,I:reg0x11b0=0x1d232f0f.   Q:reg0x11ec=0x232b2d27.
+vga case:13 pass.
+RX0 vga case:13 ,absolute value dc_i_tmp : 6 , value dc_q_tmp : 2 ,I:reg0x11b4=0x2d1d390f.   Q:reg0x11f0=0x1f2d2d27.
+vga case:14 pass.
+RX0 vga case:14 ,absolute value dc_i_tmp : 6 , value dc_q_tmp : 2 ,I:reg0x11b8=0x212d3d05.   Q:reg0x11f4=0x252f2d25.
+rx1 vga calibration begin
+rx1 vga case:1 pass.
+RX1 vga case:1 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 5 ,I:reg0x11fc=0x25251d2b. Q:reg0x1238=0x15152121.
+rx1 vga case:2 pass.
+RX1 vga case:2 ,absolute value dc_i_tmp : 1 , value dc_q_tmp : 2 ,I:reg0x1200=0x25271b2b. Q:reg0x123c=0x15132121.
+rx1 vga case:3 pass.
+RX1 vga case:3 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 2 ,I:reg0x1204=0x25271b2b. Q:reg0x1240=0x17152121.
+rx1 vga case:4 pass.
+RX1 vga case:4 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 2 ,I:reg0x1208=0x25271b2b. Q:reg0x1244=0x17152121.
+rx1 vga case:5 pass.
+RX1 vga case:5 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 3 ,I:reg0x120c=0x25271b2b. Q:reg0x1248=0x17152121.
+rx1 vga case:6 pass.
+RX1 vga case:6 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 4 ,I:reg0x1210=0x25271b2b. Q:reg0x124c=0x17152121.
+rx1 vga case:7 pass.
+RX1 vga case:7 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 3 ,I:reg0x1214=0x25271b2b. Q:reg0x1250=0x19152121.
+rx1 vga case:8 pass.
+RX1 vga case:8 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 2 ,I:reg0x1218=0x2529192d. Q:reg0x1254=0x19152121.
+rx1 vga case:9 pass.
+RX1 vga case:9 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 2 ,I:reg0x121c=0x2329172f. Q:reg0x1258=0x19152121.
+rx1 vga case:10 pass.
+RX1 vga case:10 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 2 ,I:reg0x1220=0x25251531. Q:reg0x125c=0x19152121.
+rx1 vga case:11 pass.
+RX1 vga case:11 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 3 ,I:reg0x1224=0x23251135. Q:reg0x1260=0x17152121.
+rx1 vga case:12 pass.
+RX1 vga case:12 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 3 ,I:reg0x1228=0x29250f39. Q:reg0x1264=0x17152121.
+rx1 vga case:13 pass.
+RX1 vga case:13 ,absolute value dc_i_tmp : 0 , value dc_q_tmp : 3 ,I:reg0x122c=0x2527093f. Q:reg0x1268=0x17152121.
+rx1 vga case:14 pass.
+RX1 vga case:14 ,absolute value dc_i_tmp : 15 , value dc_q_tmp : 1 ,I:reg0x1230=0x27251d29. Q:reg0x126c=0x19152121.
+reg0x1120=0x3c0100.
+vga calibration end!
+RX0: 0x103c : e0008000 ,0x1040 : 20001102
+RX1: 0x1054 : e0008000 ,0x1058 : 20001100

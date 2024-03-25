@@ -6,7 +6,6 @@ import tempfile
 from pathlib import Path
 
 
-
 class MacroAutoMerge:
     def __init__(self, old_relative_path, new_relative_path, endname):
         current_dir = Path.cwd()
@@ -52,11 +51,11 @@ class MacroAutoMerge:
             get_else = self.get_macro_else.match(line)
             if get_ifdef:
                 ifdef_stack.append(get_ifdef.group(1))
-                #print(ifdef_stack)
+                # print(ifdef_stack)
                 if get_ifdef.group(1) == 'FPGA':
                     if fpga_content_flag:
                         print(f"Error occurred due to FPGA block not close")
-                    else :
+                    else:
                         macro_block = []
                         macro_block.append(file_content[index - 2])
                         macro_block.append(file_content[index - 1])
@@ -69,7 +68,7 @@ class MacroAutoMerge:
 
                 if get_endif:
                     current_ifdef = ifdef_stack[-1]
-                    #print(current_ifdef)
+                    # print(current_ifdef)
                     if len(ifdef_stack) == 1:
                         fpga_content_flag = False
                         macro_block.append(line)
@@ -81,8 +80,8 @@ class MacroAutoMerge:
                         self.old_file_del_dict.setdefault(file_name, {}).setdefault(fpga_index, del_block)
                         fpga_index = fpga_index + 1
                         ifdef_stack.pop()
-                        #print(ifdef_stack)
-                        #print(del_block)
+                        # print(ifdef_stack)
+                        # print(del_block)
                     else:
                         macro_block.append(line)
                         ifdef_stack.pop()
@@ -93,21 +92,21 @@ class MacroAutoMerge:
                     if len(ifdef_stack) == 1:
                         del_content_flag = True
 
-                if del_content_flag :
+                if del_content_flag:
                     del_block.append(line)
 
         # print(macro_block)
 
     def insert_data(self):
         for file_name, content_dict in self.old_file_dict.items():
-            #print(file_name)
-            #print(content_dict)
+            # print(file_name)
+            # print(content_dict)
             file_path = os.path.join(self.new_path, file_name)
             old_path = os.path.join(self.old_path, file_name)
             # print(file_path)
-            if not content_dict :
+            if not content_dict:
                 print(f"file {file_name} don't have FPGA macro")
-            else :
+            else:
                 print(f"file {file_name} have FPGA macro")
 
                 if os.path.exists(file_path):
@@ -125,7 +124,7 @@ class MacroAutoMerge:
                             # Delete duplicate rows, the macro must be written in format
                             for del_index, del_content_block in self.old_file_del_dict[file_name].items():
                                 if not del_content_block:
-                                    #print(f"file {file_name}:{del_index} don't have del block")
+                                    # print(f"file {file_name}:{del_index} don't have del block")
                                     pass
                                 else:
                                     print(f"file {file_name}:{del_index} have del block")
@@ -133,16 +132,17 @@ class MacroAutoMerge:
                                     for index, line in enumerate(file_content):
                                         if line == del_content_block[0]:
                                             if file_content[index + 1] == del_content_block[1]:
-                                                for i in range(del_block_length -2):
-                                                    #print(f" need delete    {del_content_block[1+i]}")
-                                                    #print(f" delete         {file_content[index + del_block_length]}")
-                                                    if del_content_block[1+i] == file_content[index + del_block_length]:
+                                                for i in range(del_block_length - 2):
+                                                    # print(f" need delete    {del_content_block[1+i]}")
+                                                    # print(f" delete         {file_content[index + del_block_length]}")
+                                                    if del_content_block[1 + i] == file_content[
+                                                        index + del_block_length]:
                                                         del file_content[index + del_block_length]
-                                                    else :
-                                                        print(f" Error occurred due to {del_content_block[1+i]} not equal {file_content[index + del_block_length]}")
+                                                    else:
+                                                        print(
+                                                            f" Error occurred due to {del_content_block[1 + i]} not equal {file_content[index + del_block_length]}")
                                                         sys.exit(1)
                                                 break
-
 
                             # print(file_content)
                             # 将文件指针重定位到文件的开始位置
@@ -157,9 +157,9 @@ class MacroAutoMerge:
                 else:
                     print(f"File {file_path} NO exists")
 
-                #src = file_path
-                #dst = old_path
-                #self.copy_file(src, dst)
+                # src = file_path
+                # dst = old_path
+                # self.copy_file(src, dst)
 
     def match_cfg(self):
         self.get_macro_ifdef = re.compile("\s*`ifdef\s*(\w+)")

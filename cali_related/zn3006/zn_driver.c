@@ -368,11 +368,11 @@ void zn_analog_regs_init(void)
         mdelay(10);
         printf("\nread pll state:0x%x \r\n",zn_read_32bit_reg(UWB_BASE_ADDR + 0x1100));
                 
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1020, 0x43112800);//8G
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1014, 0x18492018);//0x18492018  0x183cf018//xo ferq change
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1020, 0x43112800);//8G
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1014, 0x18492018);//0x18492018  0x183cf018//xo ferq change
         
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x0108, 0x2f);//digital clk_tx_en
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x05bc, 0x02);//digital_clk_rx_en
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x0108, 0x2f);//digital clk_tx_en
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x05bc, 0x02);//digital_clk_rx_en
                 
         // rx0 AGC config
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x03D0, 0x02500404);//agc on
@@ -1059,7 +1059,7 @@ void zn_isr(void)
 {
     uint32_t status = zn_read_32bit_reg(SYS_STATUS_ID); 
     uint32_t finfo32 = zn_read_32bit_reg(RX_INFO_BUF0_ID);
-	  //printf("zn_isr:0X%0X \r\n",status);
+      //printf("zn_isr:0X%0X \r\n",status);
     s_global_zn_config.cb_data.status = status;
     s_global_zn_config.cb_data.rx_flags = 0;
     
@@ -1458,26 +1458,26 @@ int32_t zn_dc_estimate(int32_t flag)
     #elif ((ZN_SOC == ZN3005) || (ZN_SOC == ZN3006))
     if(flag < 2)
     {
-			  zn_write_32bit_reg(ADC_SYNC_ID, 0x0E200588);
-			  mdelay(10); 
-			  zn_write_32bit_reg(ADC_SYNC_ID, 0x0E200488);
+              zn_write_32bit_reg(ADC_SYNC_ID, 0x0E200588);
+              mdelay(10);
+              zn_write_32bit_reg(ADC_SYNC_ID, 0x0E200488);
     }
     else
     {
         zn_write_32bit_reg(ADC_SYNC_ID, 0x0e220588);
-			  mdelay(10);
-			  zn_write_32bit_reg(ADC_SYNC_ID, 0x0e220488);  
+              mdelay(10);
+              zn_write_32bit_reg(ADC_SYNC_ID, 0x0e220488);
     }
 
     if(flag == 0 )
     {
         zn_read_from_device(AHB1_SLAVE_BASE_ADDR, 512, s_read_mem_buf);
     }
-		else if(flag == 1 )
+        else if(flag == 1 )
     {
         zn_read_from_device(AHB1_SLAVE_BASE_ADDR + 1024*2, 512, s_read_mem_buf);
     }
-		else if(flag == 2 )
+        else if(flag == 2 )
     {
         zn_read_from_device(AHB1_SLAVE_BASE_ADDR + 1024, 512, s_read_mem_buf);
     }
@@ -5745,30 +5745,30 @@ void zn_tia_calibration(void)
 {
     uint32_t reg_value;
     uint32_t reg_value_temp;
-		uint32_t tia_cali_tmp_value[32]={0};
-		uint32_t times;
-		int32_t dc_i     = 0;
+    uint32_t tia_cali_tmp_value[32]={0};
+    uint32_t times;
+    int32_t dc_i     = 0;
     int32_t dc_q     = 0;
-		int32_t dc_i_tmp = 0;
+    int32_t dc_i_tmp = 0;
     int32_t dc_q_tmp = 0;
-		
-		uint32_t i_p_value;
-		uint32_t i_n_value;
-		uint32_t q_p_value;
-		uint32_t q_n_value;
-		uint32_t i_cali_value;
-		uint32_t q_cali_value;
-		
-	  zn_calibration_pre();
+
+    uint32_t i_p_value;
+    uint32_t i_n_value;
+    uint32_t q_p_value;
+    uint32_t q_n_value;
+    uint32_t i_cali_value;
+    uint32_t q_cali_value;
+
+    zn_calibration_pre();
     printf("rx0 tia cali begin:\n");
-	
-		//cfg ovrd vga gain min 
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
-		
+
+    //cfg ovrd vga gain min
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+
     for(int cali_case =0; cali_case<13; cali_case++)//13
     {
         mdelay(10);
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0 
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff); 
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna, tia gain ovrd
         switch(cali_case)
@@ -5776,23 +5776,21 @@ void zn_tia_calibration(void)
             case 0:
             {
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);//lna stage1 gain setup
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
+                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
-//								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x10015010);
-//                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x01080128);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
                 break;
             }
             case 1:
             {
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00027f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000013f);
                 break;
@@ -5802,8 +5800,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00047f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000023f);
                 break;
@@ -5813,8 +5811,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00087f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000043f);
                 break;
@@ -5824,8 +5822,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5835,8 +5833,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5846,8 +5844,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000001a);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5857,8 +5855,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000007a);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5868,8 +5866,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x00000018);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00080000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00080000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5879,8 +5877,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x00000018);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5890,8 +5888,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x00000058);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5901,8 +5899,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x00000078);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5912,8 +5910,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x00000074);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x0000083f);
                 break;
@@ -5923,211 +5921,188 @@ void zn_tia_calibration(void)
                 break;
             }
         }	
-				//cfg analog top I channel
+        //cfg analog top I channel
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, 0x00000102);//I_tia atest_en, cali clk en
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
-				//close I channel cali_en
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en & close tia word ovrd 
-				//cfg I channel cali_en
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
+        //close I channel cali_en
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en & close tia word ovrd
+        //cfg I channel cali_en
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
         
 
-				while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00000080) != 0x00000080){};
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-					
-					
+        while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00000080) != 0x00000080){};
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
+
+
         if((reg_value & 0x00000080) == 0x00000080)
         {
-//            printf("I channel case:%d pass.\n",cali_case);
-//				    //ovrd test
-//				    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-//				    //printf("####0x1124 value :%x\n",reg_value);
-//			      reg_value = reg_value<<16;
-//			      //printf("####0x1124 value :%x\n",reg_value);
-//				    reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-//				    //printf("####0x%x value :%x\n",0x112c,reg_value_temp);
-//				    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-				
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-				    //printf("####0x1124 value :%x\n",reg_value);
+            //printf("####0x1124 value :%x\n",reg_value);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
-				    //printf("####0x%x value :%x\n",0x1270 + 4*cali_case,reg_value_temp);
+            //printf("####0x%x value :%x\n",0x1270 + 4*cali_case,reg_value_temp);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-				    //printf("####I:reg0x%x=0x%x.",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));		
+            //printf("####I:reg0x%x=0x%x.",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
         }
-				//close I channel cali_en
+        //close I channel cali_en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en
-//        //close I channel dcoc en at ana if regfile					// need it ?
+        //close I channel dcoc en at ana if regfile					// need it ?
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1034);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffeff);
         //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
-				//printf("0x1034 value :%x\n ",reg_value);
+        //printf("0x1034 value :%x\n ",reg_value);
         //open Q channel analog top cfg
         zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00001002);//Q_tia atest_en, cali clk en
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value|0x06000001);//Q_tia_dcoc_en, keep_dococ_en;q_2u
         //cfg Q channel cali off
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
-				//cfg Q channel cali en
+        //cfg Q channel cali en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f2);
-
-				while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00800000) != 0x00800000){};
+        while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00800000) != 0x00800000){};
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
         if((reg_value & 0x00800000) == 0x00800000)
         {
-//            printf("Q channel case:%d pass.\n",cali_case);
-//				    //ovrd test
-//			      reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-//				    //printf("####0x1124 value :%x\n",reg_value);
-//			      reg_value = reg_value>>16;
-//			      //printf("####0x1124 value :%x\n",reg_value);
-//				    reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-//				    //printf("####0x%x value :%x\n",0x112c,reg_value_temp);
-//				    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-//			      printf("####Q:reg0x%x=0x%x.\n",0x112c,zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c));
-
-				
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
-				    //printf("####reg0x%x value :%x\n ",0x1270 + 4*cali_case,reg_value_temp);
+            //printf("####reg0x%x value :%x\n ",0x1270 + 4*cali_case,reg_value_temp);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff)); 
-				    printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));	  
+            printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
         }
-				//cfg Q channel cali off
+        //cfg Q channel cali off
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
-				//close Q channel dcoc en at ana if regfile
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
+        //close Q channel dcoc en at ana if regfile
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xfbffffff);
-				//printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
-				
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
-		    reg_value_temp = reg_value>>16;
-	      reg_value = reg_value<<16;
-	      zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-				//en tia_calib_load_ovrd
-	      reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-	      zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
-				
-				for(int32_t j = 0; j < 128 ; j++)
-				{
-						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-						i_n_value = (0xff000000 & reg_value)>>24;
-						i_p_value = (0x00ff0000 & reg_value)>>16;
-						dc_i = zn_dc_estimate(0);
-            dc_i += zn_dc_estimate(0);
-            dc_i = dc_i >> 1;
-						if(dc_i < -1)
-						{
-							  if(i_p_value == 0x7f || i_n_value == 0x00)
-								{
-								    break;
-								}
-								else
-								{
-									i_p_value = i_p_value + 1;
-									i_n_value = i_n_value - 1;
-									reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-									zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-								}
-						}
-						if(dc_i > 1)
-						{
-							  if(i_p_value == 0x00 || i_n_value == 0x7f)
-								{
-									  break;
-								}
-							  i_p_value = i_p_value - 1;
-							  i_n_value = i_n_value + 1;
-							  reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-							  zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-						}
-						
-						if((dc_i <= 1) && (dc_i >= -1) )
-						{
-							  break;
-						}		
+        //printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
+
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
+        reg_value_temp = reg_value>>16;
+        reg_value = reg_value<<16;
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        //en tia_calib_load_ovrd
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
+
+        for(int32_t j = 0; j < 128 ; j++)
+        {
+                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
+                i_n_value = (0xff000000 & reg_value)>>24;
+                i_p_value = (0x00ff0000 & reg_value)>>16;
+                dc_i = zn_dc_estimate(0);
+                dc_i += zn_dc_estimate(0);
+                dc_i = dc_i >> 1;
+                if(dc_i < -1)
+                {
+                      if(i_p_value == 0x7f || i_n_value == 0x00)
+                      {
+                          break;
+                      }
+                      else
+                      {
+                          i_p_value = i_p_value + 1;
+                          i_n_value = i_n_value - 1;
+                          reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+                          zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+                      }
+                }
+                if(dc_i > 1)
+                {
+                      if(i_p_value == 0x00 || i_n_value == 0x7f)
+                      {
+                            break;
+                      }
+                      i_p_value = i_p_value - 1;
+                      i_n_value = i_n_value + 1;
+                      reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+                      zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+                }
+
+                if((dc_i <= 1) && (dc_i >= -1) )
+                {
+                      break;
+                }
         }
-				for(int32_t j = 0; j < 128 ; j++)
-				{
-						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-					  q_n_value = (0x0000ff00 & reg_value)>>8;
-						q_p_value = (0x000000ff & reg_value);
-					  dc_q = zn_dc_estimate(1);
+        for(int32_t j = 0; j < 128 ; j++)
+        {
+            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
+            q_n_value = (0x0000ff00 & reg_value)>>8;
+            q_p_value = (0x000000ff & reg_value);
+            dc_q = zn_dc_estimate(1);
             dc_q += zn_dc_estimate(1);
             dc_q = dc_q >> 1;
-						if(dc_q < -1)
-						{
-							  if(q_p_value == 0x7f || q_n_value == 0x00)
-								{
-								    break;
-								}
-								else
-								{
-									q_p_value = q_p_value + 1;
-									q_n_value = q_n_value - 1;
-									reg_value_temp = (q_p_value) + (i_n_value << 8);
-									zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-								}
-						}
-						if(dc_q > 1)
-						{
-							  if(q_p_value == 0x00 || q_n_value == 0x7f)
-								{
-								    break;
-								}
-								else
-								{
-									q_p_value = q_p_value - 1;
-									q_n_value = q_n_value + 1;
-									reg_value_temp = (q_p_value) + (i_n_value << 8);
-									zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-								}
-						}
-						
-						
-						if((dc_q <= 1) && (dc_q >= -1) )
-						{
-							  break;
-						}		
+            if(dc_q < -1)
+            {
+                if(q_p_value == 0x7f || q_n_value == 0x00)
+                {
+                    break;
+                }
+                else
+                {
+                    q_p_value = q_p_value + 1;
+                    q_n_value = q_n_value - 1;
+                    reg_value_temp = (q_p_value) + (i_n_value << 8);
+                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+                }
+            }
+            if(dc_q > 1)
+            {
+                  if(q_p_value == 0x00 || q_n_value == 0x7f)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        q_p_value = q_p_value - 1;
+                        q_n_value = q_n_value + 1;
+                        reg_value_temp = (q_p_value) + (i_n_value << 8);
+                        zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+                    }
+            }
+
+
+            if((dc_q <= 1) && (dc_q >= -1) )
+            {
+                  break;
+            }
         }
-				printf("RX0 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-				q_cali_value = (reg_value & 0x0000ffff)<<16;
-				i_cali_value = (reg_value & 0xffff0000)>>16;
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff)); 
-				printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));	  
-		}
+        printf("RX0 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
+        q_cali_value = (reg_value & 0x0000ffff)<<16;
+        i_cali_value = (reg_value & 0xffff0000)>>16;
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff));
+        printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
+    }
 //#ifdef _AOA_EN
     //cali tia 2nd
     printf("rx1 tia cali begin:\n");
     for(int cali_case =0; cali_case<13; cali_case++)//13
     {
         mdelay(10);
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1 
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000); 
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0004ffc0);//lna, tia gain ovrd 2nd
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0004ffc0);//lna, tia gain ovrd 2nd
         switch(cali_case)
         {
             case 0:
             {
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80); //d_i_tia_stag1_isel d_i_tia_stg1_itrim fb_res
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002f8);	//d_q_tia_stag1_isel d_q_tia_stg1_itrim fb_res
-		
+
                 break;
             }
             case 1:
             {
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00027f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000004f8);
                 break;
@@ -6135,10 +6110,10 @@ void zn_tia_calibration(void)
             case 2:
             {
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00047f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000008f8);
                 break;
@@ -6146,10 +6121,10 @@ void zn_tia_calibration(void)
             case 3:
             {
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00087f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000010f8);
                 break;
@@ -6159,8 +6134,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6170,8 +6145,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6181,8 +6156,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000001a);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6192,8 +6167,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000007a);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6203,8 +6178,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000018);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00080000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00080000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6214,8 +6189,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000018);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6225,8 +6200,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000058);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6236,8 +6211,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000078);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6247,8 +6222,8 @@ void zn_tia_calibration(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000074);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-								reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-								zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
+                                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+                                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00000000);//lna stage2 gain setup
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00107f80);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000020f8);
                 break;
@@ -6258,216 +6233,164 @@ void zn_tia_calibration(void)
                 break;
             }
         }
-				//cfg tia cali wait time
+        //cfg tia cali wait time
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup
 
         //cfg analog top I channel
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-				
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
+
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x00000100);  //I_tia atest_en, cali clk en should en?
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x104c);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
         
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-				//printf("####before cali_en 0x1128 value :%x\n",reg_value);
-				
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
+        //printf("####before cali_en 0x1128 value :%x\n",reg_value);
+
         //cfg I channel cali_en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f4);
-        
-        //wait cali done
-//        mdelay(10);
-				
-//				times = 0;
-//				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-//        while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00000080) != 0x00000080){
-//						
-//						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-//						tia_cali_tmp_value[times%32] = reg_value;
-//						times++;
-//						
-//				};
+
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00000080) != 0x00000080);
-				
+
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-				//printf("####I after 0x1128 value :%x\n",reg_value);
+        //printf("####I after 0x1128 value :%x\n",reg_value);
         if((reg_value & 0x00000080) == 0x00000080)
         {
             //printf("rx1 I channel case:%d pass.\n",cali_case);
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-						//printf("####0x1128 to 12b0 value :%x\n",reg_value);
+            //printf("####0x1128 to 12b0 value :%x\n",reg_value);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000)); 
-//					  printf("I:reg0x%x=0x%x.    ",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));	
-					
-//						for(int i =0; i <32; i++)
-//						{
-//							printf("####I:tia_cali_tmp_value[%d]=0x%x.\n",i,tia_cali_tmp_value[i]);
-//						}          
-						
+            zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+
         }
-				//close I channel cali_en
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);
+        //close I channel cali_en
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);
         //close I channel dcoc en at ana if regfile
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X104c);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value &0xfffffc7f);
         
         //open Q channel analog top cfg
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-				
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
+
         zn_write_32bit_reg(UWB_BASE_ADDR + 0X1058, 0x00001000);//Q_tia atest_en, 
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1050);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, reg_value|0x00000007);//Q_tia_dcoc_en, keep_dococ_en;q_2u
-				//cfg Q channel cali en
+        //cfg Q channel cali en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f8);
         // wait cal done
         //mdelay(10);
-				
-//				times = 0;
-//				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-//        while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00800000) != 0x00800000){
-//						
-//						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-//						tia_cali_tmp_value[times%32] = reg_value;
-//						times++;
-//						
-//				};
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00800000) != 0x00800000);
-				
+
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-				//printf("####Q after 0x1128 value :%x\n",reg_value);
+        //printf("####Q after 0x1128 value :%x\n",reg_value);
         if((reg_value & 0x00800000) == 0x00800000)
         {
             //printf("rx1 Q channel case:%d pass.\n",cali_case);
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));     
-            printf("Q:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));			
-
-//						for(int i =0; i <32; i++)
-//						{
-//							printf("####Q:tia_cali_tmp_value[%d]=0x%x.\n",i,tia_cali_tmp_value[i]);
-//						}    					
+            printf("Q:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));
         }
-				
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
-		    reg_value_temp = reg_value>>16;
-	      reg_value = reg_value<<16;
-	      zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-				//en tia_calib_load_ovrd
-	      reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-	      zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
-				
-				for(int32_t j = 0; j < 128 ; j++)
-				{
-						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
-						i_n_value = (0xff000000 & reg_value)>>24;
-						i_p_value = (0x00ff0000 & reg_value)>>16;
-						dc_i = zn_dc_estimate(2);
+
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
+        reg_value_temp = reg_value>>16;
+        reg_value = reg_value<<16;
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        //en tia_calib_load_ovrd
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
+
+        for(int32_t j = 0; j < 128 ; j++)
+        {
+            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
+            i_n_value = (0xff000000 & reg_value)>>24;
+            i_p_value = (0x00ff0000 & reg_value)>>16;
+            dc_i = zn_dc_estimate(2);
             dc_i += zn_dc_estimate(2);
             dc_i = dc_i >> 1;
-						if(dc_i < -1)
-						{
-							  if(i_p_value == 0x7f || i_n_value == 0x00)
-								{
-								    break;
-								}
-								else
-								{
-									i_p_value = i_p_value + 1;
-									i_n_value = i_n_value - 1;
-									reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-									zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-								}
-						}
-						if(dc_i > 1)
-						{
-							  if(i_p_value == 0x00 || i_n_value == 0x7f)
-								{
-									  break;
-								}
-							  i_p_value = i_p_value - 1;
-							  i_n_value = i_n_value + 1;
-							  reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-							  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-						}
-						
-						if((dc_i <= 1) && (dc_i >= -1) )
-						{
-							  break;
-						}		
+            if(dc_i < -1)
+            {
+                if(i_p_value == 0x7f || i_n_value == 0x00)
+                {
+                    break;
+                }
+                else
+                {
+                    i_p_value = i_p_value + 1;
+                    i_n_value = i_n_value - 1;
+                    reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+                }
+            }
+            if(dc_i > 1)
+            {
+                if(i_p_value == 0x00 || i_n_value == 0x7f)
+                {
+                    break;
+                }
+                i_p_value = i_p_value - 1;
+                i_n_value = i_n_value + 1;
+                reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+            }
+
+            if((dc_i <= 1) && (dc_i >= -1) )
+            {
+                  break;
+            }
         }
-				for(int32_t j = 0; j < 128 ; j++)
-				{
-						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
-					  q_n_value = (0x0000ff00 & reg_value)>>8;
-						q_p_value = (0x000000ff & reg_value);
-					  dc_q = zn_dc_estimate(3);
+        for(int32_t j = 0; j < 128 ; j++)
+        {
+            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
+            q_n_value = (0x0000ff00 & reg_value)>>8;
+            q_p_value = (0x000000ff & reg_value);
+            dc_q = zn_dc_estimate(3);
             dc_q += zn_dc_estimate(3);
             dc_q = dc_q >> 1;
-						if(dc_q < -1)
-						{
-							  if(q_p_value == 0x7f || q_n_value == 0x00)
-								{
-								    break;
-								}
-								else
-								{
-									q_p_value = q_p_value + 1;
-									q_n_value = q_n_value - 1;
-									reg_value_temp = (q_p_value) + (i_n_value << 8);
-									zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-								}
-						}
-						if(dc_q > 1)
-						{
-							  if(q_p_value == 0x00 || q_n_value == 0x7f)
-								{
-								    break;
-								}
-								else
-								{
-									q_p_value = q_p_value - 1;
-									q_n_value = q_n_value + 1;
-									reg_value_temp = (q_p_value) + (i_n_value << 8);
-									zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-								}
-						}
-						
-						
-						if((dc_q <= 1) && (dc_q >= -1) )
-						{
-							  break;
-						}		
+            if(dc_q < -1)
+            {
+                if(q_p_value == 0x7f || q_n_value == 0x00)
+                {
+                    break;
+                }
+                else
+                {
+                    q_p_value = q_p_value + 1;
+                    q_n_value = q_n_value - 1;
+                    reg_value_temp = (q_p_value) + (i_n_value << 8);
+                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+                }
+            }
+            if(dc_q > 1)
+            {
+                if(q_p_value == 0x00 || q_n_value == 0x7f)
+                {
+                    break;
+                }
+                else
+                {
+                    q_p_value = q_p_value - 1;
+                    q_n_value = q_n_value + 1;
+                    reg_value_temp = (q_p_value) + (i_n_value << 8);
+                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+                }
+            }
+
+            if((dc_q <= 1) && (dc_q >= -1) )
+            {
+                  break;
+            }
         }
-				printf("RX1 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
-				q_cali_value = (reg_value & 0x0000ffff)<<16;
-				i_cali_value = (reg_value & 0xffff0000)>>16;
-				zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff)); 
-				printf("####:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));	  
+        printf("RX1 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
+        q_cali_value = (reg_value & 0x0000ffff)<<16;
+        i_cali_value = (reg_value & 0xffff0000)>>16;
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff));
+        printf("####:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));
     }
 //#endif
-//			//ovrd tia gain
-//		  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
-//		  zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd en & stage2
-//			//ovrd cfg
-//			reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-//			reg_value = reg_value<<16;
-//			reg_value_temp = reg_value>>16;
-//			zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-//		  //en tia_calib_load_ovrd
-//		  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x0000c000);
-		
-//		  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-//			reg_value = reg_value<<16;
-//			reg_value_temp = reg_value>>16;
-//			zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-//		  //en tia_calib_load_ovrd
-//		  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x0003c000);
-		
     //close tia agc ovrd
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c,reg_value&0xfffffe3f);
@@ -6476,82 +6399,78 @@ void zn_tia_calibration(void)
 
     //en agc sel tia word ovrd
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x003c0100);
-		//close vga ovrd min
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
+    //close vga ovrd min
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
     printf("tia calibration end!\n");
 }
 
 void zn_vga_calibration(void)
 {
-	  uint32_t reg_value;
+    uint32_t reg_value;
     uint32_t reg_value_temp;
-	  uint32_t times;
+    uint32_t times;
     uint32_t vga_i_cali_value_tmp[32] = {0};
     uint32_t vga_q_cali_value_tmp[32] = {0};
     int32_t power_table[15] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F};
     
-		int32_t dc_i     = 0;
+    int32_t dc_i     = 0;
     int32_t dc_q     = 0;
-		int32_t dc_i_tmp = 0;
+    int32_t dc_i_tmp = 0;
     int32_t dc_q_tmp = 0;
-	  
-	  printf("rx0 vga calibration begin\n");
-	  	
-	  	
-	  //ovrd tia max gain & cali_value
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd ana en & stage2
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-//	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x060000bf);//Q_tia gain setup
-		
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80);//I_tia gain setup
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
-	  
-	  //ovrd cfg
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-		reg_value_temp = reg_value>>16;
-	  reg_value = reg_value<<16;
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-	  
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-	  reg_value_temp = reg_value>>16;
-		reg_value = reg_value<<16;
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-	  //en tia_calib_load_ovrd
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
-	  printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
-	
-	
-	
-	
-		//close vga_word_ovrd
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000000);
-	
+
+    printf("rx0 vga calibration begin\n");
+
+
+    //ovrd tia max gain & cali_value
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd ana en & stage2
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x060000bf);//Q_tia gain setup
+
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80);//I_tia gain setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
+
+    //ovrd cfg
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+    reg_value_temp = reg_value>>16;
+    reg_value = reg_value<<16;
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
+    reg_value_temp = reg_value>>16;
+    reg_value = reg_value<<16;
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+    //en tia_calib_load_ovrd
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
+    printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
+
+    //close vga_word_ovrd
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000000);
+
     //vga cal wait time
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f00000);//0x01000000, calibration time setup
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00000002);//cali clk en, where is the bb clk 125M setup?
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00000002);//cali clk en, where is the bb clk 125M setup?
 
     for(int cali_idx=0; cali_idx<15; cali_idx++)//15
     {
-	      dc_i_tmp = 15;
+        dc_i_tmp = 15;
         dc_q_tmp = 15;
-		
+
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0 
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
-			
+
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
         //set vga gain
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f10000 + power_table[cali_idx]);//gain sel ovrd
-		
-		
-		    for(int32_t j = 0; j < 30 ; j++)
+
+        for(int32_t j = 0; j < 30 ; j++)
         {
-		        //iq_keep_en
+            //iq_keep_en
             zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00000044
             //iq vag auto calib en
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000011);//keep dcoc, auto cali en,0x00000055
@@ -6561,7 +6480,7 @@ void zn_vga_calibration(void)
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148);
             if((reg_value & 0x30) == 0x30)
             {
-			          dc_i = zn_dc_estimate(0);
+                dc_i = zn_dc_estimate(0);
                 dc_i += zn_dc_estimate(0);
                 dc_i = dc_i >> 1;
                 dc_q = zn_dc_estimate(1);
@@ -6587,53 +6506,41 @@ void zn_vga_calibration(void)
                     break;
                 }
             }
-		    }
+        }
 
         printf("vga case:%d pass.\n",cali_idx);
-//						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1170);
-//						zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
-//						printf("I:reg0x%x=0x%x.   ",0x1150,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1170));
-//						reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1174);
-//						zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
-//						printf("Q:reg0x%x=0x%x.   \n",0x1154,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1174));
-					
-//        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1170);
-//        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1180 + 4*cali_idx, reg_value);
-				printf("RX0 vga case:%d ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,",cali_idx,dc_i_tmp,dc_q_tmp);
-		    printf("I:reg0x%x=0x%x.   ",0x1180 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180 + 4*cali_idx));
-//        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1174);
-//        zn_write_32bit_reg(UWB_BASE_ADDR + 0x11bc + 4*cali_idx,reg_value);
-		    printf("Q:reg0x%x=0x%x.\n",0x11bc + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc + 4*cali_idx));
-        //finish pass;
+        printf("RX0 vga case:%d ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,",cali_idx,dc_i_tmp,dc_q_tmp);
+        printf("I:reg0x%x=0x%x.   ",0x1180 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180 + 4*cali_idx));
+        printf("Q:reg0x%x=0x%x.\n",0x11bc + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc + 4*cali_idx));
     }   
     //vga cali rx1 begin
     printf("rx1 vga calibration begin\n");
     for(int cali_idx=0; cali_idx<15; cali_idx++)//15
     {
-			  dc_i_tmp = 15;
+        dc_i_tmp = 15;
         dc_q_tmp = 15;
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1 
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000); 
         //close iq auto cali
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
         //set vga gain
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x0ff20000 + (power_table[cali_idx]<<8));
-			
-			  for(int32_t j = 0; j < 30 ; j++)
+
+        for(int32_t j = 0; j < 30 ; j++)
         {
-					  //iq_keep_en
+            //iq_keep_en
             zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00004400
             //iq vag auto calib en
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00001100);//keep dcoc, auto cali en,0x00005500
 
             //wait RX finished
             mdelay(10);
-					  while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0xc0) != 0xc0){};
-				
+            while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0xc0) != 0xc0){};
+
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148);		
             if((reg_value & 0xc0) == 0xc0)
             {
-			          dc_i = zn_dc_estimate(2);
+                dc_i = zn_dc_estimate(2);
                 dc_i += zn_dc_estimate(2);
                 dc_i = dc_i >> 1;
                 dc_q = zn_dc_estimate(3);
@@ -6643,15 +6550,15 @@ void zn_vga_calibration(void)
                 if((dc_i < dc_i_tmp) && (dc_i > - dc_i_tmp))
                 {
                     dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
-									  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1178);
+                    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1178);
                     zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f8 + 4*cali_idx, reg_value);
                 }
 
                 if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
                 {
                     dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
-									  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x117c);
-						        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1234 + 4*cali_idx,reg_value);
+                    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x117c);
+                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1234 + 4*cali_idx,reg_value);
                 }
 
                 if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
@@ -6659,51 +6566,33 @@ void zn_vga_calibration(void)
                     break;
                 }
             }
-		    }
+        }
         
         printf("rx1 vga case:%d pass.\n",cali_idx);
         printf("RX1 vga case:%d ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,",cali_idx,dc_i_tmp,dc_q_tmp);
-				printf("I:reg0x%x=0x%x. ",0x11f8 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8 + 4*cali_idx));
-				printf("Q:reg0x%x=0x%x.\n",0x1234 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234 + 4*cali_idx));
-					
-					
-
-            //finish pass;
+        printf("I:reg0x%x=0x%x. ",0x11f8 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8 + 4*cali_idx));
+        printf("Q:reg0x%x=0x%x.\n",0x1234 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234 + 4*cali_idx));
     }
-//		//cfg vga_word_ovrd
-//		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11b8);
-//		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
-//		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f4);
-//		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
-//		zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000003);
-		
-//		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1230);
-//		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1158 , reg_value);
-//		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x126c);
-//		zn_write_32bit_reg(UWB_BASE_ADDR + 0x115c , reg_value);
-//		zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x0000000f);
-		
-		
-		//close tia agc ovrd
+    //close tia agc ovrd
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X102c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c,reg_value&0xfffffe3f);
-		
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1044);
+
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1044);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044,reg_value&0xfffffe3f);
-		
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value & 0xfffc3fff);
-		printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
-		
+
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value & 0xfffc3fff);
+    printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
+
     //cfg agc_gain_ovrd and close vga_gain_sel
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x010c0000);
     //cfg agc_word_ovrd
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x000000f0);
-		//sw to rx0
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); 
+    //sw to rx0
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
-		//cfg adc_tune_ch2 to reduce the generation of -16
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x70000000);
+    //cfg adc_tune_ch2 to reduce the generation of -16
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x70000000);
 
     printf("vga calibration end!\n");
 }
@@ -6986,7 +6875,7 @@ void zn_vco_calibration(void)
 //            return;//finish_fail;
 //        }
 //    }
-		printf("vco calibration end!\n");
+        printf("vco calibration end!\n");
 }
 
 
@@ -6994,41 +6883,41 @@ void zn_32k_calibration(void)
 {
     uint32_t reg_value;
     uint32_t reg_value_temp;
-		
-		for(int32_t j = 0; j < 32 ; j++)
-		{
-		    //cfg 32k ovrd_en & ovrd word
+
+    for(int32_t j = 0; j < 32 ; j++)
+    {
+        //cfg 32k ovrd_en & ovrd word
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110,0x60 + j);
-		    //close 32k cali_en
-	      reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
-	      zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110, reg_value & 0xffffffdf);
+        //close 32k cali_en
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110, reg_value & 0xffffffdf);
         //cfg 32k cali_en
-		    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110,reg_value | 0x20);
         mdelay(10);
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1114)&0x00200000) != 0x00200000);
     
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1114);
-	      reg_value_temp = reg_value&0xffff;
-				printf("%f \n",19200.0/reg_value_temp);
-		    //printf("cali_ovrd_word: %d,clk_freq %f.\n",j,19200.0/reg_value_temp);
-		    mdelay(1000);
-		}
-		//close 32k ovrd
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110, reg_value & 0xffffffbf);
-		//close 32k cali_en
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110, reg_value & 0xffffffdf);
+        reg_value_temp = reg_value&0xffff;
+        printf("%f \n",19200.0/reg_value_temp);
+        //printf("cali_ovrd_word: %d,clk_freq %f.\n",j,19200.0/reg_value_temp);
+        mdelay(1000);
+    }
+    //close 32k ovrd
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110, reg_value & 0xffffffbf);
+    //close 32k cali_en
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110, reg_value & 0xffffffdf);
     //cfg 32k cali_en
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1110);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1110,reg_value | 0x20);
     mdelay(10);
     while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1114)&0x00200000) != 0x00200000);
     
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1114);
-	  reg_value_temp = reg_value&0xffff;
-	  printf("%f \n",19200.0/reg_value_temp);
+    reg_value_temp = reg_value&0xffff;
+    printf("%f \n",19200.0/reg_value_temp);
 //	  printf("AUTO_CALI clk_freq %f.\n",19200.0/reg_value_temp);
     if((545<=(reg_value&0xffff)) && ((reg_value&0xffff)<=667))
     {
@@ -7038,38 +6927,38 @@ void zn_32k_calibration(void)
     {
         printf("32K AUTO cali case FAILED.\n");
     }
-		mdelay(1000);
-		printf("32k calibration end!\n");
+        mdelay(1000);
+        printf("32k calibration end!\n");
 }
 void zn_calibration_pre(void)
 {
     uint32_t reg_value;
     uint32_t reg_value_temp;
-		int32_t power_table[15] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F};
-		int32_t dc_i     = 0;
+    int32_t power_table[15] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F};
+    int32_t dc_i     = 0;
     int32_t dc_q     = 0;
-		int32_t dc_i_tmp = 0;
+    int32_t dc_i_tmp = 0;
     int32_t dc_q_tmp = 0;
-		
-		printf("calibration begin\n");
-		
-		//cfg RX0
-		//cfg ovrd vga gain min 
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
-		
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0 
+
+    printf("calibration begin\n");
+
+    //cfg RX0
+    //cfg ovrd vga gain min
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff); 
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna, tia gain ovrd
-		
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);//lna stage1 gain setup max_db_set
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna, tia gain ovrd
+
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);//lna stage1 gain setup max_db_set
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
-		
-		//cfg tia cali wait time
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
+
+    //cfg tia cali wait time
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup
     //cfg analog top I channel
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, 0x00000102);//I_tia atest_en, cali clk en
@@ -7078,16 +6967,16 @@ void zn_calibration_pre(void)
         
     //cfg I channel cali_en
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
-		while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00000080) != 0x00000080){};
+    while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00000080) != 0x00000080){};
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
     if((reg_value & 0x00000080) == 0x00000080)
     {
-			reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-      reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-      zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-     }
-		
-		//close I channel cali_en
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+    }
+
+    //close I channel cali_en
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en
     //close I channel dcoc en at ana if regfile					// need it ?
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1034);
@@ -7098,76 +6987,76 @@ void zn_calibration_pre(void)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value|0x06000001);//Q_tia_dcoc_en, keep_dococ_en;q_2u
     //cfg Q channel cali off
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
-		//cfg Q channel cali en
+    //cfg Q channel cali en
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f2);
-		
-		while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00800000) != 0x00800000){};
+
+    while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00800000) != 0x00800000){};
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
     if((reg_value & 0x00800000) == 0x00800000)
     {
-				reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
+        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
         reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));   
     }
-		
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
-		//close Q channel dcoc en at ana if regfile
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
+
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
+    //close Q channel dcoc en at ana if regfile
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xf9fffffe);
-		
-		//cfg RX1
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1 
+
+    //cfg RX1
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000); 
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0004ffc0);//lna, tia gain ovrd 2nd
-		
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0004ffc0);//lna, tia gain ovrd 2nd
+
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80); //d_i_tia_stag1_isel d_i_tia_stg1_itrim fb_res
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002f8);	//d_q_tia_stag1_isel d_q_tia_stg1_itrim fb_res
-		
-		//cfg tia cali wait time
+
+    //cfg tia cali wait time
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup
 
     //cfg analog top I channel
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-		
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x00000100);  //I_tia atest_en, cali clk en should en?
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x104c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
     
     //cfg I channel cali_en
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f4);
-		while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00000080) != 0x00000080){};
-		
+    while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00000080) != 0x00000080){};
+
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
     if((reg_value & 0x00000080) == 0x00000080)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
         reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000)); 
-		}
-		//close I channel cali_en
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);
+    }
+    //close I channel cali_en
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);
     //close I channel dcoc en at ana if regfile
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X104c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value &0xfffffc7f);
     
     //open Q channel analog top cfg
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-		
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0X1058, 0x00001000);//Q_tia atest_en, 
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1050);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, reg_value|0x00000007);//Q_tia_dcoc_en, keep_dococ_en;q_2u
-		//cfg Q channel cali en
+    //cfg Q channel cali en
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f8);
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
     while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00800000) != 0x00800000);
-		
+
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
     if((reg_value & 0x00800000) == 0x00800000)
     {
@@ -7175,7 +7064,7 @@ void zn_calibration_pre(void)
         reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));     
     }
-		//close tia agc ovrd
+    //close tia agc ovrd
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c,reg_value&0xfffffe3f);
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
@@ -7183,54 +7072,54 @@ void zn_calibration_pre(void)
 
     //en agc sel tia word ovrd
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x003c0100);
-		//close vga ovrd min
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
-		
-		//VGA
-		//ovrd tia max gain & cali_value
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd ana en & stage2
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-//	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x060000bf);//Q_tia gain setup
-		
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80);//I_tia gain setup
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
-	  
-	  //ovrd cfg
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-		reg_value_temp = reg_value>>16;
-	  reg_value = reg_value<<16;
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-	  
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-	  reg_value_temp = reg_value>>16;
-		reg_value = reg_value<<16;
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-	  //en tia_calib_load_ovrd
-	  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
+    //close vga ovrd min
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
 
-		//close vga_word_ovrd
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000000);
-		
-		//vga cal wait time
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f00000);//0x01000000, calibration time setup
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00000002);//cali clk en, where is the bb clk 125M setup?
-		dc_i_tmp = 15;
+    //VGA
+    //ovrd tia max gain & cali_value
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd ana en & stage2
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
+//  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x060000bf);//Q_tia gain setup
+
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80);//I_tia gain setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
+
+    //ovrd cfg
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+      reg_value_temp = reg_value>>16;
+    reg_value = reg_value<<16;
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
+    reg_value_temp = reg_value>>16;
+      reg_value = reg_value<<16;
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+    //en tia_calib_load_ovrd
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
+
+    //close vga_word_ovrd
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000000);
+
+    //vga cal wait time
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f00000);//0x01000000, calibration time setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00000002);//cali clk en, where is the bb clk 125M setup?
+    dc_i_tmp = 15;
     dc_q_tmp = 15;
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0 
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
-		
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
     //set vga gain
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f10000);//gain sel ovrd
-		for(int32_t j = 0; j < 30 ; j++)
+    for(int32_t j = 0; j < 30 ; j++)
     {
-		    //iq_keep_en
+        //iq_keep_en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00000044
         //iq vag auto calib en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000011);//keep dcoc, auto cali en,0x00000055
@@ -7240,7 +7129,7 @@ void zn_calibration_pre(void)
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148);
         if((reg_value & 0x30) == 0x30)
         {
-		        dc_i = zn_dc_estimate(0);
+            dc_i = zn_dc_estimate(0);
             dc_i += zn_dc_estimate(0);
             dc_i = dc_i >> 1;
             dc_q = zn_dc_estimate(1);
@@ -7266,31 +7155,31 @@ void zn_calibration_pre(void)
                 break;
             }
         }
-		}
-		printf("RX0 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
-		dc_i_tmp = 15;
+    }
+    printf("RX0 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
+    dc_i_tmp = 15;
     dc_q_tmp = 15;
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1 
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000); 
     //close iq auto cali
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
     //set vga gain
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x0ff20000);
-		for(int32_t j = 0; j < 30 ; j++)
+    for(int32_t j = 0; j < 30 ; j++)
     {
-			  //iq_keep_en
+        //iq_keep_en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00004400
         //iq vag auto calib en
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00001100);//keep dcoc, auto cali en,0x00005500
 
         //wait RX finished
         mdelay(10);
-			  while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0xc0) != 0xc0){};
-		
+        while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0xc0) != 0xc0){};
+
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148);		
         if((reg_value & 0xc0) == 0xc0)
         {
-		        dc_i = zn_dc_estimate(2);
+            dc_i = zn_dc_estimate(2);
             dc_i += zn_dc_estimate(2);
             dc_i = dc_i >> 1;
             dc_q = zn_dc_estimate(3);
@@ -7300,15 +7189,15 @@ void zn_calibration_pre(void)
             if((dc_i < dc_i_tmp) && (dc_i > - dc_i_tmp))
             {
                 dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
-							  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1178);
+                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1178);
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f8, reg_value);
             }
 
             if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
             {
                 dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
-							  reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x117c);
-				        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1234,reg_value);
+                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x117c);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1234,reg_value);
             }
 
             if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
@@ -7316,24 +7205,24 @@ void zn_calibration_pre(void)
                 break;
             }
         }
-		}
+    }
         
     printf("RX1 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
-		//cfg vga_word_ovrd
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000003);
-		
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x1158 , reg_value);
-		reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x115c , reg_value);
-		zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x0000000f);
-		
-	  //ovrd vga=0 vga_cali_value
-	  //cfg ovrd vga gain min 
-	  zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+    //cfg vga_word_ovrd
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000003);
+
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1158 , reg_value);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x115c , reg_value);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x0000000f);
+
+    //ovrd vga=0 vga_cali_value
+    //cfg ovrd vga gain min
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
 }
 #endif

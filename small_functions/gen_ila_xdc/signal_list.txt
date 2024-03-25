@@ -1,0 +1,43 @@
+FILE_PATH
+./../small_functions/gen_ila_xdc/signal_listA.txt
+    CLK
+    U_CLK_PROC/fpga_clk_bufg_o
+    BUS
+        io
+            U_APB_SLAVE_TOP.APB_M_prdata[31:0]
+            U_APB_SLAVE_TOP.APB_M_prdata1[31:0]
+        wire
+            U_APB_SLAVE_TOP.APB_M_paddr[1:0]
+    SINGLE
+
+FILE_PATH
+./../small_functions/gen_ila_xdc/signal_listB.txt
+    CLK
+    U_CLK_PROC/U_MMCM_I499M2_O124M8/inst/clk_out1
+    BUS
+        reg
+            U_PL_PS_DMA_wrapper.PL_PS_DMA_i.ps8_0_axi_periph_M00_AXI_ARADDR[9:0]
+    SINGLE
+        other
+            U_APB_SLAVE_TOP.reg00_read_en
+
+FILE_PATH
+./../small_functions/gen_ila_xdc/signal_listB.txt
+    CLK
+    U_CLK_PROC/U_MMCM_I499M2_O124M8/inst/clk_out2
+    BUS
+
+    SINGLE
+        other
+            U_APB_SLAVE_TOP.reg00_read_en2
+
+FILE_PATH
+./../small_functions/gen_ila_xdc/signal_listB.txt
+    CLK
+    U_CLK_PROC/fpga_clk_bufg_o
+    BUS
+        reg
+            U_PL_PS_DMA_wrapper.PL_PS_DMA_i.ps8_0_axi_periph_M00_AXI_ARADDR3[9:0]
+    SINGLE
+        other
+            U_APB_SLAVE_TOP.reg00_read_en3

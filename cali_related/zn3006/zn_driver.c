@@ -6091,7 +6091,7 @@ void zn_tia_calibration(void)
     printf("rx0 tia cali begin:\n");
 
     //cfg ovrd vga gain min
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00033f3f);//gain sel ovrd vga & 2nd
 
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
@@ -6665,7 +6665,7 @@ void zn_vga_calibration(void)
     ////zn_set_i_tia_keep_dcoc(1);
     //zn_set_q_tia_dcoc_en(0);
     ////zn_set_q_tia_keep_dcoc(1);
-    zn_set_tia_lna_gain(tia_gain_table[0]);
+    zn_set_tia_lna_gain(tia_gain_table[12]);
 
 //    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
 //    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
@@ -6673,7 +6673,7 @@ void zn_vga_calibration(void)
 //    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
 
     //ovrd cfg
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
     reg_value_temp = reg_value>>16;
     reg_value = reg_value<<16;
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
@@ -7190,9 +7190,12 @@ void zn_calibration_pre(void)
     printf("calibration begin\n");
 
     //cfg RX0
-    //cfg ovrd vga gain min
+    ////cfg ovrd vga gain min
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+    //cfg ovrd vga gain max
+
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00033f3f);//gain sel ovrd vga & 2nd
     // sw to rx0
     zn_set_aoa_mode_sel(0);         // How to use this function
 
@@ -7212,8 +7215,10 @@ void zn_calibration_pre(void)
     zn_set_lna_stage2_ovrd(1);
     zn_set_tia_gain_ovrd(1);
 
-    // set tia gain max 55 db max
-    zn_set_tia_lna_gain(tia_gain_table[0]);
+    //// set tia gain max 55 db max
+    //zn_set_tia_lna_gain(tia_gain_table[0]);
+    // set tia gain min -9  db max
+    zn_set_tia_lna_gain(tia_gain_table[12]);
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);//lna stage1 gain setup max_db_set
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
@@ -7242,8 +7247,10 @@ void zn_calibration_pre(void)
     if((reg_value & 0x00000080) == 0x00000080)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12A0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
     }
 
     //close I channel cali_en
@@ -7279,8 +7286,10 @@ void zn_calibration_pre(void)
     if((reg_value & 0x00800000) == 0x00800000)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));   
+        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12A0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
     }
 
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
@@ -7370,7 +7379,7 @@ void zn_calibration_pre(void)
 
     //en agc sel tia word ovrd
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x003c0100);
-    //close vga ovrd min
+    //close vga ovrd max
     reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
 
@@ -7399,7 +7408,7 @@ void zn_calibration_pre(void)
     //zn_set_i_tia_keep_dcoc(1);
     //zn_set_q_tia_dcoc_en(0);
     //zn_set_q_tia_keep_dcoc(1);
-    zn_set_tia_lna_gain(tia_gain_table[0]);
+    zn_set_tia_lna_gain(tia_gain_table[12]);
 
 
 
@@ -7409,7 +7418,8 @@ void zn_calibration_pre(void)
 //    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
 
     //ovrd cfg
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
     reg_value_temp = reg_value>>16;
     reg_value = reg_value<<16;
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
@@ -7441,7 +7451,8 @@ void zn_calibration_pre(void)
 
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
     //set vga gain
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f10000);//gain sel ovrd
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f10000);//gain sel ovrd
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f1003f);//gain sel ovrd
     for(int32_t j = 0; j < 30 ; j++)
     {
         //iq_keep_en
@@ -7465,14 +7476,15 @@ void zn_calibration_pre(void)
             {
                 dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1170);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1180, reg_value);
+                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1180, reg_value);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11b8, reg_value);
             }
 
             if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
             {
                 dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1174);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11bc,reg_value);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f4,reg_value);
             }
 
             if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
@@ -7534,9 +7546,10 @@ void zn_calibration_pre(void)
 //
 //    printf("RX1 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
     //cfg vga_word_ovrd
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11b8);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f4);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000003);
 
@@ -7548,6 +7561,6 @@ void zn_calibration_pre(void)
 
     //ovrd vga=0 vga_cali_value
     //cfg ovrd vga gain min
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00033f3f);//gain sel ovrd vga & 2nd
 }
 #endif

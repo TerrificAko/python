@@ -6661,9 +6661,9 @@ void zn_vga_calibration(void)
     ////zn_set_q_tia_stag1_isel(3);
     ////zn_set_q_tia_stg1_itrim(7);
     ////zn_set_q_tia_dcoc_2ua_en(1);
-    zn_set_i_tia_dcoc_en(1);            // When to enable
+    //zn_set_i_tia_dcoc_en(0);            // When to enable
     ////zn_set_i_tia_keep_dcoc(1);
-    zn_set_q_tia_dcoc_en(1);
+    //zn_set_q_tia_dcoc_en(0);
     ////zn_set_q_tia_keep_dcoc(1);
     zn_set_tia_lna_gain(tia_gain_table[0]);
 
@@ -7223,7 +7223,7 @@ void zn_calibration_pre(void)
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
 
     //cfg tia cali wait time
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup & cali en close
     //cfg analog top I channel
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, 0x00000102);//I_tia atest_en, cali clk en
     zn_set_i_tia_atest_en(1);                       //  When to enable and when to disable
@@ -7233,7 +7233,7 @@ void zn_calibration_pre(void)
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
     zn_set_i_tia_dcoc_en(1);                        //  When to enable
     zn_set_i_tia_keep_dcoc(1);                      //  When to enable
-
+    ////zn_set_i_tia_dcoc_2ua_en(1);
 
     //cfg I channel cali_en
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
@@ -7250,21 +7250,24 @@ void zn_calibration_pre(void)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en
     //close I channel dcoc en at ana if regfile					// need it ?
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1034);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffc7f);
+    ////zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffc7f);
+    //zn_set_i_tia_dcoc_en(0);                    //  When to enable
+    //zn_set_i_tia_keep_dcoc(0);                  //  When to enable
+    //zn_set_i_tia_dcoc_2ua_en(0);                //  When to enable
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffeff); while at cali_pre is 0xfffffc7f
     zn_set_i_tia_dcoc_en(0);                    //  When to enable
-    zn_set_i_tia_keep_dcoc(0);                  //  When to enable
-    zn_set_i_tia_dcoc_2ua_en(0);                //  When to enable
 
     //open Q channel analog top cfg
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00001002);//Q_tia atest_en, cali clk en
     zn_set_i_tia_atest_en(0);                   //  When to enable
     zn_set_q_tia_atest_en(1);                   //  When to enable and When to disable
-
+    ////zn_set_rx_clk38p4_div_en(1);
 
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value|0x06000001);//Q_tia_dcoc_en, keep_dococ_en;q_2u
     zn_set_q_tia_dcoc_en(1);
     zn_set_q_tia_keep_dcoc(1);
+    ////zn_set_q_tia_dcoc_2ua_en(1);
 
     //cfg Q channel cali off
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
@@ -7281,12 +7284,17 @@ void zn_calibration_pre(void)
     }
 
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
+    ////close Q channel dcoc en at ana if regfile
+    ////reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
+    ////zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xf9fffffe);
+    //zn_set_q_tia_dcoc_en(0);                    //  When to enable
+    //zn_set_q_tia_keep_dcoc(0);                  //  When to enable
+    //zn_set_q_tia_dcoc_2ua_en(0);                //  When to enable
+
     //close Q channel dcoc en at ana if regfile
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xf9fffffe);
-    zn_set_q_tia_dcoc_en(0);                    //  When to enable
-    zn_set_q_tia_keep_dcoc(0);                  //  When to enable
-    zn_set_q_tia_dcoc_2ua_en(0);                //  When to enable
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xfbffffff); while at cali_pre is 0xf9fffffe
+    zn_set_q_tia_dcoc_en(0);
 //
 //    //cfg RX1
 //    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
@@ -7383,14 +7391,14 @@ void zn_calibration_pre(void)
     //tia band width cfg
     ////zn_set_i_tia_stag1_isel(3);
     ////zn_set_i_tia_stg1_itrim(7);
-    zn_set_i_tia_dcoc_2ua_en(1);
+    //zn_set_i_tia_dcoc_2ua_en(1);
     ////zn_set_q_tia_stag1_isel(3);
     ////zn_set_q_tia_stg1_itrim(7);
-    zn_set_q_tia_dcoc_2ua_en(1);
-    zn_set_i_tia_dcoc_en(1);
-    zn_set_i_tia_keep_dcoc(1);
-    zn_set_q_tia_dcoc_en(1);
-    zn_set_q_tia_keep_dcoc(1);
+    //zn_set_q_tia_dcoc_2ua_en(1);
+    //zn_set_i_tia_dcoc_en(0);
+    //zn_set_i_tia_keep_dcoc(1);
+    //zn_set_q_tia_dcoc_en(0);
+    //zn_set_q_tia_keep_dcoc(1);
     zn_set_tia_lna_gain(tia_gain_table[0]);
 
 

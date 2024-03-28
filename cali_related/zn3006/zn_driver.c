@@ -5997,17 +5997,17 @@ int AGCLUTstep2dB(int i)
 #define I_VGA_AUX_2ND_BIT_LEN                   (3U)
 #define I_VGA_AUX_2ND_BIT_MASK                  0x7000000U
 
-#define I_VGA_AUX_2ND_OVRD_BIT_OFFSET           (27U)
-#define I_VGA_AUX_2ND_OVRD_BIT_LEN              (1U)
-#define I_VGA_AUX_2ND_OVRD_BIT_MASK             0x8000000U
+#define I_VGA_AUX_OVRD_2ND_BIT_OFFSET           (27U)
+#define I_VGA_AUX_OVRD_2ND_BIT_LEN              (1U)
+#define I_VGA_AUX_OVRD_2ND_BIT_MASK             0x8000000U
 
 #define Q_VGA_AUX_2ND_BIT_OFFSET                (28U)
 #define Q_VGA_AUX_2ND_BIT_LEN                   (3U)
 #define Q_VGA_AUX_2ND_BIT_MASK                  0x70000000U
 
-#define Q_VGA_AUX_2ND_OVRD_BIT_OFFSET           (31U)
-#define Q_VGA_AUX_2ND_OVRD_BIT_LEN              (1U)
-#define Q_VGA_AUX_2ND_OVRD_BIT_MASK             0x80000000U
+#define Q_VGA_AUX_OVRD_2ND_BIT_OFFSET           (31U)
+#define Q_VGA_AUX_OVRD_2ND_BIT_LEN              (1U)
+#define Q_VGA_AUX_OVRD_2ND_BIT_MASK             0x80000000U
 
 #define ADDR_0X1144                             (UWB_BASE_ADDR + 0x1144)
 
@@ -6071,8 +6071,8 @@ int AGCLUTstep2dB(int i)
 #define I_AGC_WORD_OVRD_2ND_BIT_MASK            0x40U
 
 #define Q_AGC_WORD_OVRD_2ND_BIT_OFFSET          (7U)
-#define I_AGC_WORD_OVRD_2ND_BIT_LEN             (1U)
-#define I_AGC_WORD_OVRD_2ND_BIT_MASK            0x80U
+#define Q_AGC_WORD_OVRD_2ND_BIT_LEN             (1U)
+#define Q_AGC_WORD_OVRD_2ND_BIT_MASK            0x80U
 
 
 void zn_set_reg_field_wr(uint32_t addr , uint32_t field_mask, uint32_t field_len, uint32_t field_offset, uint32_t field_value)
@@ -6325,9 +6325,9 @@ void zn_set_aoa_mode_sel(uint32_t aoa_mode_sel)
 void zn_set_i_adc_cmp_dly_ctrl_2nd(uint32_t i_adc_cmp_dly_ctrl_2nd)
 {
     zn_set_reg_field_wr(RX_CH2_ATEST_ID,
-                        I_ADC_CMP_DLY_CTRL_2ND_BIT_MASK,
-                        I_ADC_CMP_DLY_CTRL_2ND_BIT_LEN,
-                        I_ADC_CMP_DLY_CTRL_2ND_BIT_OFFSET,
+                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_MASK,
+                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_LEN,
+                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_OFFSET,
                         i_adc_cmp_dly_ctrl_2nd);
 }
 

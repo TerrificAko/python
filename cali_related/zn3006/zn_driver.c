@@ -7614,7 +7614,7 @@ void zn_tia_calibration(void)
     uint32_t q_cali_value;
 
     zn_calibration_pre();
-    printf("rx0 tia cali begin:\n");
+
 
     //cfg vga_word_ovrd
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
@@ -7643,7 +7643,7 @@ void zn_tia_calibration(void)
     zn_set_vga_gain_sel_2nd(0x3f);
     zn_set_vga_gain_sel_ovrd_2nd(1);
 
-
+     printf("rx0 tia cali begin:\n");
     //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna, tia gain ovrd
@@ -7686,7 +7686,7 @@ void zn_tia_calibration(void)
         //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en & close tia word ovrd
         //cfg I channel cali_en
         //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
-        ////zn_set_i_tia_auto_calib_en(0);
+        zn_set_i_tia_auto_calib_en(0);
         zn_set_i_tia_auto_calib_en(1);
 
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00000080) != 0x00000080){};
@@ -8392,8 +8392,8 @@ void zn_vga_calibration(void)
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x000000f0);
     zn_set_i_agc_word_ovrd(1);
     zn_set_q_agc_word_ovrd(1);
-    //zn_set_i_agc_word_ovrd_2nd(1);
-    //zn_set_q_agc_word_ovrd_2nd(1);
+    zn_set_i_agc_word_ovrd_2nd(1);
+    zn_set_q_agc_word_ovrd_2nd(1);
     ////zn_set_i_vga_word_ovrd(0);
     ////zn_set_q_vga_word_ovrd(0);
     ////zn_set_i_vga_word_ovrd_2nd(0);

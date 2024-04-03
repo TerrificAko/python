@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 from pathlib import Path
 
 
@@ -11,6 +12,7 @@ class GenIlaXdc:
         self.data_dict = {}
         self.clk_data_expanded_dict = {}
         self.clk_data_unexpanded_dict = {}
+        self.dbg_hub_clk = 'clk124p8'
 
     def load_content(self):
         with open(self.file_path, 'r', encoding='utf-8') as f:
@@ -81,8 +83,10 @@ class GenIlaXdc:
                                     expanded_bus = f"{replaced_bus[:replaced_bus.index('[')]}[{i}]"
                                     self.clk_data_expanded_dict[clk_name].setdefault('bus', []).append(expanded_bus)
                     if signal_type == 'signal':
-                        self.clk_data_expanded_dict[clk_name].setdefault('signal', []).extend(signal_list)
-                        self.clk_data_unexpanded_dict[clk_name].setdefault('signal', []).extend(signal_list)
+                        replaced_signal = [singel.replace('.', '/') for singel in signal_list]
+                        print(replaced_signal)
+                        self.clk_data_expanded_dict[clk_name].setdefault('signal', []).extend(replaced_signal)
+                        self.clk_data_unexpanded_dict[clk_name].setdefault('signal', []).extend(replaced_signal)
 
     def gen_ila_xdc(self):
         mark_debug = "set_property MARK_DEBUG true"
@@ -90,7 +94,7 @@ class GenIlaXdc:
         ila_content_probe = []
         ila_content_dbg_hub = []
         clk_index = 0
-        dbg_hub_clk = 'axi_clk'
+
         for clk_name, clk_data in self.clk_data_expanded_dict.items():
             for signal_type, signal_list in clk_data.items():
                 for signal in signal_list:
@@ -112,15 +116,14 @@ class GenIlaXdc:
             ila_content_probe.append(f"set_property C_INPUT_PIPE_STAGES 0 {get_debug_core}")
             ila_content_probe.append(f"set_property C_TRIGIN_EN false {get_debug_core}")
             ila_content_probe.append(f"set_property C_TRIGOUT_EN false {get_debug_core}")
-            ila_content_probe.append(f"set_property C_ADV_TRIGGER true {get_debug_core}")
             ila_content_probe.append(f"set_property port_width 1 [get_debug_ports {ila_index}/clk]")
             ila_content_probe.append(f"connect_debug_port {ila_index}/clk [get_nets [list {clk_name}]]")
             for signal_type, signal_list in clk_data.items():
                 if signal_type == 'bus':
                     for signal in signal_list:
                         probe_str = f"probe{probe_index}"
-                        start = None
-                        end = None
+                        start = 0
+                        end = 0
                         range_search = re.search(r"\[(\d+):(\d+)\]", signal)
                         if range_search:
                             start = int(range_search.group(2))
@@ -150,10 +153,10 @@ class GenIlaXdc:
         ila_content_dbg_hub.append("set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]")
         ila_content_dbg_hub.append("set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]")
         ila_content_dbg_hub.append("set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]")
-        ila_content_dbg_hub.append(f"connect_debug_port dbg_hub/clk [get_nets {dbg_hub_clk}]")
+        ila_content_dbg_hub.append(f"connect_debug_port dbg_hub/clk [get_nets {self.dbg_hub_clk}]")
         ila_content = ila_content_mark + ila_content_probe + ila_content_dbg_hub
 
-        with open("./ila_xdc.xdc", "w") as f:
+        with open("./zn3107_rfsoc_top_debug.xdc", "w") as f:
             for line in ila_content:
                 f.write(line + "\n")
 
@@ -165,11 +168,15 @@ class GenIlaXdc:
         self.get_signal_searcher = re.compile("\s*SINGLE\s*")
 
 
-def main():
-    gen_ila = GenIlaXdc(list_name='./signal_list.txt')
+def main(input_file):
+    gen_ila = GenIlaXdc(input_file)
     gen_ila.extract_content()
     gen_ila.gen_ila_xdc()
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <input_file>")
+        sys.exit(1)
+    input_file = sys.argv[1]
+    main(input_file)

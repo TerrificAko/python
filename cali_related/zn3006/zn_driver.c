@@ -7058,11 +7058,22 @@ void zn_calibration_pre(void)
     zn_set_aoa_mode_sel(1);
     // enable cali clk
     zn_set_rx_clk38p4_div_en(1);
+    //initial tia cfg
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x0);
+    zn_set_i_agc_sel_tia_word_ovrd(0);
+    zn_set_q_agc_sel_tia_word_ovrd(0);
+    zn_set_i_agc_sel_tia_word_ovrd_2nd(0);
+    zn_set_q_agc_sel_tia_word_ovrd_2nd(0);
+    //initial vga
+    zn_set_i_agc_word_ovrd(0);
+    zn_set_q_agc_word_ovrd(0);
+    zn_set_i_agc_word_ovrd_2nd(0);
+    zn_set_q_agc_word_ovrd_2nd(0);
 
     ////cfg ovrd vga gain min
     zn_set_vga_gain_sel(0x0);
     zn_set_vga_gain_sel_ovrd(1);
-    zn_set_vga_gain_sel_2nd(0x3f);
+    zn_set_vga_gain_sel_2nd(0x0);
     zn_set_vga_gain_sel_ovrd_2nd(1);
 
 
@@ -7829,7 +7840,7 @@ void zn_vga_calibration(void)
         dc_i_tmp = 15;
         dc_q_tmp = 15;
 
-        zn_set_vga_gain_sel_2nd(power_table[cali_idx]<<8);
+        zn_set_vga_gain_sel_2nd(power_table[cali_idx]);
         zn_set_vga_gain_sel_ovrd_2nd(1);
 
         for(int32_t j = 0; j < 30 ; j++)

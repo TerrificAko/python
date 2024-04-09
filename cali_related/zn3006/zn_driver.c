@@ -263,6 +263,1279 @@ void zn_init_global_config(void)
 * Output param: None
 * Return value: None
 *************************************************************************************************************/
+#define RX_CH1_LNA_ID                           (UWB_BASE_ADDR + 0x102C)
+
+#define D_LNA_STAGE2_AGC_BIT_OFFSET             (19U)
+#define D_LNA_STAGE2_AGC_BIT_LEN                (2U)
+#define D_LNA_STAGE2_AGC_BIT_MASK               0x180000U
+
+#define D_LNA_STAGE2_VCM_SEL_BIT_OFFSET         (16U)
+#define D_LNA_STAGE2_VCM_SEL_BIT_LEN            (3U)
+#define D_LNA_STAGE2_VCM_SEL_BIT_MASK           0x70000U
+
+#define D_LNA_STAGE2_BIAS_SEL_BIT_OFFSET        (12U)
+#define D_LNA_STAGE2_BIAS_SEL_BIT_LEN           (4U)
+#define D_LNA_STAGE2_BIAS_SEL_BIT_MASK          0xf000U
+
+#define D_LNA_STAGE1_BIAS_SEL_BIT_OFFSET        (9U)
+#define D_LNA_STAGE1_BIAS_SEL_BIT_LEN           (3U)
+#define D_LNA_STAGE1_BIAS_SEL_BIT_MASK          0xe00U
+
+
+#define D_LNA_STAGE1_AGC_OVRD_BIT_OFFSET        (8U)
+#define D_LNA_STAGE1_AGC_OVRD_BIT_LEN           (1U)
+#define D_LNA_STAGE1_AGC_OVRD_BIT_MASK          0x100U
+
+#define D_LNA_STAGE2_AGC_OVRD_BIT_OFFSET        (7U)
+#define D_LNA_STAGE2_AGC_OVRD_BIT_LEN           (1U)
+#define D_LNA_STAGE2_AGC_OVRD_BIT_MASK          0x80U
+
+#define D_TIA_AGC_OVRD_BIT_OFFSET               (6U)
+#define D_TIA_AGC_OVRD_BIT_LEN                  (1U)
+#define D_TIA_AGC_OVRD_BIT_MASK                 0x40U
+
+#define RX_CH1_MIXER_ID                         (UWB_BASE_ADDR + 0x1030)
+
+#define D_LNA_STAGE1_VCT_BIT_OFFSET             (0U)
+#define D_LNA_STAGE1_VCT_BIT_LEN                (7U)
+#define D_LNA_STAGE1_VCT_BIT_MASK               0x7fU
+
+
+#define RX_CH1_TIA_I_ID                         (UWB_BASE_ADDR + 0x1034)
+
+#define D_I_TIA_FB_RES_BIT_OFFSET               (15U)
+#define D_I_TIA_FB_RES_BIT_LEN                  (6U)
+#define D_I_TIA_FB_RES_BIT_MASK                 0x1f8000U
+
+#define D_I_TIA_STAG1_ISEL_BIT_OFFSET          (13U)
+#define D_I_TIA_STAG1_ISEL_BIT_LEN             (2U)
+#define D_I_TIA_STAG1_ISEL_BIT_MASK            0x6000U
+
+#define D_I_TIA_STG1_ITRIM_BIT_OFFSET           (10U)
+#define D_I_TIA_STG1_ITRIM_BIT_LEN              (3U)
+#define D_I_TIA_STG1_ITRIM_BIT_MASK             0x1c00U
+
+#define D_I_TIA_DCOC_2UA_EN_BIT_OFFSET          (9U)
+#define D_I_TIA_DCOC_2UA_EN_BIT_LEN             (1U)
+#define D_I_TIA_DCOC_2UA_EN_BIT_MASK            0x200U
+
+#define D_I_TIA_DCOC_EN_BIT_OFFSET              (8U)
+#define D_I_TIA_DCOC_EN_BIT_LEN                 (1U)
+#define D_I_TIA_DCOC_EN_BIT_MASK                0x100U
+
+#define D_I_TIA_KEEP_DCOC_BIT_OFFSET            (7U)
+#define D_I_TIA_KEEP_DCOC_BIT_LEN               (1U)
+#define D_I_TIA_KEEP_DCOC_BIT_MASK              0x80U
+
+
+#define RX_CH1_TIA_Q_ID                         (UWB_BASE_ADDR + 0x1038)
+
+#define D_Q_TIA_DCOC_EN_BIT_OFFSET              (26U)
+#define D_Q_TIA_DCOC_EN_BIT_LEN                 (1U)
+#define D_Q_TIA_DCOC_EN_BIT_MASK                0x4000000U
+
+#define D_Q_TIA_KEEP_DCOC_BIT_OFFSET            (25U)
+#define D_Q_TIA_KEEP_DCOC_BIT_LEN               (1U)
+#define D_Q_TIA_KEEP_DCOC_BIT_MASK              0x2000000U
+
+#define D_Q_TIA_FB_RES_BIT_OFFSET               (6U)
+#define D_Q_TIA_FB_RES_BIT_LEN                  (6U)
+#define D_Q_TIA_FB_RES_BIT_MASK                 0xfc0U
+
+#define D_Q_TIA_STAG1_ISEL_BIT_OFFSET          (4U)
+#define D_Q_TIA_STAG1_ISEL_BIT_LEN             (2U)
+#define D_Q_TIA_STAG1_ISEL_BIT_MASK            0x30U
+
+#define D_Q_TIA_STG1_ITRIM_BIT_OFFSET           (1U)
+#define D_Q_TIA_STG1_ITRIM_BIT_LEN              (3U)
+#define D_Q_TIA_STG1_ITRIM_BIT_MASK             0xeU
+
+#define D_Q_TIA_DCOC_2UA_EN_BIT_OFFSET          (0U)
+#define D_Q_TIA_DCOC_2UA_EN_BIT_LEN             (1U)
+#define D_Q_TIA_DCOC_2UA_EN_BIT_MASK            0x1U
+
+#define RX_CH1_ATEST_ID                         (UWB_BASE_ADDR + 0x1040)
+
+#define D_Q_TIA_ATEST_EN_BIT_OFFSET             (12U)
+#define D_Q_TIA_ATEST_EN_BIT_LEN                (1U)
+#define D_Q_TIA_ATEST_EN_BIT_MASK               0x1000U
+
+#define D_I_TIA_ATEST_EN_BIT_OFFSET             (8U)
+#define D_I_TIA_ATEST_EN_BIT_LEN                (1U)
+#define D_I_TIA_ATEST_EN_BIT_MASK               0x100U
+
+#define D_RX_CLK38P4_DIV_EN_BIT_OFFSET          (1U)
+#define D_RX_CLK38P4_DIV_EN_BIT_LEN             (1U)
+#define D_RX_CLK38P4_DIV_EN_BIT_MASK            0x2U
+
+#define RX_CH2_LNA_ID                           (UWB_BASE_ADDR + 0x1044)
+
+#define D_TIA_AGC_VORD_2ND_BIT_OFFSET           (6U)
+#define D_TIA_AGC_VORD_2ND_BIT_LEN              (1U)
+#define D_TIA_AGC_VORD_2ND_BIT_MASK             0x40U
+
+#define D_LNA_STAGE2_AGC_VORD_2ND_BIT_OFFSET    (7U)
+#define D_LNA_STAGE2_AGC_VORD_2ND_BIT_LEN       (1U)
+#define D_LNA_STAGE2_AGC_VORD_2ND_BIT_MASK      0x80U
+
+#define D_LNA_STAGE1_AGC_VORD_2ND_BIT_OFFSET    (8U)
+#define D_LNA_STAGE1_AGC_VORD_2ND_BIT_LEN       (1U)
+#define D_LNA_STAGE1_AGC_VORD_2ND_BIT_MASK      0x100U
+
+#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_OFFSET    (9U)
+#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_LEN       (3U)
+#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_MASK      0xe00U
+
+#define D_LNA_STAGE2_BIAS_SEL_2ND_BIT_OFFSET    (12U)
+#define D_LNA_STAGE2_BIAS_SEL_2ND_BIT_LEN       (4U)
+#define D_LNA_STAGE2_BIAS_SEL_2ND_BIT_MASK      0xf000U
+
+#define D_LNA_STAGE2_VCM_SEL_2ND_BIT_OFFSET     (16U)
+#define D_LNA_STAGE2_VCM_SEL_2ND_BIT_LEN        (3U)
+#define D_LNA_STAGE2_VCM_SEL_2ND_BIT_MASK       0x70000U
+
+#define D_LNA_STAGE2_AGC_2ND_BIT_OFFSET         (19U)
+#define D_LNA_STAGE2_AGC_2ND_BIT_LEN            (2U)
+#define D_LNA_STAGE2_AGC_2ND_BIT_MASK           0x180000U
+
+#define RX_CH2_MIXER_ID                         (UWB_BASE_ADDR + 0x1048)
+
+#define D_LNA_STAGE1_VCT_2ND_BIT_OFFSET         (0U)
+#define D_LNA_STAGE1_VCT_2ND_BIT_LEN            (7U)
+#define D_LNA_STAGE1_VCT_2ND_BIT_MASK           0x7fU
+
+#define RX_CH2_TIA_I_ID                         (UWB_BASE_ADDR + 0x104c)
+
+#define D_I_TIA_KEEP_DCOC_2ND_BIT_OFFSET        (7U)
+#define D_I_TIA_KEEP_DCOC_2ND_BIT_LEN           (1U)
+#define D_I_TIA_KEEP_DCOC_2ND_BIT_MASK          0x80U
+
+#define D_I_TIA_DCOC_EN_2ND_BIT_OFFSET          (8U)
+#define D_I_TIA_DCOC_EN_2ND_BIT_LEN             (1U)
+#define D_I_TIA_DCOC_EN_2ND_BIT_MASK            0x100U
+
+#define D_I_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET      (9U)
+#define D_I_TIA_DCOC_2UA_EN_2ND_BIT_LEN         (1U)
+#define D_I_TIA_DCOC_2UA_EN_2ND_BIT_MASK        0x200U
+
+#define D_I_TIA_STG1_ITRIM_2ND_BIT_OFFSET       (10U)
+#define D_I_TIA_STG1_ITRIM_2ND_BIT_LEN          (3U)
+#define D_I_TIA_STG1_ITRIM_2ND_BIT_MASK         0x1c00U
+
+#define D_I_TIA_STAG1_ISEL_2ND_BIT_OFFSET       (13U)
+#define D_I_TIA_STAG1_ISEL_2ND_BIT_LEN          (2U)
+#define D_I_TIA_STAG1_ISEL_2ND_BIT_MASK         0x6000U
+
+#define D_I_TIA_FB_RES_2ND_BIT_OFFSET           (15U)
+#define D_I_TIA_FB_RES_2ND_BIT_LEN              (6U)
+#define D_I_TIA_FB_RES_2ND_BIT_MASK             0x1f8000U
+
+#define RX_CH2_TIA_Q_ID                         (UWB_BASE_ADDR + 0x1050)
+
+#define D_Q_TIA_KEEP_DCOC_2ND_BIT_OFFSET        (0U)
+#define D_Q_TIA_KEEP_DCOC_2ND_BIT_LEN           (1U)
+#define D_Q_TIA_KEEP_DCOC_2ND_BIT_MASK          0x1U
+
+#define D_Q_TIA_DCOC_EN_2ND_BIT_OFFSET          (1U)
+#define D_Q_TIA_DCOC_EN_2ND_BIT_LEN             (1U)
+#define D_Q_TIA_DCOC_EN_2ND_BIT_MASK            0x2U
+
+#define D_Q_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET      (2U)
+#define D_Q_TIA_DCOC_2UA_EN_2ND_BIT_LEN         (1U)
+#define D_Q_TIA_DCOC_2UA_EN_2ND_BIT_MASK        0x4U
+
+#define D_Q_TIA_STG1_ITRIM_2ND_BIT_OFFSET       (3U)
+#define D_Q_TIA_STG1_ITRIM_2ND_BIT_LEN          (3U)
+#define D_Q_TIA_STG1_ITRIM_2ND_BIT_MASK         0x38U
+
+#define D_Q_TIA_STAG1_ISEL_2ND_BIT_OFFSET       (6U)
+#define D_Q_TIA_STAG1_ISEL_2ND_BIT_LEN          (2U)
+#define D_Q_TIA_STAG1_ISEL_2ND_BIT_MASK         0xc0U
+
+#define D_Q_TIA_FB_RES_2ND_BIT_OFFSET           (8U)
+#define D_Q_TIA_FB_RES_2ND_BIT_LEN              (6U)
+#define D_Q_TIA_FB_RES_2ND_BIT_MASK             0x3f00U
+
+#define RX_CH2_ATEST_ID                         (UWB_BASE_ADDR + 0x1058)
+
+#define D_I_TIA_ATEST_EN_2ND_BIT_OFFSET         (8U)
+#define D_I_TIA_ATEST_EN_2ND_BIT_LEN            (1U)
+#define D_I_TIA_ATEST_EN_2ND_BIT_MASK           0x100U
+
+#define D_Q_TIA_ATEST_EN_2ND_BIT_OFFSET         (12U)
+#define D_Q_TIA_ATEST_EN_2ND_BIT_LEN            (1U)
+#define D_Q_TIA_ATEST_EN_2ND_BIT_MASK           0x1000U
+
+#define D_I_ADC_CMP_DLY_CTRL_2ND_BIT_OFFSET     (28U)
+#define D_I_ADC_CMP_DLY_CTRL_2ND_BIT_LEN        (4U)
+#define D_I_ADC_CMP_DLY_CTRL_2ND_BIT_MASK       0xf0000000U
+
+#define RX_REDU_ID                              (UWB_BASE_ADDR + 0x105C)
+
+#define D_AOA_MODE_SEL_BIT_OFFSET               (29U)
+#define D_AOA_MODE_SEL_BIT_LEN                  (1U)
+#define D_AOA_MODE_SEL_BIT_MASK                 0x20000000U
+
+#define ADDR_0X1120                             (UWB_BASE_ADDR + 0x1120)
+
+#define Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET  (21U)
+#define Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN     (1U)
+#define Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK    0x200000U
+
+#define I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET  (20U)
+#define I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN     (1U)
+#define I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK    0x100000U
+
+#define Q_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET      (19U)
+#define Q_AGC_SEL_TIA_WORD_OVRD_BIT_LEN         (1U)
+#define Q_AGC_SEL_TIA_WORD_OVRD_BIT_MASK        0x80000U
+
+#define I_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET      (18U)
+#define I_AGC_SEL_TIA_WORD_OVRD_BIT_LEN         (1U)
+#define I_AGC_SEL_TIA_WORD_OVRD_BIT_MASK        0x40000U
+
+#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET    (17U)
+#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN       (1U)
+#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK      0x20000U
+
+#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET    (16U)
+#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN       (1U)
+#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK      0x10000U
+
+#define Q_TIA_CALIB_LOAD_OVRD_BIT_OFFSET        (15U)
+#define Q_TIA_CALIB_LOAD_OVRD_BIT_LEN           (1U)
+#define Q_TIA_CALIB_LOAD_OVRD_BIT_MASK          0x8000U
+
+#define I_TIA_CALIB_LOAD_OVRD_BIT_OFFSET        (14U)
+#define I_TIA_CALIB_LOAD_OVRD_BIT_LEN           (1U)
+#define I_TIA_CALIB_LOAD_OVRD_BIT_MASK          0x4000U
+
+#define TIA_CAL_WAIT_TIME_BIT_OFFSET            (4U)
+#define TIA_CAL_WAIT_TIME_BIT_LEN               (8U)
+#define TIA_CAL_WAIT_TIME_BIT_MASK              0xff0U
+
+#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (3U)
+#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
+#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_MASK        0x8U
+
+#define I_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (2U)
+#define I_TIA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
+#define I_TIA_AUTO_CALIB_EN_2ND_BIT_MASK        0x4U
+
+#define Q_TIA_AUTO_CALIB_EN_BIT_OFFSET          (1U)
+#define Q_TIA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define Q_TIA_AUTO_CALIB_EN_BIT_MASK            0x2U
+
+#define I_TIA_AUTO_CALIB_EN_BIT_OFFSET          (0U)
+#define I_TIA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define I_TIA_AUTO_CALIB_EN_BIT_MASK            0x1U
+
+#define ADDR_0X1140                             (UWB_BASE_ADDR + 0x1140)
+
+#define I_VGA_AUTO_CALIB_EN_BIT_OFFSET          (0U)
+#define I_VGA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define I_VGA_AUTO_CALIB_EN_BIT_MASK            0x1U
+
+#define I_VGA_DCOC_COMP_EN_BIT_OFFSET           (1U)
+#define I_VGA_DCOC_COMP_EN_BIT_LEN              (1U)
+#define I_VGA_DCOC_COMP_EN_BIT_MASK             0x2U
+
+#define I_VGA_DCOC_KEEP_EN_BIT_OFFSET           (2U)
+#define I_VGA_DCOC_KEEP_EN_BIT_LEN              (1U)
+#define I_VGA_DCOC_KEEP_EN_BIT_MASK             0x4U
+
+#define I_VGA_VCM_COMP_EN_BIT_OFFSET            (3U)
+#define I_VGA_VCM_COMP_EN_BIT_LEN               (1U)
+#define I_VGA_VCM_COMP_EN_BIT_MASK              0x8U
+
+#define Q_VGA_AUTO_CALIB_EN_BIT_OFFSET          (4U)
+#define Q_VGA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define Q_VGA_AUTO_CALIB_EN_BIT_MASK            0x10U
+
+#define Q_VGA_DCOC_COMP_EN_BIT_OFFSET           (5U)
+#define Q_VGA_DCOC_COMP_EN_BIT_LEN              (1U)
+#define Q_VGA_DCOC_COMP_EN_BIT_MASK             0x20U
+
+#define Q_VGA_DCOC_KEEP_EN_BIT_OFFSET           (6U)
+#define Q_VGA_DCOC_KEEP_EN_BIT_LEN              (1U)
+#define Q_VGA_DCOC_KEEP_EN_BIT_MASK             0x40U
+
+#define Q_VGA_VCM_COMP_EN_BIT_OFFSET            (7U)
+#define Q_VGA_VCM_COMP_EN_BIT_LEN               (1U)
+#define Q_VGA_VCM_COMP_EN_BIT_MASK              0x80U
+
+#define I_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (8U)
+#define I_VGA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
+#define I_VGA_AUTO_CALIB_EN_2ND_BIT_MASK        0x100U
+
+#define I_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET       (9U)
+#define I_VGA_DCOC_COMP_EN_2ND_BIT_LEN          (1U)
+#define I_VGA_DCOC_COMP_EN_2ND_BIT_MASK         0x200U
+
+#define I_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET       (10U)
+#define I_VGA_DCOC_KEEP_EN_2ND_BIT_LEN          (1U)
+#define I_VGA_DCOC_KEEP_EN_2ND_BIT_MASK         0x400U
+
+#define I_VGA_VCM_COMP_EN_2ND_BIT_OFFSET        (11U)
+#define I_VGA_VCM_COMP_EN_2ND_BIT_LEN           (1U)
+#define I_VGA_VCM_COMP_EN_2ND_BIT_MASK          0x800U
+
+#define Q_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (12U)
+#define Q_VGA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
+#define Q_VGA_AUTO_CALIB_EN_2ND_BIT_MASK        0x1000U
+
+#define Q_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET       (13U)
+#define Q_VGA_DCOC_COMP_EN_2ND_BIT_LEN          (1U)
+#define Q_VGA_DCOC_COMP_EN_2ND_BIT_MASK         0x2000U
+
+#define Q_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET       (14U)
+#define Q_VGA_DCOC_KEEP_EN_2ND_BIT_LEN          (1U)
+#define Q_VGA_DCOC_KEEP_EN_2ND_BIT_MASK         0x4000U
+
+#define Q_VGA_VCM_COMP_EN_2ND_BIT_OFFSET        (15U)
+#define Q_VGA_VCM_COMP_EN_2ND_BIT_LEN           (1U)
+#define Q_VGA_VCM_COMP_EN_2ND_BIT_MASK          0x8000U
+
+#define I_VGA_AUX_BIT_OFFSET                    (16U)
+#define I_VGA_AUX_BIT_LEN                       (3U)
+#define I_VGA_AUX_BIT_MASK                      0x70000U
+
+#define I_VGA_AUX_OVRD_BIT_OFFSET               (19U)
+#define I_VGA_AUX_OVRD_BIT_LEN                  (1U)
+#define I_VGA_AUX_OVRD_BIT_MASK                 0x80000U
+
+#define Q_VGA_AUX_BIT_OFFSET                    (20U)
+#define Q_VGA_AUX_BIT_LEN                       (3U)
+#define Q_VGA_AUX_BIT_MASK                      0x700000U
+
+#define Q_VGA_AUX_OVRD_BIT_OFFSET               (23U)
+#define Q_VGA_AUX_OVRD_BIT_LEN                  (1U)
+#define Q_VGA_AUX_OVRD_BIT_MASK                 0x800000U
+
+#define I_VGA_AUX_2ND_BIT_OFFSET                (24U)
+#define I_VGA_AUX_2ND_BIT_LEN                   (3U)
+#define I_VGA_AUX_2ND_BIT_MASK                  0x7000000U
+
+#define I_VGA_AUX_OVRD_2ND_BIT_OFFSET           (27U)
+#define I_VGA_AUX_OVRD_2ND_BIT_LEN              (1U)
+#define I_VGA_AUX_OVRD_2ND_BIT_MASK             0x8000000U
+
+#define Q_VGA_AUX_2ND_BIT_OFFSET                (28U)
+#define Q_VGA_AUX_2ND_BIT_LEN                   (3U)
+#define Q_VGA_AUX_2ND_BIT_MASK                  0x70000000U
+
+#define Q_VGA_AUX_OVRD_2ND_BIT_OFFSET           (31U)
+#define Q_VGA_AUX_OVRD_2ND_BIT_LEN              (1U)
+#define Q_VGA_AUX_OVRD_2ND_BIT_MASK             0x80000000U
+
+
+#define ADDR_0X1144                             (UWB_BASE_ADDR + 0x1144)
+
+#define VGA_CAL_WAIT_TIME_BIT_OFFSET            (20U)
+#define VGA_CAL_WAIT_TIME_BIT_LEN               (8U)
+#define VGA_CAL_WAIT_TIME_BIT_MASK              0xff00000U
+
+#define AGC_GAIN_OVRD_2ND_BIT_OFFSET            (19U)
+#define AGC_GAIN_OVRD_2ND_BIT_LEN               (1U)
+#define AGC_GAIN_OVRD_2ND_BIT_MASK              0x80000U
+
+#define AGC_GAIN_OVRD_BIT_OFFSET                (18U)
+#define AGC_GAIN_OVRD_BIT_LEN                   (1U)
+#define AGC_GAIN_OVRD_BIT_MASK                  0x40000U
+
+#define VGA_GAIN_SEL_OVRD_2ND_BIT_OFFSET        (17U)
+#define VGA_GAIN_SEL_OVRD_2ND_BIT_LEN           (1U)
+#define VGA_GAIN_SEL_OVRD_2ND_BIT_MASK          0x20000U
+
+#define VGA_GAIN_SEL_OVRD_BIT_OFFSET            (16U)
+#define VGA_GAIN_SEL_OVRD_BIT_LEN               (1U)
+#define VGA_GAIN_SEL_OVRD_BIT_MASK              0x10000U
+
+
+#define VGA_GAIN_SEL_2ND_BIT_OFFSET             (8U)
+#define VGA_GAIN_SEL_2ND_BIT_LEN                (6U)
+#define VGA_GAIN_SEL_2ND_BIT_MASK               0x3f00U
+
+#define VGA_GAIN_SEL_BIT_OFFSET                 (0U)
+#define VGA_GAIN_SEL_BIT_LEN                    (6U)
+#define VGA_GAIN_SEL_BIT_MASK                   0x3fU
+
+#define ADDR_0X114c                             (UWB_BASE_ADDR + 0x114c)
+
+#define I_VGA_WORD_OVRD_BIT_OFFSET              (0U)
+#define I_VGA_WORD_OVRD_BIT_LEN                 (1U)
+#define I_VGA_WORD_OVRD_BIT_MASK                0x1U
+
+#define Q_VGA_WORD_OVRD_BIT_OFFSET              (1U)
+#define Q_VGA_WORD_OVRD_BIT_LEN                 (1U)
+#define Q_VGA_WORD_OVRD_BIT_MASK                0x2U
+
+#define I_VGA_WORD_OVRD_2ND_BIT_OFFSET          (2U)
+#define I_VGA_WORD_OVRD_2ND_BIT_LEN             (1U)
+#define I_VGA_WORD_OVRD_2ND_BIT_MASK            0x4U
+
+#define Q_VGA_WORD_OVRD_2ND_BIT_OFFSET          (3U)
+#define Q_VGA_WORD_OVRD_2ND_BIT_LEN             (1U)
+#define Q_VGA_WORD_OVRD_2ND_BIT_MASK            0x8U
+
+#define I_AGC_WORD_OVRD_BIT_OFFSET              (4U)
+#define I_AGC_WORD_OVRD_BIT_LEN                 (1U)
+#define I_AGC_WORD_OVRD_BIT_MASK                0x10U
+
+#define Q_AGC_WORD_OVRD_BIT_OFFSET              (5U)
+#define Q_AGC_WORD_OVRD_BIT_LEN                 (1U)
+#define Q_AGC_WORD_OVRD_BIT_MASK                0x20U
+
+#define I_AGC_WORD_OVRD_2ND_BIT_OFFSET          (6U)
+#define I_AGC_WORD_OVRD_2ND_BIT_LEN             (1U)
+#define I_AGC_WORD_OVRD_2ND_BIT_MASK            0x40U
+
+#define Q_AGC_WORD_OVRD_2ND_BIT_OFFSET          (7U)
+#define Q_AGC_WORD_OVRD_2ND_BIT_LEN             (1U)
+#define Q_AGC_WORD_OVRD_2ND_BIT_MASK            0x80U
+
+
+void zn_set_reg_field_wr(uint32_t addr , uint32_t field_mask, uint32_t field_len, uint32_t field_offset, uint32_t field_value)
+{
+    uint32_t reg_value = 0;
+    reg_value = zn_read_32bit_reg(addr);
+    reg_value &= (~field_mask);
+    reg_value |= ((field_value<<field_offset) & field_mask);
+    zn_write_32bit_reg(addr, reg_value);
+}
+
+uint32_t tia_gain_table[]={0x0FC2,0x0FC4,0x0FC8,0x0FD0,0x0FE0,0x0F20,0x1A20,0x7A20,0x1860,0x1820,0x5820,0x7820,0x7420};
+///gain_db               ={55,    50,    44,    39,    33,    27,    20,    16,    12,    8 ,    1 ,    -4,    -9};
+void zn_set_tia_lna_gain(uint32_t gain_table)
+{
+    uint32_t lna_stage1;
+    uint32_t lna_stage2;
+    uint32_t tia_gain;
+    lna_stage1 = (gain_table>>8) & 0x7f;
+    lna_stage2 = (gain_table>>6) & 0x3;
+    tia_gain   = (gain_table & 0x3f);
+    uint32_t reg_value = 0;
+    //lna stage1
+    zn_set_reg_field_wr(RX_CH1_MIXER_ID,
+                        D_LNA_STAGE1_VCT_BIT_MASK,
+                        D_LNA_STAGE1_VCT_BIT_LEN,
+                        D_LNA_STAGE1_VCT_BIT_OFFSET,
+                        lna_stage1);
+
+    //lna stage2
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_LNA_STAGE2_AGC_BIT_MASK,
+                        D_LNA_STAGE2_AGC_BIT_LEN,
+                        D_LNA_STAGE2_AGC_BIT_OFFSET,
+                        lna_stage2);
+    //tia i
+    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
+                        D_I_TIA_FB_RES_BIT_MASK,
+                        D_I_TIA_FB_RES_BIT_LEN,
+                        D_I_TIA_FB_RES_BIT_OFFSET,
+                        tia_gain);
+    //tia q
+    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
+                        D_Q_TIA_FB_RES_BIT_MASK,
+                        D_Q_TIA_FB_RES_BIT_LEN,
+                        D_Q_TIA_FB_RES_BIT_OFFSET,
+                        tia_gain);
+}
+void zn_set_tia_lna_gain_2nd(uint32_t gain_table)
+{
+    uint32_t lna_stage1;
+    uint32_t lna_stage2;
+    uint32_t tia_gain;
+    lna_stage1 = (gain_table>>8) & 0x7f;
+    lna_stage2 = (gain_table>>6) & 0x3;
+    tia_gain   = (gain_table & 0x3f);
+    uint32_t reg_value = 0;
+
+    zn_set_reg_field_wr(RX_CH2_MIXER_ID,
+                        D_LNA_STAGE1_VCT_2ND_BIT_MASK,
+                        D_LNA_STAGE1_VCT_2ND_BIT_LEN,
+                        D_LNA_STAGE1_VCT_2ND_BIT_OFFSET,
+                        lna_stage1);
+
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_LNA_STAGE2_AGC_2ND_BIT_MASK,
+                        D_LNA_STAGE2_AGC_2ND_BIT_LEN,
+                        D_LNA_STAGE2_AGC_2ND_BIT_OFFSET,
+                        lna_stage2);
+
+    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
+                        D_I_TIA_FB_RES_2ND_BIT_MASK,
+                        D_I_TIA_FB_RES_2ND_BIT_LEN,
+                        D_I_TIA_FB_RES_2ND_BIT_OFFSET,
+                        tia_gain);
+
+    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
+                        D_Q_TIA_FB_RES_2ND_BIT_MASK,
+                        D_Q_TIA_FB_RES_2ND_BIT_LEN,
+                        D_Q_TIA_FB_RES_2ND_BIT_OFFSET,
+                        tia_gain);
+}
+
+void zn_set_lna_stage1_agc_vord(uint32_t lna_stage1_agc_vord)
+{
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_LNA_STAGE1_AGC_OVRD_BIT_MASK,
+                        D_LNA_STAGE1_AGC_OVRD_BIT_LEN,
+                        D_LNA_STAGE1_AGC_OVRD_BIT_OFFSET,
+                        lna_stage1_agc_vord);
+}
+
+void zn_set_lna_stage2_agc_vord(uint32_t lna_stage2_agc_vord)
+{
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_LNA_STAGE2_AGC_OVRD_BIT_MASK,
+                        D_LNA_STAGE2_AGC_OVRD_BIT_LEN,
+                        D_LNA_STAGE2_AGC_OVRD_BIT_OFFSET,
+                        lna_stage2_agc_vord);
+}
+
+void zn_set_tia_agc_vord(uint32_t tia_agc_vord)
+{
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_TIA_AGC_OVRD_BIT_MASK,
+                        D_TIA_AGC_OVRD_BIT_LEN,
+                        D_TIA_AGC_OVRD_BIT_OFFSET,
+                        tia_agc_vord);
+}
+
+void zn_set_lna_stage2_vcm_sel(uint32_t lna_stage2_vcm_sel)
+{
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_LNA_STAGE2_VCM_SEL_BIT_MASK,
+                        D_LNA_STAGE2_VCM_SEL_BIT_LEN,
+                        D_LNA_STAGE2_VCM_SEL_BIT_OFFSET,
+                        lna_stage2_vcm_sel);
+}
+
+void zn_set_lna_stage2_bias_sel(uint32_t lna_stage2_bias_sel)
+{
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_LNA_STAGE2_BIAS_SEL_BIT_MASK,
+                        D_LNA_STAGE2_BIAS_SEL_BIT_LEN,
+                        D_LNA_STAGE2_BIAS_SEL_BIT_OFFSET,
+                        lna_stage2_bias_sel);
+}
+
+void zn_set_lna_stage1_bias_sel(uint32_t lna_stage1_bias_sel)
+{
+    zn_set_reg_field_wr(RX_CH1_LNA_ID,
+                        D_LNA_STAGE1_BIAS_SEL_BIT_MASK,
+                        D_LNA_STAGE1_BIAS_SEL_BIT_LEN,
+                        D_LNA_STAGE1_BIAS_SEL_BIT_OFFSET,
+                        lna_stage1_bias_sel);
+}
+
+void zn_set_i_tia_stag1_isel(uint32_t i_tia_stag1_isel)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
+                        D_I_TIA_STAG1_ISEL_BIT_MASK,
+                        D_I_TIA_STAG1_ISEL_BIT_LEN,
+                        D_I_TIA_STAG1_ISEL_BIT_OFFSET,
+                        i_tia_stag1_isel);
+}
+
+void zn_set_i_tia_stg1_itrim(uint32_t i_tia_stg1_itrim)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
+                        D_I_TIA_STG1_ITRIM_BIT_MASK,
+                        D_I_TIA_STG1_ITRIM_BIT_LEN,
+                        D_I_TIA_STG1_ITRIM_BIT_OFFSET,
+                        i_tia_stg1_itrim);
+}
+
+void zn_set_i_tia_dcoc_2ua_en(uint32_t i_tia_dcoc_2ua_en)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
+                        D_I_TIA_DCOC_2UA_EN_BIT_MASK,
+                        D_I_TIA_DCOC_2UA_EN_BIT_LEN,
+                        D_I_TIA_DCOC_2UA_EN_BIT_OFFSET,
+                        i_tia_dcoc_2ua_en);
+}
+
+void zn_set_q_tia_stag1_isel(uint32_t q_tia_stag1_isel)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
+                        D_Q_TIA_STAG1_ISEL_BIT_MASK,
+                        D_Q_TIA_STAG1_ISEL_BIT_LEN,
+                        D_Q_TIA_STAG1_ISEL_BIT_OFFSET,
+                        q_tia_stag1_isel);
+}
+
+void zn_set_q_tia_stg1_itrim(uint32_t q_tia_stg1_itrim)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
+                        D_Q_TIA_STG1_ITRIM_BIT_MASK,
+                        D_Q_TIA_STG1_ITRIM_BIT_LEN,
+                        D_Q_TIA_STG1_ITRIM_BIT_OFFSET,
+                        q_tia_stg1_itrim);
+}
+
+void zn_set_q_tia_dcoc_2ua_en(uint32_t q_tia_dcoc_2ua_en)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
+                        D_Q_TIA_DCOC_2UA_EN_BIT_MASK,
+                        D_Q_TIA_DCOC_2UA_EN_BIT_LEN,
+                        D_Q_TIA_DCOC_2UA_EN_BIT_OFFSET,
+                        q_tia_dcoc_2ua_en);
+}
+
+
+void zn_set_q_tia_dcoc_en(uint32_t q_tia_dcoc_en)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
+                        D_Q_TIA_DCOC_EN_BIT_MASK,
+                        D_Q_TIA_DCOC_EN_BIT_LEN,
+                        D_Q_TIA_DCOC_EN_BIT_OFFSET,
+                        q_tia_dcoc_en);
+}
+
+void zn_set_q_tia_keep_dcoc(uint32_t q_tia_keep_dcoc)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
+                        D_Q_TIA_KEEP_DCOC_BIT_MASK,
+                        D_Q_TIA_KEEP_DCOC_BIT_LEN,
+                        D_Q_TIA_KEEP_DCOC_BIT_OFFSET,
+                        q_tia_keep_dcoc);
+}
+
+void zn_set_i_tia_atest_en(uint32_t i_tia_atest_en)
+{
+    zn_set_reg_field_wr(RX_CH1_ATEST_ID,
+                        D_I_TIA_ATEST_EN_BIT_MASK,
+                        D_I_TIA_ATEST_EN_BIT_LEN,
+                        D_I_TIA_ATEST_EN_BIT_OFFSET,
+                        i_tia_atest_en);
+}
+
+void zn_set_q_tia_atest_en(uint32_t q_tia_atest_en)
+{
+    zn_set_reg_field_wr(RX_CH1_ATEST_ID,
+                        D_Q_TIA_ATEST_EN_BIT_MASK,
+                        D_Q_TIA_ATEST_EN_BIT_LEN,
+                        D_Q_TIA_ATEST_EN_BIT_OFFSET,
+                        q_tia_atest_en);
+}
+
+void zn_set_rx_clk38p4_div_en(uint32_t rx_clk38p4_div_en)
+{
+    zn_set_reg_field_wr(RX_CH1_ATEST_ID,
+                        D_RX_CLK38P4_DIV_EN_BIT_MASK,
+                        D_RX_CLK38P4_DIV_EN_BIT_LEN,
+                        D_RX_CLK38P4_DIV_EN_BIT_OFFSET,
+                        rx_clk38p4_div_en);
+}
+
+void zn_set_i_tia_dcoc_en(uint32_t i_tia_dcoc_en)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
+                        D_I_TIA_DCOC_EN_BIT_MASK,
+                        D_I_TIA_DCOC_EN_BIT_LEN,
+                        D_I_TIA_DCOC_EN_BIT_OFFSET,
+                        i_tia_dcoc_en);
+}
+
+void zn_set_i_tia_keep_dcoc(uint32_t i_tia_keep_dcoc)
+{
+    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
+                        D_I_TIA_KEEP_DCOC_BIT_MASK,
+                        D_I_TIA_KEEP_DCOC_BIT_LEN,
+                        D_I_TIA_KEEP_DCOC_BIT_OFFSET,
+                        i_tia_keep_dcoc);
+}
+
+void zn_set_aoa_mode_sel(uint32_t aoa_mode_sel)
+{
+    zn_set_reg_field_wr(RX_REDU_ID,
+                        D_AOA_MODE_SEL_BIT_MASK,
+                        D_AOA_MODE_SEL_BIT_LEN,
+                        D_AOA_MODE_SEL_BIT_OFFSET,
+                        aoa_mode_sel);
+}
+
+void zn_set_i_adc_cmp_dly_ctrl_2nd(uint32_t i_adc_cmp_dly_ctrl_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_ATEST_ID,
+                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_MASK,
+                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_LEN,
+                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_OFFSET,
+                        i_adc_cmp_dly_ctrl_2nd);
+}
+void zn_set_i_tia_atest_en_2nd(uint32_t i_tia_atest_en_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_ATEST_ID,
+                        D_I_TIA_ATEST_EN_2ND_BIT_MASK,
+                        D_I_TIA_ATEST_EN_2ND_BIT_LEN,
+                        D_I_TIA_ATEST_EN_2ND_BIT_OFFSET,
+                        i_tia_atest_en_2nd);
+}
+void zn_set_q_tia_atest_en_2nd(uint32_t q_tia_atest_en_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_ATEST_ID,
+                        D_Q_TIA_ATEST_EN_2ND_BIT_MASK,
+                        D_Q_TIA_ATEST_EN_2ND_BIT_LEN,
+                        D_Q_TIA_ATEST_EN_2ND_BIT_OFFSET,
+                        q_tia_atest_en_2nd);
+}
+
+
+void zn_set_vga_cal_wait_time(uint32_t vga_cal_wait_time)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        VGA_CAL_WAIT_TIME_BIT_MASK,
+                        VGA_CAL_WAIT_TIME_BIT_LEN,
+                        VGA_CAL_WAIT_TIME_BIT_OFFSET,
+                        vga_cal_wait_time);
+}
+void zn_set_agc_gain_ovrd_2nd(uint32_t agc_gain_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        AGC_GAIN_OVRD_2ND_BIT_MASK,
+                        AGC_GAIN_OVRD_2ND_BIT_LEN,
+                        AGC_GAIN_OVRD_2ND_BIT_OFFSET,
+                        agc_gain_ovrd_2nd);
+}
+void zn_set_agc_gain_ovrd(uint32_t agc_gain_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        AGC_GAIN_OVRD_BIT_MASK,
+                        AGC_GAIN_OVRD_BIT_LEN,
+                        AGC_GAIN_OVRD_BIT_OFFSET,
+                        agc_gain_ovrd);
+}
+void zn_set_vga_gain_sel_ovrd_2nd(uint32_t vga_gain_sel_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        VGA_GAIN_SEL_OVRD_2ND_BIT_MASK,
+                        VGA_GAIN_SEL_OVRD_2ND_BIT_LEN,
+                        VGA_GAIN_SEL_OVRD_2ND_BIT_OFFSET,
+                        vga_gain_sel_ovrd_2nd);
+}
+void zn_set_vga_gain_sel_ovrd(uint32_t vga_gain_sel_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        VGA_GAIN_SEL_OVRD_BIT_MASK,
+                        VGA_GAIN_SEL_OVRD_BIT_LEN,
+                        VGA_GAIN_SEL_OVRD_BIT_OFFSET,
+                        vga_gain_sel_ovrd);
+}
+void zn_set_vga_gain_sel_2nd(uint32_t vga_gain_sel_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        VGA_GAIN_SEL_2ND_BIT_MASK,
+                        VGA_GAIN_SEL_2ND_BIT_LEN,
+                        VGA_GAIN_SEL_2ND_BIT_OFFSET,
+                        vga_gain_sel_2nd);
+}
+void zn_set_vga_gain_sel(uint32_t vga_gain_sel)
+{
+    zn_set_reg_field_wr(ADDR_0X1144,
+                        VGA_GAIN_SEL_BIT_MASK,
+                        VGA_GAIN_SEL_BIT_LEN,
+                        VGA_GAIN_SEL_BIT_OFFSET,
+                        vga_gain_sel);
+}
+
+void zn_set_i_tia_auto_calib_en(uint32_t i_tia_auto_calib_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        I_TIA_AUTO_CALIB_EN_BIT_MASK,
+                        I_TIA_AUTO_CALIB_EN_BIT_LEN,
+                        I_TIA_AUTO_CALIB_EN_BIT_OFFSET,
+                        i_tia_auto_calib_en);
+}
+void zn_set_q_tia_auto_calib_en(uint32_t q_tia_auto_calib_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        Q_TIA_AUTO_CALIB_EN_BIT_MASK,
+                        Q_TIA_AUTO_CALIB_EN_BIT_LEN,
+                        Q_TIA_AUTO_CALIB_EN_BIT_OFFSET,
+                        q_tia_auto_calib_en);
+}
+void zn_set_i_tia_auto_calib_en_2nd(uint32_t i_tia_auto_calib_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        I_TIA_AUTO_CALIB_EN_2ND_BIT_MASK,
+                        I_TIA_AUTO_CALIB_EN_2ND_BIT_LEN,
+                        I_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
+                        i_tia_auto_calib_en_2nd);
+}
+void zn_set_q_tia_auto_calib_en_2nd(uint32_t q_tia_auto_calib_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        Q_TIA_AUTO_CALIB_EN_2ND_BIT_MASK,
+                        Q_TIA_AUTO_CALIB_EN_2ND_BIT_LEN,
+                        Q_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
+                        q_tia_auto_calib_en_2nd);
+}
+void zn_set_tia_cal_wait_time(uint32_t tia_cal_wait_time)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        TIA_CAL_WAIT_TIME_BIT_MASK,
+                        TIA_CAL_WAIT_TIME_BIT_LEN,
+                        TIA_CAL_WAIT_TIME_BIT_OFFSET,
+                        tia_cal_wait_time);
+}
+
+
+void zn_set_i_tia_calib_load_ovrd(uint32_t i_tia_calib_load_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        I_TIA_CALIB_LOAD_OVRD_BIT_MASK,
+                        I_TIA_CALIB_LOAD_OVRD_BIT_LEN,
+                        I_TIA_CALIB_LOAD_OVRD_BIT_OFFSET,
+                        i_tia_calib_load_ovrd);
+}
+void zn_set_q_tia_calib_load_ovrd(uint32_t q_tia_calib_load_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        Q_TIA_CALIB_LOAD_OVRD_BIT_MASK,
+                        Q_TIA_CALIB_LOAD_OVRD_BIT_LEN,
+                        Q_TIA_CALIB_LOAD_OVRD_BIT_OFFSET,
+                        q_tia_calib_load_ovrd);
+}
+void zn_set_i_tia_calib_load_ovrd_2nd(uint32_t i_tia_calib_load_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        I_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK,
+                        I_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN,
+                        I_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET,
+                        i_tia_calib_load_ovrd_2nd);
+}
+void zn_set_q_tia_calib_load_ovrd_2nd(uint32_t q_tia_calib_load_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK,
+                        Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN,
+                        Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET,
+                        q_tia_calib_load_ovrd_2nd);
+}
+void zn_set_i_agc_sel_tia_word_ovrd(uint32_t i_agc_sel_tia_word_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        I_AGC_SEL_TIA_WORD_OVRD_BIT_MASK,
+                        I_AGC_SEL_TIA_WORD_OVRD_BIT_LEN,
+                        I_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET,
+                        i_agc_sel_tia_word_ovrd);
+}
+void zn_set_q_agc_sel_tia_word_ovrd(uint32_t q_agc_sel_tia_word_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        Q_AGC_SEL_TIA_WORD_OVRD_BIT_MASK,
+                        Q_AGC_SEL_TIA_WORD_OVRD_BIT_LEN,
+                        Q_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET,
+                        q_agc_sel_tia_word_ovrd);
+}
+void zn_set_i_agc_sel_tia_word_ovrd_2nd(uint32_t i_agc_sel_tia_word_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK,
+                        I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN,
+                        I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET,
+                        i_agc_sel_tia_word_ovrd_2nd);
+}
+void zn_set_q_agc_sel_tia_word_ovrd_2nd(uint32_t q_agc_sel_tia_word_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1120,
+                        Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK,
+                        Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN,
+                        Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET,
+                        q_agc_sel_tia_word_ovrd_2nd);
+}
+
+void zn_set_i_vga_word_ovrd(uint32_t i_vga_word_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        I_VGA_WORD_OVRD_BIT_MASK,
+                        I_VGA_WORD_OVRD_BIT_LEN,
+                        I_VGA_WORD_OVRD_BIT_OFFSET,
+                        i_vga_word_ovrd);
+}
+void zn_set_q_vga_word_ovrd(uint32_t q_vga_word_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        Q_VGA_WORD_OVRD_BIT_MASK,
+                        Q_VGA_WORD_OVRD_BIT_LEN,
+                        Q_VGA_WORD_OVRD_BIT_OFFSET,
+                        q_vga_word_ovrd);
+}
+void zn_set_i_vga_word_ovrd_2nd(uint32_t i_vga_word_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        I_VGA_WORD_OVRD_2ND_BIT_MASK,
+                        I_VGA_WORD_OVRD_2ND_BIT_LEN,
+                        I_VGA_WORD_OVRD_2ND_BIT_OFFSET,
+                        i_vga_word_ovrd_2nd);
+}
+void zn_set_q_vga_word_ovrd_2nd(uint32_t q_vga_word_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        Q_VGA_WORD_OVRD_2ND_BIT_MASK,
+                        Q_VGA_WORD_OVRD_2ND_BIT_LEN,
+                        Q_VGA_WORD_OVRD_2ND_BIT_OFFSET,
+                        q_vga_word_ovrd_2nd);
+}
+void zn_set_i_agc_word_ovrd(uint32_t i_agc_word_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        I_AGC_WORD_OVRD_BIT_MASK,
+                        I_AGC_WORD_OVRD_BIT_LEN,
+                        I_AGC_WORD_OVRD_BIT_OFFSET,
+                        i_agc_word_ovrd);
+}
+void zn_set_q_agc_word_ovrd(uint32_t q_agc_word_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        Q_AGC_WORD_OVRD_BIT_MASK,
+                        Q_AGC_WORD_OVRD_BIT_LEN,
+                        Q_AGC_WORD_OVRD_BIT_OFFSET,
+                        q_agc_word_ovrd);
+}
+void zn_set_i_agc_word_ovrd_2nd(uint32_t i_agc_word_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        I_AGC_WORD_OVRD_2ND_BIT_MASK,
+                        I_AGC_WORD_OVRD_2ND_BIT_LEN,
+                        I_AGC_WORD_OVRD_2ND_BIT_OFFSET,
+                        i_agc_word_ovrd_2nd);
+}
+void zn_set_q_agc_word_ovrd_2nd(uint32_t q_agc_word_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X114c,
+                        Q_AGC_WORD_OVRD_2ND_BIT_MASK,
+                        Q_AGC_WORD_OVRD_2ND_BIT_LEN,
+                        Q_AGC_WORD_OVRD_2ND_BIT_OFFSET,
+                        q_agc_word_ovrd_2nd);
+}
+
+void zn_set_i_vga_auto_calib_en(uint32_t i_vga_auto_calib_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_AUTO_CALIB_EN_BIT_MASK,
+                        I_VGA_AUTO_CALIB_EN_BIT_LEN,
+                        I_VGA_AUTO_CALIB_EN_BIT_OFFSET,
+                        i_vga_auto_calib_en);
+}
+void zn_set_i_vga_dcoc_comp_en(uint32_t i_vga_dcoc_comp_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_DCOC_COMP_EN_BIT_MASK,
+                        I_VGA_DCOC_COMP_EN_BIT_LEN,
+                        I_VGA_DCOC_COMP_EN_BIT_OFFSET,
+                        i_vga_dcoc_comp_en);
+}
+void zn_set_i_vga_dcoc_keep_en(uint32_t i_vga_dcoc_keep_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_DCOC_KEEP_EN_BIT_MASK,
+                        I_VGA_DCOC_KEEP_EN_BIT_LEN,
+                        I_VGA_DCOC_KEEP_EN_BIT_OFFSET,
+                        i_vga_dcoc_keep_en);
+}
+void zn_set_i_vga_vcm_comp_en(uint32_t i_vga_vcm_comp_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_VCM_COMP_EN_BIT_MASK,
+                        I_VGA_VCM_COMP_EN_BIT_LEN,
+                        I_VGA_VCM_COMP_EN_BIT_OFFSET,
+                        i_vga_vcm_comp_en);
+}
+void zn_set_q_vga_auto_calib_en(uint32_t q_vga_auto_calib_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_AUTO_CALIB_EN_BIT_MASK,
+                        Q_VGA_AUTO_CALIB_EN_BIT_LEN,
+                        Q_VGA_AUTO_CALIB_EN_BIT_OFFSET,
+                        q_vga_auto_calib_en);
+}
+void zn_set_q_vga_dcoc_comp_en(uint32_t q_vga_dcoc_comp_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_DCOC_COMP_EN_BIT_MASK,
+                        Q_VGA_DCOC_COMP_EN_BIT_LEN,
+                        Q_VGA_DCOC_COMP_EN_BIT_OFFSET,
+                        q_vga_dcoc_comp_en);
+}
+void zn_set_q_vga_dcoc_keep_en(uint32_t q_vga_dcoc_keep_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_DCOC_KEEP_EN_BIT_MASK,
+                        Q_VGA_DCOC_KEEP_EN_BIT_LEN,
+                        Q_VGA_DCOC_KEEP_EN_BIT_OFFSET,
+                        q_vga_dcoc_keep_en);
+}
+void zn_set_q_vga_vcm_comp_en(uint32_t q_vga_vcm_comp_en)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_VCM_COMP_EN_BIT_MASK,
+                        Q_VGA_VCM_COMP_EN_BIT_LEN,
+                        Q_VGA_VCM_COMP_EN_BIT_OFFSET,
+                        q_vga_vcm_comp_en);
+}
+void zn_set_i_vga_auto_calib_en_2nd(uint32_t i_vga_auto_calib_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_AUTO_CALIB_EN_2ND_BIT_MASK,
+                        I_VGA_AUTO_CALIB_EN_2ND_BIT_LEN,
+                        I_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
+                        i_vga_auto_calib_en_2nd);
+}
+void zn_set_i_vga_dcoc_comp_en_2nd(uint32_t i_vga_dcoc_comp_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_DCOC_COMP_EN_2ND_BIT_MASK,
+                        I_VGA_DCOC_COMP_EN_2ND_BIT_LEN,
+                        I_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET,
+                        i_vga_dcoc_comp_en_2nd);
+}
+void zn_set_i_vga_dcoc_keep_en_2nd(uint32_t i_vga_dcoc_keep_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_DCOC_KEEP_EN_2ND_BIT_MASK,
+                        I_VGA_DCOC_KEEP_EN_2ND_BIT_LEN,
+                        I_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET,
+                        i_vga_dcoc_keep_en_2nd);
+}
+void zn_set_i_vga_vcm_comp_en_2nd(uint32_t i_vga_vcm_comp_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_VCM_COMP_EN_2ND_BIT_MASK,
+                        I_VGA_VCM_COMP_EN_2ND_BIT_LEN,
+                        I_VGA_VCM_COMP_EN_2ND_BIT_OFFSET,
+                        i_vga_vcm_comp_en_2nd);
+}
+void zn_set_q_vga_auto_calib_en_2nd(uint32_t q_vga_auto_calib_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_AUTO_CALIB_EN_2ND_BIT_MASK,
+                        Q_VGA_AUTO_CALIB_EN_2ND_BIT_LEN,
+                        Q_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
+                        q_vga_auto_calib_en_2nd);
+}
+void zn_set_q_vga_dcoc_comp_en_2nd(uint32_t q_vga_dcoc_comp_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_DCOC_COMP_EN_2ND_BIT_MASK,
+                        Q_VGA_DCOC_COMP_EN_2ND_BIT_LEN,
+                        Q_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET,
+                        q_vga_dcoc_comp_en_2nd);
+}
+void zn_set_q_vga_dcoc_keep_en_2nd(uint32_t q_vga_dcoc_keep_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_DCOC_KEEP_EN_2ND_BIT_MASK,
+                        Q_VGA_DCOC_KEEP_EN_2ND_BIT_LEN,
+                        Q_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET,
+                        q_vga_dcoc_keep_en_2nd);
+}
+void zn_set_q_vga_vcm_comp_en_2nd(uint32_t q_vga_vcm_comp_en_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_VCM_COMP_EN_2ND_BIT_MASK,
+                        Q_VGA_VCM_COMP_EN_2ND_BIT_LEN,
+                        Q_VGA_VCM_COMP_EN_2ND_BIT_OFFSET,
+                        q_vga_vcm_comp_en_2nd);
+}
+void zn_set_i_vga_aux(uint32_t i_vga_aux)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_AUX_BIT_MASK,
+                        I_VGA_AUX_BIT_LEN,
+                        I_VGA_AUX_BIT_OFFSET,
+                        i_vga_aux);
+}
+void zn_set_q_vga_aux(uint32_t q_vga_aux)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_AUX_BIT_MASK,
+                        Q_VGA_AUX_BIT_LEN,
+                        Q_VGA_AUX_BIT_OFFSET,
+                        q_vga_aux);
+}
+void zn_set_i_vga_aux_2nd(uint32_t i_vga_aux_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_AUX_2ND_BIT_MASK,
+                        I_VGA_AUX_2ND_BIT_LEN,
+                        I_VGA_AUX_2ND_BIT_OFFSET,
+                        i_vga_aux_2nd);
+}
+void zn_set_q_vga_aux_2nd(uint32_t q_vga_aux_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_AUX_2ND_BIT_MASK,
+                        Q_VGA_AUX_2ND_BIT_LEN,
+                        Q_VGA_AUX_2ND_BIT_OFFSET,
+                        q_vga_aux_2nd);
+}
+void zn_set_i_vga_aux_ovrd(uint32_t i_vga_aux_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_AUX_OVRD_BIT_MASK,
+                        I_VGA_AUX_OVRD_BIT_LEN,
+                        I_VGA_AUX_OVRD_BIT_OFFSET,
+                        i_vga_aux_ovrd);
+}
+void zn_set_q_vga_aux_ovrd(uint32_t q_vga_aux_ovrd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_AUX_OVRD_BIT_MASK,
+                        Q_VGA_AUX_OVRD_BIT_LEN,
+                        Q_VGA_AUX_OVRD_BIT_OFFSET,
+                        q_vga_aux_ovrd);
+}
+void zn_set_i_vga_aux_ovrd_2nd(uint32_t i_vga_aux_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        I_VGA_AUX_OVRD_2ND_BIT_MASK,
+                        I_VGA_AUX_OVRD_2ND_BIT_LEN,
+                        I_VGA_AUX_OVRD_2ND_BIT_OFFSET,
+                        i_vga_aux_ovrd_2nd);
+}
+void zn_set_q_vga_aux_ovrd_2nd(uint32_t q_vga_aux_ovrd_2nd)
+{
+    zn_set_reg_field_wr(ADDR_0X1140,
+                        Q_VGA_AUX_OVRD_2ND_BIT_MASK,
+                        Q_VGA_AUX_OVRD_2ND_BIT_LEN,
+                        Q_VGA_AUX_OVRD_2ND_BIT_OFFSET,
+                        q_vga_aux_ovrd_2nd);
+}
+
+void zn_set_i_tia_keep_dcoc_2nd(uint32_t i_tia_keep_dcoc_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
+                        D_I_TIA_KEEP_DCOC_2ND_BIT_MASK,
+                        D_I_TIA_KEEP_DCOC_2ND_BIT_LEN,
+                        D_I_TIA_KEEP_DCOC_2ND_BIT_OFFSET,
+                        i_tia_keep_dcoc_2nd);
+}
+void zn_set_i_tia_dcoc_en_2nd(uint32_t i_tia_dcoc_en_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
+                        D_I_TIA_DCOC_EN_2ND_BIT_MASK,
+                        D_I_TIA_DCOC_EN_2ND_BIT_LEN,
+                        D_I_TIA_DCOC_EN_2ND_BIT_OFFSET,
+                        i_tia_dcoc_en_2nd);
+}
+void zn_set_i_tia_dcoc_2ua_en_2nd(uint32_t i_tia_dcoc_2ua_en_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
+                        D_I_TIA_DCOC_2UA_EN_2ND_BIT_MASK,
+                        D_I_TIA_DCOC_2UA_EN_2ND_BIT_LEN,
+                        D_I_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET,
+                        i_tia_dcoc_2ua_en_2nd);
+}
+void zn_set_i_tia_stg1_itrim_2nd(uint32_t i_tia_stg1_itrim_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
+                        D_I_TIA_STG1_ITRIM_2ND_BIT_MASK,
+                        D_I_TIA_STG1_ITRIM_2ND_BIT_LEN,
+                        D_I_TIA_STG1_ITRIM_2ND_BIT_OFFSET,
+                        i_tia_stg1_itrim_2nd);
+}
+void zn_set_i_tia_stag1_isel_2nd(uint32_t i_tia_stag1_isel_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
+                        D_I_TIA_STAG1_ISEL_2ND_BIT_MASK,
+                        D_I_TIA_STAG1_ISEL_2ND_BIT_LEN,
+                        D_I_TIA_STAG1_ISEL_2ND_BIT_OFFSET,
+                        i_tia_stag1_isel_2nd);
+}
+
+void zn_set_q_tia_keep_dcoc_2nd(uint32_t q_tia_keep_dcoc_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
+                        D_Q_TIA_KEEP_DCOC_2ND_BIT_MASK,
+                        D_Q_TIA_KEEP_DCOC_2ND_BIT_LEN,
+                        D_Q_TIA_KEEP_DCOC_2ND_BIT_OFFSET,
+                        q_tia_keep_dcoc_2nd);
+}
+void zn_set_q_tia_dcoc_en_2nd(uint32_t q_tia_dcoc_en_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
+                        D_Q_TIA_DCOC_EN_2ND_BIT_MASK,
+                        D_Q_TIA_DCOC_EN_2ND_BIT_LEN,
+                        D_Q_TIA_DCOC_EN_2ND_BIT_OFFSET,
+                        q_tia_dcoc_en_2nd);
+}
+void zn_set_q_tia_dcoc_2ua_en_2nd(uint32_t q_tia_dcoc_2ua_en_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
+                        D_Q_TIA_DCOC_2UA_EN_2ND_BIT_MASK,
+                        D_Q_TIA_DCOC_2UA_EN_2ND_BIT_LEN,
+                        D_Q_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET,
+                        q_tia_dcoc_2ua_en_2nd);
+}
+void zn_set_q_tia_stg1_itrim_2nd(uint32_t q_tia_stg1_itrim_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
+                        D_Q_TIA_STG1_ITRIM_2ND_BIT_MASK,
+                        D_Q_TIA_STG1_ITRIM_2ND_BIT_LEN,
+                        D_Q_TIA_STG1_ITRIM_2ND_BIT_OFFSET,
+                        q_tia_stg1_itrim_2nd);
+}
+void zn_set_q_tia_stag1_isel_2nd(uint32_t q_tia_stag1_isel_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
+                        D_Q_TIA_STAG1_ISEL_2ND_BIT_MASK,
+                        D_Q_TIA_STAG1_ISEL_2ND_BIT_LEN,
+                        D_Q_TIA_STAG1_ISEL_2ND_BIT_OFFSET,
+                        q_tia_stag1_isel_2nd);
+}
+
+
+void zn_set_tia_agc_vord_2nd(uint32_t tia_agc_vord_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_TIA_AGC_VORD_2ND_BIT_MASK,
+                        D_TIA_AGC_VORD_2ND_BIT_LEN,
+                        D_TIA_AGC_VORD_2ND_BIT_OFFSET,
+                        tia_agc_vord_2nd);
+}
+void zn_set_lna_stage2_agc_vord_2nd(uint32_t lna_stage2_agc_vord_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_LNA_STAGE2_AGC_VORD_2ND_BIT_MASK,
+                        D_LNA_STAGE2_AGC_VORD_2ND_BIT_LEN,
+                        D_LNA_STAGE2_AGC_VORD_2ND_BIT_OFFSET,
+                        lna_stage2_agc_vord_2nd);
+}
+void zn_set_lna_stage1_agc_vord_2nd(uint32_t lna_stage1_agc_vord_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_LNA_STAGE1_AGC_VORD_2ND_BIT_MASK,
+                        D_LNA_STAGE1_AGC_VORD_2ND_BIT_LEN,
+                        D_LNA_STAGE1_AGC_VORD_2ND_BIT_OFFSET,
+                        lna_stage1_agc_vord_2nd);
+}
+void zn_set_lna_stage1_bias_sel_2nd(uint32_t lna_stage1_bias_sel_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_LNA_STAGE1_BIAS_SEL_2ND_BIT_MASK,
+                        D_LNA_STAGE1_BIAS_SEL_2ND_BIT_LEN,
+                        D_LNA_STAGE1_BIAS_SEL_2ND_BIT_OFFSET,
+                        lna_stage1_bias_sel_2nd);
+}
+void zn_set_lna_stage2_bias_sel_2nd(uint32_t lna_stage2_bias_sel_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_LNA_STAGE2_BIAS_SEL_2ND_BIT_MASK,
+                        D_LNA_STAGE2_BIAS_SEL_2ND_BIT_LEN,
+                        D_LNA_STAGE2_BIAS_SEL_2ND_BIT_OFFSET,
+                        lna_stage2_bias_sel_2nd);
+}
+void zn_set_lna_stage2_vcm_sel_2nd(uint32_t lna_stage2_vcm_sel_2nd)
+{
+    zn_set_reg_field_wr(RX_CH2_LNA_ID,
+                        D_LNA_STAGE2_VCM_SEL_2ND_BIT_MASK,
+                        D_LNA_STAGE2_VCM_SEL_2ND_BIT_LEN,
+                        D_LNA_STAGE2_VCM_SEL_2ND_BIT_OFFSET,
+                        lna_stage2_vcm_sel_2nd);
+}
 void zn_analog_regs_init(void)
 {
     #if (ZN_SOC == ZN2014)
@@ -432,8 +1705,7 @@ void zn_analog_regs_init(void)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x020c, 0xc44fa8fb);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x0210, 0x362ee834);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x0200, 0x00400300);
-    mdelay(100);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060,0x0006000b);//atest sw rfsw trx on
+
     mdelay(100);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c,0x1c400000);//rx vbgr ldoh1p8
     mdelay(100);
@@ -442,6 +1714,35 @@ void zn_analog_regs_init(void)
     mdelay(100);
     printf("pll state:0x%08X! \r\n",zn_read_32bit_reg(UWB_BASE_ADDR + 0x1100));//pll state
     mdelay(100);
+
+    //TIA band width
+    zn_set_i_tia_stag1_isel(3);
+    zn_set_i_tia_stg1_itrim(7);
+    zn_set_i_tia_dcoc_2ua_en(1);
+    zn_set_q_tia_stag1_isel(3);
+    zn_set_q_tia_stg1_itrim(7);
+    zn_set_q_tia_dcoc_2ua_en(1);
+    zn_set_i_tia_stag1_isel_2nd(3);
+    zn_set_i_tia_stg1_itrim_2nd(7);
+    zn_set_i_tia_dcoc_2ua_en_2nd(1);
+    zn_set_q_tia_stag1_isel_2nd(3);
+    zn_set_q_tia_stg1_itrim_2nd(7);
+    zn_set_q_tia_dcoc_2ua_en_2nd(1);
+    //CFG LNA
+    zn_set_lna_stage2_vcm_sel(4);   // LNA
+    zn_set_lna_stage2_bias_sel(15);
+    zn_set_lna_stage1_bias_sel(7);
+    zn_set_lna_stage2_vcm_sel_2nd(4);   // LNA
+    zn_set_lna_stage2_bias_sel_2nd(15);
+    zn_set_lna_stage1_bias_sel_2nd(7);
+    //cfg IQ keep_dcoc
+    zn_set_i_tia_keep_dcoc(1);
+    zn_set_q_tia_keep_dcoc(1);
+    zn_set_i_tia_keep_dcoc_2nd(1);
+    zn_set_q_tia_keep_dcoc_2nd(1);
+    //cfg adc_tune_ch2 to reduce the generation of -16
+    zn_set_i_adc_cmp_dly_ctrl_2nd(7);
+
 //    zn_or_32bit_reg(SYSCTRL_BASE_ADDR + 0x0c, (1 << 4));
 //    mdelay(SETTING_DELAY);
 //    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0300, 0x2AFFCFd0);
@@ -5740,1299 +7041,7 @@ int AGCLUTstep2dB(int i)
     else
         return 14;
 }
-#define RX_CH1_LNA_ID                           (UWB_BASE_ADDR + 0x102C)
 
-#define D_LNA_STAGE2_AGC_BIT_OFFSET             (19U)
-#define D_LNA_STAGE2_AGC_BIT_LEN                (2U)
-#define D_LNA_STAGE2_AGC_BIT_MASK               0x180000U
-
-#define D_LNA_STAGE2_VCM_SEL_BIT_OFFSET         (16U)
-#define D_LNA_STAGE2_VCM_SEL_BIT_LEN            (3U)
-#define D_LNA_STAGE2_VCM_SEL_BIT_MASK           0x70000U
-
-#define D_LNA_STAGE2_BIAS_SEL_BIT_OFFSET        (12U)
-#define D_LNA_STAGE2_BIAS_SEL_BIT_LEN           (4U)
-#define D_LNA_STAGE2_BIAS_SEL_BIT_MASK          0xf000U
-
-#define D_LNA_STAGE1_BIAS_SEL_BIT_OFFSET        (9U)
-#define D_LNA_STAGE1_BIAS_SEL_BIT_LEN           (3U)
-#define D_LNA_STAGE1_BIAS_SEL_BIT_MASK          0xe00U
-
-
-#define D_LNA_STAGE1_AGC_OVRD_BIT_OFFSET        (8U)
-#define D_LNA_STAGE1_AGC_OVRD_BIT_LEN           (1U)
-#define D_LNA_STAGE1_AGC_OVRD_BIT_MASK          0x100U
-
-#define D_LNA_STAGE2_AGC_OVRD_BIT_OFFSET        (7U)
-#define D_LNA_STAGE2_AGC_OVRD_BIT_LEN           (1U)
-#define D_LNA_STAGE2_AGC_OVRD_BIT_MASK          0x80U
-
-#define D_TIA_AGC_OVRD_BIT_OFFSET               (6U)
-#define D_TIA_AGC_OVRD_BIT_LEN                  (1U)
-#define D_TIA_AGC_OVRD_BIT_MASK                 0x40U
-
-#define RX_CH1_MIXER_ID                         (UWB_BASE_ADDR + 0x1030)
-
-#define D_LNA_STAGE1_VCT_BIT_OFFSET             (0U)
-#define D_LNA_STAGE1_VCT_BIT_LEN                (7U)
-#define D_LNA_STAGE1_VCT_BIT_MASK               0x7fU
-
-
-#define RX_CH1_TIA_I_ID                         (UWB_BASE_ADDR + 0x1034)
-
-#define D_I_TIA_FB_RES_BIT_OFFSET               (15U)
-#define D_I_TIA_FB_RES_BIT_LEN                  (6U)
-#define D_I_TIA_FB_RES_BIT_MASK                 0x1f8000U
-
-#define D_I_TIA_STAG1_ISEL_BIT_OFFSET          (13U)
-#define D_I_TIA_STAG1_ISEL_BIT_LEN             (2U)
-#define D_I_TIA_STAG1_ISEL_BIT_MASK            0x6000U
-
-#define D_I_TIA_STG1_ITRIM_BIT_OFFSET           (10U)
-#define D_I_TIA_STG1_ITRIM_BIT_LEN              (3U)
-#define D_I_TIA_STG1_ITRIM_BIT_MASK             0x1c00U
-
-#define D_I_TIA_DCOC_2UA_EN_BIT_OFFSET          (9U)
-#define D_I_TIA_DCOC_2UA_EN_BIT_LEN             (1U)
-#define D_I_TIA_DCOC_2UA_EN_BIT_MASK            0x200U
-
-#define D_I_TIA_DCOC_EN_BIT_OFFSET              (8U)
-#define D_I_TIA_DCOC_EN_BIT_LEN                 (1U)
-#define D_I_TIA_DCOC_EN_BIT_MASK                0x100U
-
-#define D_I_TIA_KEEP_DCOC_BIT_OFFSET            (7U)
-#define D_I_TIA_KEEP_DCOC_BIT_LEN               (1U)
-#define D_I_TIA_KEEP_DCOC_BIT_MASK              0x80U
-
-
-#define RX_CH1_TIA_Q_ID                         (UWB_BASE_ADDR + 0x1038)
-
-#define D_Q_TIA_DCOC_EN_BIT_OFFSET              (26U)
-#define D_Q_TIA_DCOC_EN_BIT_LEN                 (1U)
-#define D_Q_TIA_DCOC_EN_BIT_MASK                0x4000000U
-
-#define D_Q_TIA_KEEP_DCOC_BIT_OFFSET            (25U)
-#define D_Q_TIA_KEEP_DCOC_BIT_LEN               (1U)
-#define D_Q_TIA_KEEP_DCOC_BIT_MASK              0x2000000U
-
-#define D_Q_TIA_FB_RES_BIT_OFFSET               (6U)
-#define D_Q_TIA_FB_RES_BIT_LEN                  (6U)
-#define D_Q_TIA_FB_RES_BIT_MASK                 0xfc0U
-
-#define D_Q_TIA_STAG1_ISEL_BIT_OFFSET          (4U)
-#define D_Q_TIA_STAG1_ISEL_BIT_LEN             (2U)
-#define D_Q_TIA_STAG1_ISEL_BIT_MASK            0x30U
-
-#define D_Q_TIA_STG1_ITRIM_BIT_OFFSET           (1U)
-#define D_Q_TIA_STG1_ITRIM_BIT_LEN              (3U)
-#define D_Q_TIA_STG1_ITRIM_BIT_MASK             0xeU
-
-#define D_Q_TIA_DCOC_2UA_EN_BIT_OFFSET          (0U)
-#define D_Q_TIA_DCOC_2UA_EN_BIT_LEN             (1U)
-#define D_Q_TIA_DCOC_2UA_EN_BIT_MASK            0x1U
-
-#define RX_CH1_ATEST_ID                         (UWB_BASE_ADDR + 0x1040)
-
-#define D_Q_TIA_ATEST_EN_BIT_OFFSET             (12U)
-#define D_Q_TIA_ATEST_EN_BIT_LEN                (1U)
-#define D_Q_TIA_ATEST_EN_BIT_MASK               0x1000U
-
-#define D_I_TIA_ATEST_EN_BIT_OFFSET             (8U)
-#define D_I_TIA_ATEST_EN_BIT_LEN                (1U)
-#define D_I_TIA_ATEST_EN_BIT_MASK               0x100U
-
-#define D_RX_CLK38P4_DIV_EN_BIT_OFFSET          (1U)
-#define D_RX_CLK38P4_DIV_EN_BIT_LEN             (1U)
-#define D_RX_CLK38P4_DIV_EN_BIT_MASK            0x2U
-
-#define RX_CH2_LNA_ID                           (UWB_BASE_ADDR + 0x1044)
-
-#define D_TIA_AGC_VORD_2ND_BIT_OFFSET           (6U)
-#define D_TIA_AGC_VORD_2ND_BIT_LEN              (1U)
-#define D_TIA_AGC_VORD_2ND_BIT_MASK             0x40U
-
-#define D_LNA_STAGE2_AGC_VORD_2ND_BIT_OFFSET    (7U)
-#define D_LNA_STAGE2_AGC_VORD_2ND_BIT_LEN       (1U)
-#define D_LNA_STAGE2_AGC_VORD_2ND_BIT_MASK      0x80U
-
-#define D_LNA_STAGE1_AGC_VORD_2ND_BIT_OFFSET    (8U)
-#define D_LNA_STAGE1_AGC_VORD_2ND_BIT_LEN       (1U)
-#define D_LNA_STAGE1_AGC_VORD_2ND_BIT_MASK      0x100U
-
-#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_OFFSET    (9U)
-#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_LEN       (3U)
-#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_MASK      0xe00U
-
-#define D_LNA_STAGE2_BIAS_SEL_2ND_BIT_OFFSET    (12U)
-#define D_LNA_STAGE2_BIAS_SEL_2ND_BIT_LEN       (4U)
-#define D_LNA_STAGE2_BIAS_SEL_2ND_BIT_MASK      0xf000U
-
-#define D_LNA_STAGE2_VCM_SEL_2ND_BIT_OFFSET     (16U)
-#define D_LNA_STAGE2_VCM_SEL_2ND_BIT_LEN        (3U)
-#define D_LNA_STAGE2_VCM_SEL_2ND_BIT_MASK       0x70000U
-
-#define D_LNA_STAGE2_AGC_2ND_BIT_OFFSET         (19U)
-#define D_LNA_STAGE2_AGC_2ND_BIT_LEN            (2U)
-#define D_LNA_STAGE2_AGC_2ND_BIT_MASK           0x180000U
-
-#define RX_CH2_MIXER_ID                         (UWB_BASE_ADDR + 0x1048)
-
-#define D_LNA_STAGE1_VCT_2ND_BIT_OFFSET         (0U)
-#define D_LNA_STAGE1_VCT_2ND_BIT_LEN            (7U)
-#define D_LNA_STAGE1_VCT_2ND_BIT_MASK           0x7fU
-
-#define RX_CH2_TIA_I_ID                         (UWB_BASE_ADDR + 0x104c)
-
-#define D_I_TIA_KEEP_DCOC_2ND_BIT_OFFSET        (7U)
-#define D_I_TIA_KEEP_DCOC_2ND_BIT_LEN           (1U)
-#define D_I_TIA_KEEP_DCOC_2ND_BIT_MASK          0x80U
-
-#define D_I_TIA_DCOC_EN_2ND_BIT_OFFSET          (8U)
-#define D_I_TIA_DCOC_EN_2ND_BIT_LEN             (1U)
-#define D_I_TIA_DCOC_EN_2ND_BIT_MASK            0x100U
-
-#define D_I_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET      (9U)
-#define D_I_TIA_DCOC_2UA_EN_2ND_BIT_LEN         (1U)
-#define D_I_TIA_DCOC_2UA_EN_2ND_BIT_MASK        0x200U
-
-#define D_I_TIA_STG1_ITRIM_2ND_BIT_OFFSET       (10U)
-#define D_I_TIA_STG1_ITRIM_2ND_BIT_LEN          (3U)
-#define D_I_TIA_STG1_ITRIM_2ND_BIT_MASK         0x1c00U
-
-#define D_I_TIA_STAG1_ISEL_2ND_BIT_OFFSET       (13U)
-#define D_I_TIA_STAG1_ISEL_2ND_BIT_LEN          (2U)
-#define D_I_TIA_STAG1_ISEL_2ND_BIT_MASK         0x6000U
-
-#define D_I_TIA_FB_RES_2ND_BIT_OFFSET           (15U)
-#define D_I_TIA_FB_RES_2ND_BIT_LEN              (6U)
-#define D_I_TIA_FB_RES_2ND_BIT_MASK             0x1f8000U
-
-#define RX_CH2_TIA_Q_ID                         (UWB_BASE_ADDR + 0x1050)
-
-#define D_Q_TIA_KEEP_DCOC_2ND_BIT_OFFSET        (0U)
-#define D_Q_TIA_KEEP_DCOC_2ND_BIT_LEN           (1U)
-#define D_Q_TIA_KEEP_DCOC_2ND_BIT_MASK          0x1U
-
-#define D_Q_TIA_DCOC_EN_2ND_BIT_OFFSET          (1U)
-#define D_Q_TIA_DCOC_EN_2ND_BIT_LEN             (1U)
-#define D_Q_TIA_DCOC_EN_2ND_BIT_MASK            0x2U
-
-#define D_Q_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET      (2U)
-#define D_Q_TIA_DCOC_2UA_EN_2ND_BIT_LEN         (1U)
-#define D_Q_TIA_DCOC_2UA_EN_2ND_BIT_MASK        0x4U
-
-#define D_Q_TIA_STG1_ITRIM_2ND_BIT_OFFSET       (3U)
-#define D_Q_TIA_STG1_ITRIM_2ND_BIT_LEN          (3U)
-#define D_Q_TIA_STG1_ITRIM_2ND_BIT_MASK         0x38U
-
-#define D_Q_TIA_STAG1_ISEL_2ND_BIT_OFFSET       (6U)
-#define D_Q_TIA_STAG1_ISEL_2ND_BIT_LEN          (2U)
-#define D_Q_TIA_STAG1_ISEL_2ND_BIT_MASK         0xc0U
-
-#define D_Q_TIA_FB_RES_2ND_BIT_OFFSET           (8U)
-#define D_Q_TIA_FB_RES_2ND_BIT_LEN              (6U)
-#define D_Q_TIA_FB_RES_2ND_BIT_MASK             0x3f00U
-
-#define RX_CH2_ATEST_ID                         (UWB_BASE_ADDR + 0x1058)
-
-#define D_I_TIA_ATEST_EN_2ND_BIT_OFFSET         (8U)
-#define D_I_TIA_ATEST_EN_2ND_BIT_LEN            (1U)
-#define D_I_TIA_ATEST_EN_2ND_BIT_MASK           0x100U
-
-#define D_Q_TIA_ATEST_EN_2ND_BIT_OFFSET         (12U)
-#define D_Q_TIA_ATEST_EN_2ND_BIT_LEN            (1U)
-#define D_Q_TIA_ATEST_EN_2ND_BIT_MASK           0x1000U
-
-#define D_I_ADC_CMP_DLY_CTRL_2ND_BIT_OFFSET     (28U)
-#define D_I_ADC_CMP_DLY_CTRL_2ND_BIT_LEN        (4U)
-#define D_I_ADC_CMP_DLY_CTRL_2ND_BIT_MASK       0xf0000000U
-
-#define RX_REDU_ID                              (UWB_BASE_ADDR + 0x105C)
-
-#define D_AOA_MODE_SEL_BIT_OFFSET               (29U)
-#define D_AOA_MODE_SEL_BIT_LEN                  (1U)
-#define D_AOA_MODE_SEL_BIT_MASK                 0x20000000U
-
-#define ADDR_0X1120                             (UWB_BASE_ADDR + 0x1120)
-
-#define Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET  (21U)
-#define Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN     (1U)
-#define Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK    0x200000U
-
-#define I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET  (20U)
-#define I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN     (1U)
-#define I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK    0x100000U
-
-#define Q_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET      (19U)
-#define Q_AGC_SEL_TIA_WORD_OVRD_BIT_LEN         (1U)
-#define Q_AGC_SEL_TIA_WORD_OVRD_BIT_MASK        0x80000U
-
-#define I_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET      (18U)
-#define I_AGC_SEL_TIA_WORD_OVRD_BIT_LEN         (1U)
-#define I_AGC_SEL_TIA_WORD_OVRD_BIT_MASK        0x40000U
-
-#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET    (17U)
-#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN       (1U)
-#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK      0x20000U
-
-#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET    (16U)
-#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN       (1U)
-#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK      0x10000U
-
-#define Q_TIA_CALIB_LOAD_OVRD_BIT_OFFSET        (15U)
-#define Q_TIA_CALIB_LOAD_OVRD_BIT_LEN           (1U)
-#define Q_TIA_CALIB_LOAD_OVRD_BIT_MASK          0x8000U
-
-#define I_TIA_CALIB_LOAD_OVRD_BIT_OFFSET        (14U)
-#define I_TIA_CALIB_LOAD_OVRD_BIT_LEN           (1U)
-#define I_TIA_CALIB_LOAD_OVRD_BIT_MASK          0x4000U
-
-#define TIA_CAL_WAIT_TIME_BIT_OFFSET            (4U)
-#define TIA_CAL_WAIT_TIME_BIT_LEN               (8U)
-#define TIA_CAL_WAIT_TIME_BIT_MASK              0xff0U
-
-#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (3U)
-#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
-#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_MASK        0x8U
-
-#define I_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (2U)
-#define I_TIA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
-#define I_TIA_AUTO_CALIB_EN_2ND_BIT_MASK        0x4U
-
-#define Q_TIA_AUTO_CALIB_EN_BIT_OFFSET          (1U)
-#define Q_TIA_AUTO_CALIB_EN_BIT_LEN             (1U)
-#define Q_TIA_AUTO_CALIB_EN_BIT_MASK            0x2U
-
-#define I_TIA_AUTO_CALIB_EN_BIT_OFFSET          (0U)
-#define I_TIA_AUTO_CALIB_EN_BIT_LEN             (1U)
-#define I_TIA_AUTO_CALIB_EN_BIT_MASK            0x1U
-
-#define ADDR_0X1140                             (UWB_BASE_ADDR + 0x1140)
-
-#define I_VGA_AUTO_CALIB_EN_BIT_OFFSET          (0U)
-#define I_VGA_AUTO_CALIB_EN_BIT_LEN             (1U)
-#define I_VGA_AUTO_CALIB_EN_BIT_MASK            0x1U
-
-#define I_VGA_DCOC_COMP_EN_BIT_OFFSET           (1U)
-#define I_VGA_DCOC_COMP_EN_BIT_LEN              (1U)
-#define I_VGA_DCOC_COMP_EN_BIT_MASK             0x2U
-
-#define I_VGA_DCOC_KEEP_EN_BIT_OFFSET           (2U)
-#define I_VGA_DCOC_KEEP_EN_BIT_LEN              (1U)
-#define I_VGA_DCOC_KEEP_EN_BIT_MASK             0x4U
-
-#define I_VGA_VCM_COMP_EN_BIT_OFFSET            (3U)
-#define I_VGA_VCM_COMP_EN_BIT_LEN               (1U)
-#define I_VGA_VCM_COMP_EN_BIT_MASK              0x8U
-
-#define Q_VGA_AUTO_CALIB_EN_BIT_OFFSET          (4U)
-#define Q_VGA_AUTO_CALIB_EN_BIT_LEN             (1U)
-#define Q_VGA_AUTO_CALIB_EN_BIT_MASK            0x10U
-
-#define Q_VGA_DCOC_COMP_EN_BIT_OFFSET           (5U)
-#define Q_VGA_DCOC_COMP_EN_BIT_LEN              (1U)
-#define Q_VGA_DCOC_COMP_EN_BIT_MASK             0x20U
-
-#define Q_VGA_DCOC_KEEP_EN_BIT_OFFSET           (6U)
-#define Q_VGA_DCOC_KEEP_EN_BIT_LEN              (1U)
-#define Q_VGA_DCOC_KEEP_EN_BIT_MASK             0x40U
-
-#define Q_VGA_VCM_COMP_EN_BIT_OFFSET            (7U)
-#define Q_VGA_VCM_COMP_EN_BIT_LEN               (1U)
-#define Q_VGA_VCM_COMP_EN_BIT_MASK              0x80U
-
-#define I_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (8U)
-#define I_VGA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
-#define I_VGA_AUTO_CALIB_EN_2ND_BIT_MASK        0x100U
-
-#define I_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET       (9U)
-#define I_VGA_DCOC_COMP_EN_2ND_BIT_LEN          (1U)
-#define I_VGA_DCOC_COMP_EN_2ND_BIT_MASK         0x200U
-
-#define I_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET       (10U)
-#define I_VGA_DCOC_KEEP_EN_2ND_BIT_LEN          (1U)
-#define I_VGA_DCOC_KEEP_EN_2ND_BIT_MASK         0x400U
-
-#define I_VGA_VCM_COMP_EN_2ND_BIT_OFFSET        (11U)
-#define I_VGA_VCM_COMP_EN_2ND_BIT_LEN           (1U)
-#define I_VGA_VCM_COMP_EN_2ND_BIT_MASK          0x800U
-
-#define Q_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (12U)
-#define Q_VGA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
-#define Q_VGA_AUTO_CALIB_EN_2ND_BIT_MASK        0x1000U
-
-#define Q_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET       (13U)
-#define Q_VGA_DCOC_COMP_EN_2ND_BIT_LEN          (1U)
-#define Q_VGA_DCOC_COMP_EN_2ND_BIT_MASK         0x2000U
-
-#define Q_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET       (14U)
-#define Q_VGA_DCOC_KEEP_EN_2ND_BIT_LEN          (1U)
-#define Q_VGA_DCOC_KEEP_EN_2ND_BIT_MASK         0x4000U
-
-#define Q_VGA_VCM_COMP_EN_2ND_BIT_OFFSET        (15U)
-#define Q_VGA_VCM_COMP_EN_2ND_BIT_LEN           (1U)
-#define Q_VGA_VCM_COMP_EN_2ND_BIT_MASK          0x8000U
-
-#define I_VGA_AUX_BIT_OFFSET                    (16U)
-#define I_VGA_AUX_BIT_LEN                       (3U)
-#define I_VGA_AUX_BIT_MASK                      0x70000U
-
-#define I_VGA_AUX_OVRD_BIT_OFFSET               (19U)
-#define I_VGA_AUX_OVRD_BIT_LEN                  (1U)
-#define I_VGA_AUX_OVRD_BIT_MASK                 0x80000U
-
-#define Q_VGA_AUX_BIT_OFFSET                    (20U)
-#define Q_VGA_AUX_BIT_LEN                       (3U)
-#define Q_VGA_AUX_BIT_MASK                      0x700000U
-
-#define Q_VGA_AUX_OVRD_BIT_OFFSET               (23U)
-#define Q_VGA_AUX_OVRD_BIT_LEN                  (1U)
-#define Q_VGA_AUX_OVRD_BIT_MASK                 0x800000U
-
-#define I_VGA_AUX_2ND_BIT_OFFSET                (24U)
-#define I_VGA_AUX_2ND_BIT_LEN                   (3U)
-#define I_VGA_AUX_2ND_BIT_MASK                  0x7000000U
-
-#define I_VGA_AUX_OVRD_2ND_BIT_OFFSET           (27U)
-#define I_VGA_AUX_OVRD_2ND_BIT_LEN              (1U)
-#define I_VGA_AUX_OVRD_2ND_BIT_MASK             0x8000000U
-
-#define Q_VGA_AUX_2ND_BIT_OFFSET                (28U)
-#define Q_VGA_AUX_2ND_BIT_LEN                   (3U)
-#define Q_VGA_AUX_2ND_BIT_MASK                  0x70000000U
-
-#define Q_VGA_AUX_OVRD_2ND_BIT_OFFSET           (31U)
-#define Q_VGA_AUX_OVRD_2ND_BIT_LEN              (1U)
-#define Q_VGA_AUX_OVRD_2ND_BIT_MASK             0x80000000U
-
-
-#define ADDR_0X1144                             (UWB_BASE_ADDR + 0x1144)
-
-#define VGA_CAL_WAIT_TIME_BIT_OFFSET            (20U)
-#define VGA_CAL_WAIT_TIME_BIT_LEN               (8U)
-#define VGA_CAL_WAIT_TIME_BIT_MASK              0xff00000U
-
-#define AGC_GAIN_OVRD_2ND_BIT_OFFSET            (19U)
-#define AGC_GAIN_OVRD_2ND_BIT_LEN               (1U)
-#define AGC_GAIN_OVRD_2ND_BIT_MASK              0x80000U
-
-#define AGC_GAIN_OVRD_BIT_OFFSET                (18U)
-#define AGC_GAIN_OVRD_BIT_LEN                   (1U)
-#define AGC_GAIN_OVRD_BIT_MASK                  0x40000U
-
-#define VGA_GAIN_SEL_OVRD_2ND_BIT_OFFSET        (17U)
-#define VGA_GAIN_SEL_OVRD_2ND_BIT_LEN           (1U)
-#define VGA_GAIN_SEL_OVRD_2ND_BIT_MASK          0x20000U
-
-#define VGA_GAIN_SEL_OVRD_BIT_OFFSET            (16U)
-#define VGA_GAIN_SEL_OVRD_BIT_LEN               (1U)
-#define VGA_GAIN_SEL_OVRD_BIT_MASK              0x10000U
-
-
-#define VGA_GAIN_SEL_2ND_BIT_OFFSET             (8U)
-#define VGA_GAIN_SEL_2ND_BIT_LEN                (6U)
-#define VGA_GAIN_SEL_2ND_BIT_MASK               0x3f00U
-
-#define VGA_GAIN_SEL_BIT_OFFSET                 (0U)
-#define VGA_GAIN_SEL_BIT_LEN                    (6U)
-#define VGA_GAIN_SEL_BIT_MASK                   0x3fU
-
-#define ADDR_0X114c                             (UWB_BASE_ADDR + 0x114c)
-
-#define I_VGA_WORD_OVRD_BIT_OFFSET              (0U)
-#define I_VGA_WORD_OVRD_BIT_LEN                 (1U)
-#define I_VGA_WORD_OVRD_BIT_MASK                0x1U
-
-#define Q_VGA_WORD_OVRD_BIT_OFFSET              (1U)
-#define Q_VGA_WORD_OVRD_BIT_LEN                 (1U)
-#define Q_VGA_WORD_OVRD_BIT_MASK                0x2U
-
-#define I_VGA_WORD_OVRD_2ND_BIT_OFFSET          (2U)
-#define I_VGA_WORD_OVRD_2ND_BIT_LEN             (1U)
-#define I_VGA_WORD_OVRD_2ND_BIT_MASK            0x4U
-
-#define Q_VGA_WORD_OVRD_2ND_BIT_OFFSET          (3U)
-#define Q_VGA_WORD_OVRD_2ND_BIT_LEN             (1U)
-#define Q_VGA_WORD_OVRD_2ND_BIT_MASK            0x8U
-
-#define I_AGC_WORD_OVRD_BIT_OFFSET              (4U)
-#define I_AGC_WORD_OVRD_BIT_LEN                 (1U)
-#define I_AGC_WORD_OVRD_BIT_MASK                0x10U
-
-#define Q_AGC_WORD_OVRD_BIT_OFFSET              (5U)
-#define Q_AGC_WORD_OVRD_BIT_LEN                 (1U)
-#define Q_AGC_WORD_OVRD_BIT_MASK                0x20U
-
-#define I_AGC_WORD_OVRD_2ND_BIT_OFFSET          (6U)
-#define I_AGC_WORD_OVRD_2ND_BIT_LEN             (1U)
-#define I_AGC_WORD_OVRD_2ND_BIT_MASK            0x40U
-
-#define Q_AGC_WORD_OVRD_2ND_BIT_OFFSET          (7U)
-#define Q_AGC_WORD_OVRD_2ND_BIT_LEN             (1U)
-#define Q_AGC_WORD_OVRD_2ND_BIT_MASK            0x80U
-
-
-void zn_set_reg_field_wr(uint32_t addr , uint32_t field_mask, uint32_t field_len, uint32_t field_offset, uint32_t field_value)
-{
-    uint32_t reg_value = 0;
-    reg_value = zn_read_32bit_reg(addr);
-    reg_value &= (~field_mask);
-    reg_value |= ((field_value<<field_offset) & field_mask);
-    zn_write_32bit_reg(addr, reg_value);
-}
-
-uint32_t tia_gain_table[]={0x0FC2,0x0FC4,0x0FC8,0x0FD0,0x0FE0,0x0F20,0x1A20,0x7A20,0x1860,0x1820,0x5820,0x7820,0x7420};
-///gain_db               ={55,    50,    44,    39,    33,    27,    20,    16,    12,    8 ,    1 ,    -4,    -9};
-void zn_set_tia_lna_gain(uint32_t gain_table)
-{
-    uint32_t lna_stage1;
-    uint32_t lna_stage2;
-    uint32_t tia_gain;
-    lna_stage1 = (gain_table>>8) & 0x7f;
-    lna_stage2 = (gain_table>>6) & 0x3;
-    tia_gain   = (gain_table & 0x3f);
-    uint32_t reg_value = 0;
-    //lna stage1
-    //reg_value = zn_read_32bit_reg(RX_CH1_MIXER_ID);
-    //reg_value &= (~D_LNA_STAGE1_VCT_BIT_MASK);
-    //reg_value |= ((lna_stage1<<D_LNA_STAGE1_VCT_BIT_OFFSET) & D_LNA_STAGE1_VCT_BIT_MASK);
-    //zn_write_32bit_reg(RX_CH1_MIXER_ID, reg_value);
-    zn_set_reg_field_wr(RX_CH1_MIXER_ID,
-                        D_LNA_STAGE1_VCT_BIT_MASK,
-                        D_LNA_STAGE1_VCT_BIT_LEN,
-                        D_LNA_STAGE1_VCT_BIT_OFFSET,
-                        lna_stage1);
-
-    //lna stage2
-    //reg_value = 0;
-    //reg_value = zn_read_32bit_reg(RX_CH1_LNA_ID);
-    //reg_value &= (~D_LNA_STAGE2_AGC_BIT_MASK);
-    //reg_value |= ((lna_stage2<<D_LNA_STAGE2_AGC_BIT_OFFSET) & D_LNA_STAGE2_AGC_BIT_MASK);
-    //zn_write_32bit_reg(RX_CH1_LNA_ID, reg_value);
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_LNA_STAGE2_AGC_BIT_MASK,
-                        D_LNA_STAGE2_AGC_BIT_LEN,
-                        D_LNA_STAGE2_AGC_BIT_OFFSET,
-                        lna_stage2);
-    //tia i
-    //reg_value = 0;
-    //reg_value = zn_read_32bit_reg(RX_CH1_TIA_I_ID);
-    //reg_value &= (~D_I_TIA_FB_RES_BIT_MASK);
-    //reg_value |= ((tia_gain<<D_I_TIA_FB_RES_BIT_OFFSET) & D_I_TIA_FB_RES_BIT_MASK);
-    //zn_write_32bit_reg(RX_CH1_TIA_I_ID, reg_value);
-    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
-                        D_I_TIA_FB_RES_BIT_MASK,
-                        D_I_TIA_FB_RES_BIT_LEN,
-                        D_I_TIA_FB_RES_BIT_OFFSET,
-                        tia_gain);
-    //tia q
-    //reg_value = 0;
-    //reg_value = zn_read_32bit_reg(RX_CH1_TIA_Q_ID);
-    //reg_value &= (~D_Q_TIA_FB_RES_BIT_MASK);
-    //reg_value |= ((tia_gain<<D_Q_TIA_FB_RES_BIT_OFFSET) & D_Q_TIA_FB_RES_BIT_MASK);
-    //zn_write_32bit_reg(RX_CH1_TIA_Q_ID, reg_value);
-    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
-                        D_Q_TIA_FB_RES_BIT_MASK,
-                        D_Q_TIA_FB_RES_BIT_LEN,
-                        D_Q_TIA_FB_RES_BIT_OFFSET,
-                        tia_gain);
-}
-void zn_set_tia_lna_gain_2nd(uint32_t gain_table)
-{
-    uint32_t lna_stage1;
-    uint32_t lna_stage2;
-    uint32_t tia_gain;
-    lna_stage1 = (gain_table>>8) & 0x7f;
-    lna_stage2 = (gain_table>>6) & 0x3;
-    tia_gain   = (gain_table & 0x3f);
-    uint32_t reg_value = 0;
-
-    zn_set_reg_field_wr(RX_CH2_MIXER_ID,
-                        D_LNA_STAGE1_VCT_2ND_BIT_MASK,
-                        D_LNA_STAGE1_VCT_2ND_BIT_LEN,
-                        D_LNA_STAGE1_VCT_2ND_BIT_OFFSET,
-                        lna_stage1);
-
-
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_LNA_STAGE2_AGC_2ND_BIT_MASK,
-                        D_LNA_STAGE2_AGC_2ND_BIT_LEN,
-                        D_LNA_STAGE2_AGC_2ND_BIT_OFFSET,
-                        lna_stage2);
-
-    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
-                        D_I_TIA_FB_RES_2ND_BIT_MASK,
-                        D_I_TIA_FB_RES_2ND_BIT_LEN,
-                        D_I_TIA_FB_RES_2ND_BIT_OFFSET,
-                        tia_gain);
-
-    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
-                        D_Q_TIA_FB_RES_2ND_BIT_MASK,
-                        D_Q_TIA_FB_RES_2ND_BIT_LEN,
-                        D_Q_TIA_FB_RES_2ND_BIT_OFFSET,
-                        tia_gain);
-}
-
-void zn_set_lna_stage1_agc_vord(uint32_t lna_stage1_agc_vord)
-{
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_LNA_STAGE1_AGC_OVRD_BIT_MASK,
-                        D_LNA_STAGE1_AGC_OVRD_BIT_LEN,
-                        D_LNA_STAGE1_AGC_OVRD_BIT_OFFSET,
-                        lna_stage1_agc_vord);
-}
-
-void zn_set_lna_stage2_agc_vord(uint32_t lna_stage2_agc_vord)
-{
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_LNA_STAGE2_AGC_OVRD_BIT_MASK,
-                        D_LNA_STAGE2_AGC_OVRD_BIT_LEN,
-                        D_LNA_STAGE2_AGC_OVRD_BIT_OFFSET,
-                        lna_stage2_agc_vord);
-}
-
-void zn_set_tia_agc_vord(uint32_t tia_agc_vord)
-{
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_TIA_AGC_OVRD_BIT_MASK,
-                        D_TIA_AGC_OVRD_BIT_LEN,
-                        D_TIA_AGC_OVRD_BIT_OFFSET,
-                        tia_agc_vord);
-}
-
-void zn_set_lna_stage2_vcm_sel(uint32_t lna_stage2_vcm_sel)
-{
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_LNA_STAGE2_VCM_SEL_BIT_MASK,
-                        D_LNA_STAGE2_VCM_SEL_BIT_LEN,
-                        D_LNA_STAGE2_VCM_SEL_BIT_OFFSET,
-                        lna_stage2_vcm_sel);
-}
-
-void zn_set_lna_stage2_bias_sel(uint32_t lna_stage2_bias_sel)
-{
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_LNA_STAGE2_BIAS_SEL_BIT_MASK,
-                        D_LNA_STAGE2_BIAS_SEL_BIT_LEN,
-                        D_LNA_STAGE2_BIAS_SEL_BIT_OFFSET,
-                        lna_stage2_bias_sel);
-}
-
-void zn_set_lna_stage1_bias_sel(uint32_t lna_stage1_bias_sel)
-{
-    zn_set_reg_field_wr(RX_CH1_LNA_ID,
-                        D_LNA_STAGE1_BIAS_SEL_BIT_MASK,
-                        D_LNA_STAGE1_BIAS_SEL_BIT_LEN,
-                        D_LNA_STAGE1_BIAS_SEL_BIT_OFFSET,
-                        lna_stage1_bias_sel);
-}
-
-void zn_set_i_tia_stag1_isel(uint32_t i_tia_stag1_isel)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
-                        D_I_TIA_STAG1_ISEL_BIT_MASK,
-                        D_I_TIA_STAG1_ISEL_BIT_LEN,
-                        D_I_TIA_STAG1_ISEL_BIT_OFFSET,
-                        i_tia_stag1_isel);
-}
-
-void zn_set_i_tia_stg1_itrim(uint32_t i_tia_stg1_itrim)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
-                        D_I_TIA_STG1_ITRIM_BIT_MASK,
-                        D_I_TIA_STG1_ITRIM_BIT_LEN,
-                        D_I_TIA_STG1_ITRIM_BIT_OFFSET,
-                        i_tia_stg1_itrim);
-}
-
-void zn_set_i_tia_dcoc_2ua_en(uint32_t i_tia_dcoc_2ua_en)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
-                        D_I_TIA_DCOC_2UA_EN_BIT_MASK,
-                        D_I_TIA_DCOC_2UA_EN_BIT_LEN,
-                        D_I_TIA_DCOC_2UA_EN_BIT_OFFSET,
-                        i_tia_dcoc_2ua_en);
-}
-
-void zn_set_q_tia_stag1_isel(uint32_t q_tia_stag1_isel)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
-                        D_Q_TIA_STAG1_ISEL_BIT_MASK,
-                        D_Q_TIA_STAG1_ISEL_BIT_LEN,
-                        D_Q_TIA_STAG1_ISEL_BIT_OFFSET,
-                        q_tia_stag1_isel);
-}
-
-void zn_set_q_tia_stg1_itrim(uint32_t q_tia_stg1_itrim)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
-                        D_Q_TIA_STG1_ITRIM_BIT_MASK,
-                        D_Q_TIA_STG1_ITRIM_BIT_LEN,
-                        D_Q_TIA_STG1_ITRIM_BIT_OFFSET,
-                        q_tia_stg1_itrim);
-}
-
-void zn_set_q_tia_dcoc_2ua_en(uint32_t q_tia_dcoc_2ua_en)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
-                        D_Q_TIA_DCOC_2UA_EN_BIT_MASK,
-                        D_Q_TIA_DCOC_2UA_EN_BIT_LEN,
-                        D_Q_TIA_DCOC_2UA_EN_BIT_OFFSET,
-                        q_tia_dcoc_2ua_en);
-}
-
-
-void zn_set_q_tia_dcoc_en(uint32_t q_tia_dcoc_en)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
-                        D_Q_TIA_DCOC_EN_BIT_MASK,
-                        D_Q_TIA_DCOC_EN_BIT_LEN,
-                        D_Q_TIA_DCOC_EN_BIT_OFFSET,
-                        q_tia_dcoc_en);
-}
-
-void zn_set_q_tia_keep_dcoc(uint32_t q_tia_keep_dcoc)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_Q_ID,
-                        D_Q_TIA_KEEP_DCOC_BIT_MASK,
-                        D_Q_TIA_KEEP_DCOC_BIT_LEN,
-                        D_Q_TIA_KEEP_DCOC_BIT_OFFSET,
-                        q_tia_keep_dcoc);
-}
-
-void zn_set_i_tia_atest_en(uint32_t i_tia_atest_en)
-{
-    zn_set_reg_field_wr(RX_CH1_ATEST_ID,
-                        D_I_TIA_ATEST_EN_BIT_MASK,
-                        D_I_TIA_ATEST_EN_BIT_LEN,
-                        D_I_TIA_ATEST_EN_BIT_OFFSET,
-                        i_tia_atest_en);
-}
-
-void zn_set_q_tia_atest_en(uint32_t q_tia_atest_en)
-{
-    zn_set_reg_field_wr(RX_CH1_ATEST_ID,
-                        D_Q_TIA_ATEST_EN_BIT_MASK,
-                        D_Q_TIA_ATEST_EN_BIT_LEN,
-                        D_Q_TIA_ATEST_EN_BIT_OFFSET,
-                        q_tia_atest_en);
-}
-
-void zn_set_rx_clk38p4_div_en(uint32_t rx_clk38p4_div_en)
-{
-    zn_set_reg_field_wr(RX_CH1_ATEST_ID,
-                        D_RX_CLK38P4_DIV_EN_BIT_MASK,
-                        D_RX_CLK38P4_DIV_EN_BIT_LEN,
-                        D_RX_CLK38P4_DIV_EN_BIT_OFFSET,
-                        rx_clk38p4_div_en);
-}
-
-void zn_set_i_tia_dcoc_en(uint32_t i_tia_dcoc_en)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
-                        D_I_TIA_DCOC_EN_BIT_MASK,
-                        D_I_TIA_DCOC_EN_BIT_LEN,
-                        D_I_TIA_DCOC_EN_BIT_OFFSET,
-                        i_tia_dcoc_en);
-}
-
-void zn_set_i_tia_keep_dcoc(uint32_t i_tia_keep_dcoc)
-{
-    zn_set_reg_field_wr(RX_CH1_TIA_I_ID,
-                        D_I_TIA_KEEP_DCOC_BIT_MASK,
-                        D_I_TIA_KEEP_DCOC_BIT_LEN,
-                        D_I_TIA_KEEP_DCOC_BIT_OFFSET,
-                        i_tia_keep_dcoc);
-}
-
-void zn_set_aoa_mode_sel(uint32_t aoa_mode_sel)
-{
-    zn_set_reg_field_wr(RX_REDU_ID,
-                        D_AOA_MODE_SEL_BIT_MASK,
-                        D_AOA_MODE_SEL_BIT_LEN,
-                        D_AOA_MODE_SEL_BIT_OFFSET,
-                        aoa_mode_sel);
-}
-
-void zn_set_i_adc_cmp_dly_ctrl_2nd(uint32_t i_adc_cmp_dly_ctrl_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_ATEST_ID,
-                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_MASK,
-                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_LEN,
-                        D_I_ADC_CMP_DLY_CTRL_2ND_BIT_OFFSET,
-                        i_adc_cmp_dly_ctrl_2nd);
-}
-void zn_set_i_tia_atest_en_2nd(uint32_t i_tia_atest_en_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_ATEST_ID,
-                        D_I_TIA_ATEST_EN_2ND_BIT_MASK,
-                        D_I_TIA_ATEST_EN_2ND_BIT_LEN,
-                        D_I_TIA_ATEST_EN_2ND_BIT_OFFSET,
-                        i_tia_atest_en_2nd);
-}
-void zn_set_q_tia_atest_en_2nd(uint32_t q_tia_atest_en_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_ATEST_ID,
-                        D_Q_TIA_ATEST_EN_2ND_BIT_MASK,
-                        D_Q_TIA_ATEST_EN_2ND_BIT_LEN,
-                        D_Q_TIA_ATEST_EN_2ND_BIT_OFFSET,
-                        q_tia_atest_en_2nd);
-}
-
-
-void zn_set_vga_cal_wait_time(uint32_t vga_cal_wait_time)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        VGA_CAL_WAIT_TIME_BIT_MASK,
-                        VGA_CAL_WAIT_TIME_BIT_LEN,
-                        VGA_CAL_WAIT_TIME_BIT_OFFSET,
-                        vga_cal_wait_time);
-}
-void zn_set_agc_gain_ovrd_2nd(uint32_t agc_gain_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        AGC_GAIN_OVRD_2ND_BIT_MASK,
-                        AGC_GAIN_OVRD_2ND_BIT_LEN,
-                        AGC_GAIN_OVRD_2ND_BIT_OFFSET,
-                        agc_gain_ovrd_2nd);
-}
-void zn_set_agc_gain_ovrd(uint32_t agc_gain_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        AGC_GAIN_OVRD_BIT_MASK,
-                        AGC_GAIN_OVRD_BIT_LEN,
-                        AGC_GAIN_OVRD_BIT_OFFSET,
-                        agc_gain_ovrd);
-}
-void zn_set_vga_gain_sel_ovrd_2nd(uint32_t vga_gain_sel_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        VGA_GAIN_SEL_OVRD_2ND_BIT_MASK,
-                        VGA_GAIN_SEL_OVRD_2ND_BIT_LEN,
-                        VGA_GAIN_SEL_OVRD_2ND_BIT_OFFSET,
-                        vga_gain_sel_ovrd_2nd);
-}
-void zn_set_vga_gain_sel_ovrd(uint32_t vga_gain_sel_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        VGA_GAIN_SEL_OVRD_BIT_MASK,
-                        VGA_GAIN_SEL_OVRD_BIT_LEN,
-                        VGA_GAIN_SEL_OVRD_BIT_OFFSET,
-                        vga_gain_sel_ovrd);
-}
-void zn_set_vga_gain_sel_2nd(uint32_t vga_gain_sel_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        VGA_GAIN_SEL_2ND_BIT_MASK,
-                        VGA_GAIN_SEL_2ND_BIT_LEN,
-                        VGA_GAIN_SEL_2ND_BIT_OFFSET,
-                        vga_gain_sel_2nd);
-}
-void zn_set_vga_gain_sel(uint32_t vga_gain_sel)
-{
-    zn_set_reg_field_wr(ADDR_0X1144,
-                        VGA_GAIN_SEL_BIT_MASK,
-                        VGA_GAIN_SEL_BIT_LEN,
-                        VGA_GAIN_SEL_BIT_OFFSET,
-                        vga_gain_sel);
-}
-
-void zn_set_i_tia_auto_calib_en(uint32_t i_tia_auto_calib_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        I_TIA_AUTO_CALIB_EN_BIT_MASK,
-                        I_TIA_AUTO_CALIB_EN_BIT_LEN,
-                        I_TIA_AUTO_CALIB_EN_BIT_OFFSET,
-                        i_tia_auto_calib_en);
-}
-void zn_set_q_tia_auto_calib_en(uint32_t q_tia_auto_calib_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        Q_TIA_AUTO_CALIB_EN_BIT_MASK,
-                        Q_TIA_AUTO_CALIB_EN_BIT_LEN,
-                        Q_TIA_AUTO_CALIB_EN_BIT_OFFSET,
-                        q_tia_auto_calib_en);
-}
-void zn_set_i_tia_auto_calib_en_2nd(uint32_t i_tia_auto_calib_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        I_TIA_AUTO_CALIB_EN_2ND_BIT_MASK,
-                        I_TIA_AUTO_CALIB_EN_2ND_BIT_LEN,
-                        I_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
-                        i_tia_auto_calib_en_2nd);
-}
-void zn_set_q_tia_auto_calib_en_2nd(uint32_t q_tia_auto_calib_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        Q_TIA_AUTO_CALIB_EN_2ND_BIT_MASK,
-                        Q_TIA_AUTO_CALIB_EN_2ND_BIT_LEN,
-                        Q_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
-                        q_tia_auto_calib_en_2nd);
-}
-void zn_set_tia_cal_wait_time(uint32_t tia_cal_wait_time)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        TIA_CAL_WAIT_TIME_BIT_MASK,
-                        TIA_CAL_WAIT_TIME_BIT_LEN,
-                        TIA_CAL_WAIT_TIME_BIT_OFFSET,
-                        tia_cal_wait_time);
-}
-
-
-void zn_set_i_tia_calib_load_ovrd(uint32_t i_tia_calib_load_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        I_TIA_CALIB_LOAD_OVRD_BIT_MASK,
-                        I_TIA_CALIB_LOAD_OVRD_BIT_LEN,
-                        I_TIA_CALIB_LOAD_OVRD_BIT_OFFSET,
-                        i_tia_calib_load_ovrd);
-}
-void zn_set_q_tia_calib_load_ovrd(uint32_t q_tia_calib_load_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        Q_TIA_CALIB_LOAD_OVRD_BIT_MASK,
-                        Q_TIA_CALIB_LOAD_OVRD_BIT_LEN,
-                        Q_TIA_CALIB_LOAD_OVRD_BIT_OFFSET,
-                        q_tia_calib_load_ovrd);
-}
-void zn_set_i_tia_calib_load_ovrd_2nd(uint32_t i_tia_calib_load_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        I_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK,
-                        I_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN,
-                        I_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET,
-                        i_tia_calib_load_ovrd_2nd);
-}
-void zn_set_q_tia_calib_load_ovrd_2nd(uint32_t q_tia_calib_load_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK,
-                        Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN,
-                        Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET,
-                        q_tia_calib_load_ovrd_2nd);
-}
-void zn_set_i_agc_sel_tia_word_ovrd(uint32_t i_agc_sel_tia_word_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        I_AGC_SEL_TIA_WORD_OVRD_BIT_MASK,
-                        I_AGC_SEL_TIA_WORD_OVRD_BIT_LEN,
-                        I_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET,
-                        i_agc_sel_tia_word_ovrd);
-}
-void zn_set_q_agc_sel_tia_word_ovrd(uint32_t q_agc_sel_tia_word_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        Q_AGC_SEL_TIA_WORD_OVRD_BIT_MASK,
-                        Q_AGC_SEL_TIA_WORD_OVRD_BIT_LEN,
-                        Q_AGC_SEL_TIA_WORD_OVRD_BIT_OFFSET,
-                        q_agc_sel_tia_word_ovrd);
-}
-void zn_set_i_agc_sel_tia_word_ovrd_2nd(uint32_t i_agc_sel_tia_word_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK,
-                        I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN,
-                        I_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET,
-                        i_agc_sel_tia_word_ovrd_2nd);
-}
-void zn_set_q_agc_sel_tia_word_ovrd_2nd(uint32_t q_agc_sel_tia_word_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1120,
-                        Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_MASK,
-                        Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_LEN,
-                        Q_AGC_SEL_TIA_WORD_OVRD_2ND_BIT_OFFSET,
-                        q_agc_sel_tia_word_ovrd_2nd);
-}
-
-void zn_set_i_vga_word_ovrd(uint32_t i_vga_word_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        I_VGA_WORD_OVRD_BIT_MASK,
-                        I_VGA_WORD_OVRD_BIT_LEN,
-                        I_VGA_WORD_OVRD_BIT_OFFSET,
-                        i_vga_word_ovrd);
-}
-void zn_set_q_vga_word_ovrd(uint32_t q_vga_word_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        Q_VGA_WORD_OVRD_BIT_MASK,
-                        Q_VGA_WORD_OVRD_BIT_LEN,
-                        Q_VGA_WORD_OVRD_BIT_OFFSET,
-                        q_vga_word_ovrd);
-}
-void zn_set_i_vga_word_ovrd_2nd(uint32_t i_vga_word_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        I_VGA_WORD_OVRD_2ND_BIT_MASK,
-                        I_VGA_WORD_OVRD_2ND_BIT_LEN,
-                        I_VGA_WORD_OVRD_2ND_BIT_OFFSET,
-                        i_vga_word_ovrd_2nd);
-}
-void zn_set_q_vga_word_ovrd_2nd(uint32_t q_vga_word_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        Q_VGA_WORD_OVRD_2ND_BIT_MASK,
-                        Q_VGA_WORD_OVRD_2ND_BIT_LEN,
-                        Q_VGA_WORD_OVRD_2ND_BIT_OFFSET,
-                        q_vga_word_ovrd_2nd);
-}
-void zn_set_i_agc_word_ovrd(uint32_t i_agc_word_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        I_AGC_WORD_OVRD_BIT_MASK,
-                        I_AGC_WORD_OVRD_BIT_LEN,
-                        I_AGC_WORD_OVRD_BIT_OFFSET,
-                        i_agc_word_ovrd);
-}
-void zn_set_q_agc_word_ovrd(uint32_t q_agc_word_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        Q_AGC_WORD_OVRD_BIT_MASK,
-                        Q_AGC_WORD_OVRD_BIT_LEN,
-                        Q_AGC_WORD_OVRD_BIT_OFFSET,
-                        q_agc_word_ovrd);
-}
-void zn_set_i_agc_word_ovrd_2nd(uint32_t i_agc_word_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        I_AGC_WORD_OVRD_2ND_BIT_MASK,
-                        I_AGC_WORD_OVRD_2ND_BIT_LEN,
-                        I_AGC_WORD_OVRD_2ND_BIT_OFFSET,
-                        i_agc_word_ovrd_2nd);
-}
-void zn_set_q_agc_word_ovrd_2nd(uint32_t q_agc_word_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X114c,
-                        Q_AGC_WORD_OVRD_2ND_BIT_MASK,
-                        Q_AGC_WORD_OVRD_2ND_BIT_LEN,
-                        Q_AGC_WORD_OVRD_2ND_BIT_OFFSET,
-                        q_agc_word_ovrd_2nd);
-}
-
-void zn_set_i_vga_auto_calib_en(uint32_t i_vga_auto_calib_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_AUTO_CALIB_EN_BIT_MASK,
-                        I_VGA_AUTO_CALIB_EN_BIT_LEN,
-                        I_VGA_AUTO_CALIB_EN_BIT_OFFSET,
-                        i_vga_auto_calib_en);
-}
-void zn_set_i_vga_dcoc_comp_en(uint32_t i_vga_dcoc_comp_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_DCOC_COMP_EN_BIT_MASK,
-                        I_VGA_DCOC_COMP_EN_BIT_LEN,
-                        I_VGA_DCOC_COMP_EN_BIT_OFFSET,
-                        i_vga_dcoc_comp_en);
-}
-void zn_set_i_vga_dcoc_keep_en(uint32_t i_vga_dcoc_keep_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_DCOC_KEEP_EN_BIT_MASK,
-                        I_VGA_DCOC_KEEP_EN_BIT_LEN,
-                        I_VGA_DCOC_KEEP_EN_BIT_OFFSET,
-                        i_vga_dcoc_keep_en);
-}
-void zn_set_i_vga_vcm_comp_en(uint32_t i_vga_vcm_comp_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_VCM_COMP_EN_BIT_MASK,
-                        I_VGA_VCM_COMP_EN_BIT_LEN,
-                        I_VGA_VCM_COMP_EN_BIT_OFFSET,
-                        i_vga_vcm_comp_en);
-}
-void zn_set_q_vga_auto_calib_en(uint32_t q_vga_auto_calib_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_AUTO_CALIB_EN_BIT_MASK,
-                        Q_VGA_AUTO_CALIB_EN_BIT_LEN,
-                        Q_VGA_AUTO_CALIB_EN_BIT_OFFSET,
-                        q_vga_auto_calib_en);
-}
-void zn_set_q_vga_dcoc_comp_en(uint32_t q_vga_dcoc_comp_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_DCOC_COMP_EN_BIT_MASK,
-                        Q_VGA_DCOC_COMP_EN_BIT_LEN,
-                        Q_VGA_DCOC_COMP_EN_BIT_OFFSET,
-                        q_vga_dcoc_comp_en);
-}
-void zn_set_q_vga_dcoc_keep_en(uint32_t q_vga_dcoc_keep_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_DCOC_KEEP_EN_BIT_MASK,
-                        Q_VGA_DCOC_KEEP_EN_BIT_LEN,
-                        Q_VGA_DCOC_KEEP_EN_BIT_OFFSET,
-                        q_vga_dcoc_keep_en);
-}
-void zn_set_q_vga_vcm_comp_en(uint32_t q_vga_vcm_comp_en)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_VCM_COMP_EN_BIT_MASK,
-                        Q_VGA_VCM_COMP_EN_BIT_LEN,
-                        Q_VGA_VCM_COMP_EN_BIT_OFFSET,
-                        q_vga_vcm_comp_en);
-}
-void zn_set_i_vga_auto_calib_en_2nd(uint32_t i_vga_auto_calib_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_AUTO_CALIB_EN_2ND_BIT_MASK,
-                        I_VGA_AUTO_CALIB_EN_2ND_BIT_LEN,
-                        I_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
-                        i_vga_auto_calib_en_2nd);
-}
-void zn_set_i_vga_dcoc_comp_en_2nd(uint32_t i_vga_dcoc_comp_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_DCOC_COMP_EN_2ND_BIT_MASK,
-                        I_VGA_DCOC_COMP_EN_2ND_BIT_LEN,
-                        I_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET,
-                        i_vga_dcoc_comp_en_2nd);
-}
-void zn_set_i_vga_dcoc_keep_en_2nd(uint32_t i_vga_dcoc_keep_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_DCOC_KEEP_EN_2ND_BIT_MASK,
-                        I_VGA_DCOC_KEEP_EN_2ND_BIT_LEN,
-                        I_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET,
-                        i_vga_dcoc_keep_en_2nd);
-}
-void zn_set_i_vga_vcm_comp_en_2nd(uint32_t i_vga_vcm_comp_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_VCM_COMP_EN_2ND_BIT_MASK,
-                        I_VGA_VCM_COMP_EN_2ND_BIT_LEN,
-                        I_VGA_VCM_COMP_EN_2ND_BIT_OFFSET,
-                        i_vga_vcm_comp_en_2nd);
-}
-void zn_set_q_vga_auto_calib_en_2nd(uint32_t q_vga_auto_calib_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_AUTO_CALIB_EN_2ND_BIT_MASK,
-                        Q_VGA_AUTO_CALIB_EN_2ND_BIT_LEN,
-                        Q_VGA_AUTO_CALIB_EN_2ND_BIT_OFFSET,
-                        q_vga_auto_calib_en_2nd);
-}
-void zn_set_q_vga_dcoc_comp_en_2nd(uint32_t q_vga_dcoc_comp_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_DCOC_COMP_EN_2ND_BIT_MASK,
-                        Q_VGA_DCOC_COMP_EN_2ND_BIT_LEN,
-                        Q_VGA_DCOC_COMP_EN_2ND_BIT_OFFSET,
-                        q_vga_dcoc_comp_en_2nd);
-}
-void zn_set_q_vga_dcoc_keep_en_2nd(uint32_t q_vga_dcoc_keep_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_DCOC_KEEP_EN_2ND_BIT_MASK,
-                        Q_VGA_DCOC_KEEP_EN_2ND_BIT_LEN,
-                        Q_VGA_DCOC_KEEP_EN_2ND_BIT_OFFSET,
-                        q_vga_dcoc_keep_en_2nd);
-}
-void zn_set_q_vga_vcm_comp_en_2nd(uint32_t q_vga_vcm_comp_en_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_VCM_COMP_EN_2ND_BIT_MASK,
-                        Q_VGA_VCM_COMP_EN_2ND_BIT_LEN,
-                        Q_VGA_VCM_COMP_EN_2ND_BIT_OFFSET,
-                        q_vga_vcm_comp_en_2nd);
-}
-void zn_set_i_vga_aux(uint32_t i_vga_aux)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_AUX_BIT_MASK,
-                        I_VGA_AUX_BIT_LEN,
-                        I_VGA_AUX_BIT_OFFSET,
-                        i_vga_aux);
-}
-void zn_set_q_vga_aux(uint32_t q_vga_aux)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_AUX_BIT_MASK,
-                        Q_VGA_AUX_BIT_LEN,
-                        Q_VGA_AUX_BIT_OFFSET,
-                        q_vga_aux);
-}
-void zn_set_i_vga_aux_2nd(uint32_t i_vga_aux_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_AUX_2ND_BIT_MASK,
-                        I_VGA_AUX_2ND_BIT_LEN,
-                        I_VGA_AUX_2ND_BIT_OFFSET,
-                        i_vga_aux_2nd);
-}
-void zn_set_q_vga_aux_2nd(uint32_t q_vga_aux_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_AUX_2ND_BIT_MASK,
-                        Q_VGA_AUX_2ND_BIT_LEN,
-                        Q_VGA_AUX_2ND_BIT_OFFSET,
-                        q_vga_aux_2nd);
-}
-void zn_set_i_vga_aux_ovrd(uint32_t i_vga_aux_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_AUX_OVRD_BIT_MASK,
-                        I_VGA_AUX_OVRD_BIT_LEN,
-                        I_VGA_AUX_OVRD_BIT_OFFSET,
-                        i_vga_aux_ovrd);
-}
-void zn_set_q_vga_aux_ovrd(uint32_t q_vga_aux_ovrd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_AUX_OVRD_BIT_MASK,
-                        Q_VGA_AUX_OVRD_BIT_LEN,
-                        Q_VGA_AUX_OVRD_BIT_OFFSET,
-                        q_vga_aux_ovrd);
-}
-void zn_set_i_vga_aux_ovrd_2nd(uint32_t i_vga_aux_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        I_VGA_AUX_OVRD_2ND_BIT_MASK,
-                        I_VGA_AUX_OVRD_2ND_BIT_LEN,
-                        I_VGA_AUX_OVRD_2ND_BIT_OFFSET,
-                        i_vga_aux_ovrd_2nd);
-}
-void zn_set_q_vga_aux_ovrd_2nd(uint32_t q_vga_aux_ovrd_2nd)
-{
-    zn_set_reg_field_wr(ADDR_0X1140,
-                        Q_VGA_AUX_OVRD_2ND_BIT_MASK,
-                        Q_VGA_AUX_OVRD_2ND_BIT_LEN,
-                        Q_VGA_AUX_OVRD_2ND_BIT_OFFSET,
-                        q_vga_aux_ovrd_2nd);
-}
-
-void zn_set_i_tia_keep_dcoc_2nd(uint32_t i_tia_keep_dcoc_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
-                        D_I_TIA_KEEP_DCOC_2ND_BIT_MASK,
-                        D_I_TIA_KEEP_DCOC_2ND_BIT_LEN,
-                        D_I_TIA_KEEP_DCOC_2ND_BIT_OFFSET,
-                        i_tia_keep_dcoc_2nd);
-}
-void zn_set_i_tia_dcoc_en_2nd(uint32_t i_tia_dcoc_en_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
-                        D_I_TIA_DCOC_EN_2ND_BIT_MASK,
-                        D_I_TIA_DCOC_EN_2ND_BIT_LEN,
-                        D_I_TIA_DCOC_EN_2ND_BIT_OFFSET,
-                        i_tia_dcoc_en_2nd);
-}
-void zn_set_i_tia_dcoc_2ua_en_2nd(uint32_t i_tia_dcoc_2ua_en_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
-                        D_I_TIA_DCOC_2UA_EN_2ND_BIT_MASK,
-                        D_I_TIA_DCOC_2UA_EN_2ND_BIT_LEN,
-                        D_I_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET,
-                        i_tia_dcoc_2ua_en_2nd);
-}
-void zn_set_i_tia_stg1_itrim_2nd(uint32_t i_tia_stg1_itrim_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
-                        D_I_TIA_STG1_ITRIM_2ND_BIT_MASK,
-                        D_I_TIA_STG1_ITRIM_2ND_BIT_LEN,
-                        D_I_TIA_STG1_ITRIM_2ND_BIT_OFFSET,
-                        i_tia_stg1_itrim_2nd);
-}
-void zn_set_i_tia_stag1_isel_2nd(uint32_t i_tia_stag1_isel_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_I_ID,
-                        D_I_TIA_STAG1_ISEL_2ND_BIT_MASK,
-                        D_I_TIA_STAG1_ISEL_2ND_BIT_LEN,
-                        D_I_TIA_STAG1_ISEL_2ND_BIT_OFFSET,
-                        i_tia_stag1_isel_2nd);
-}
-
-void zn_set_q_tia_keep_dcoc_2nd(uint32_t q_tia_keep_dcoc_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
-                        D_Q_TIA_KEEP_DCOC_2ND_BIT_MASK,
-                        D_Q_TIA_KEEP_DCOC_2ND_BIT_LEN,
-                        D_Q_TIA_KEEP_DCOC_2ND_BIT_OFFSET,
-                        q_tia_keep_dcoc_2nd);
-}
-void zn_set_q_tia_dcoc_en_2nd(uint32_t q_tia_dcoc_en_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
-                        D_Q_TIA_DCOC_EN_2ND_BIT_MASK,
-                        D_Q_TIA_DCOC_EN_2ND_BIT_LEN,
-                        D_Q_TIA_DCOC_EN_2ND_BIT_OFFSET,
-                        q_tia_dcoc_en_2nd);
-}
-void zn_set_q_tia_dcoc_2ua_en_2nd(uint32_t q_tia_dcoc_2ua_en_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
-                        D_Q_TIA_DCOC_2UA_EN_2ND_BIT_MASK,
-                        D_Q_TIA_DCOC_2UA_EN_2ND_BIT_LEN,
-                        D_Q_TIA_DCOC_2UA_EN_2ND_BIT_OFFSET,
-                        q_tia_dcoc_2ua_en_2nd);
-}
-void zn_set_q_tia_stg1_itrim_2nd(uint32_t q_tia_stg1_itrim_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
-                        D_Q_TIA_STG1_ITRIM_2ND_BIT_MASK,
-                        D_Q_TIA_STG1_ITRIM_2ND_BIT_LEN,
-                        D_Q_TIA_STG1_ITRIM_2ND_BIT_OFFSET,
-                        q_tia_stg1_itrim_2nd);
-}
-void zn_set_q_tia_stag1_isel_2nd(uint32_t q_tia_stag1_isel_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_TIA_Q_ID,
-                        D_Q_TIA_STAG1_ISEL_2ND_BIT_MASK,
-                        D_Q_TIA_STAG1_ISEL_2ND_BIT_LEN,
-                        D_Q_TIA_STAG1_ISEL_2ND_BIT_OFFSET,
-                        q_tia_stag1_isel_2nd);
-}
-
-
-void zn_set_tia_agc_vord_2nd(uint32_t tia_agc_vord_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_TIA_AGC_VORD_2ND_BIT_MASK,
-                        D_TIA_AGC_VORD_2ND_BIT_LEN,
-                        D_TIA_AGC_VORD_2ND_BIT_OFFSET,
-                        tia_agc_vord_2nd);
-}
-void zn_set_lna_stage2_agc_vord_2nd(uint32_t lna_stage2_agc_vord_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_LNA_STAGE2_AGC_VORD_2ND_BIT_MASK,
-                        D_LNA_STAGE2_AGC_VORD_2ND_BIT_LEN,
-                        D_LNA_STAGE2_AGC_VORD_2ND_BIT_OFFSET,
-                        lna_stage2_agc_vord_2nd);
-}
-void zn_set_lna_stage1_agc_vord_2nd(uint32_t lna_stage1_agc_vord_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_LNA_STAGE1_AGC_VORD_2ND_BIT_MASK,
-                        D_LNA_STAGE1_AGC_VORD_2ND_BIT_LEN,
-                        D_LNA_STAGE1_AGC_VORD_2ND_BIT_OFFSET,
-                        lna_stage1_agc_vord_2nd);
-}
-void zn_set_lna_stage1_bias_sel_2nd(uint32_t lna_stage1_bias_sel_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_LNA_STAGE1_BIAS_SEL_2ND_BIT_MASK,
-                        D_LNA_STAGE1_BIAS_SEL_2ND_BIT_LEN,
-                        D_LNA_STAGE1_BIAS_SEL_2ND_BIT_OFFSET,
-                        lna_stage1_bias_sel_2nd);
-}
-void zn_set_lna_stage2_bias_sel_2nd(uint32_t lna_stage2_bias_sel_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_LNA_STAGE2_BIAS_SEL_2ND_BIT_MASK,
-                        D_LNA_STAGE2_BIAS_SEL_2ND_BIT_LEN,
-                        D_LNA_STAGE2_BIAS_SEL_2ND_BIT_OFFSET,
-                        lna_stage2_bias_sel_2nd);
-}
-void zn_set_lna_stage2_vcm_sel_2nd(uint32_t lna_stage2_vcm_sel_2nd)
-{
-    zn_set_reg_field_wr(RX_CH2_LNA_ID,
-                        D_LNA_STAGE2_VCM_SEL_2ND_BIT_MASK,
-                        D_LNA_STAGE2_VCM_SEL_2ND_BIT_LEN,
-                        D_LNA_STAGE2_VCM_SEL_2ND_BIT_OFFSET,
-                        lna_stage2_vcm_sel_2nd);
-}
 
 void zn_calibration_pre(void)
 {
@@ -7045,89 +7054,36 @@ void zn_calibration_pre(void)
     int32_t dc_q_tmp = 0;
 
     printf("calibration begin\n");
+    //cfg AOA EN
+    zn_set_aoa_mode_sel(1);
+    // enable cali clk
+    zn_set_rx_clk38p4_div_en(1);
 
-    //cfg RX0
     ////cfg ovrd vga gain min
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00030000);//gain sel ovrd vga & 2nd
-
-
-    //cfg RX0
-    //cfg ovrd vga gain max
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x0001003f);//gain sel ovrd vga & 2nd
-    zn_set_vga_gain_sel(0x3f);
+    zn_set_vga_gain_sel(0x0);
     zn_set_vga_gain_sel_ovrd(1);
-
-    //tia band width cfg RX0
-    zn_set_i_tia_stag1_isel(3);     // When to enable and When to disable
-    zn_set_i_tia_stg1_itrim(7);
-    zn_set_i_tia_dcoc_2ua_en(1);    // When to enable and When to disable
-    zn_set_q_tia_stag1_isel(3);
-    zn_set_q_tia_stg1_itrim(7);
-    zn_set_q_tia_dcoc_2ua_en(1);    // When to enable and When to disable
-
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna & tia gain ovrd
-    zn_set_lna_stage2_vcm_sel(4);   // LNA
-    zn_set_lna_stage2_bias_sel(15);
-    zn_set_lna_stage1_bias_sel(7);
-    zn_set_lna_stage1_agc_vord(1);
-    zn_set_lna_stage2_agc_vord(1);
-    zn_set_tia_agc_vord(1);
-
-    //cfg RX1
-    //cfg ovrd vga gain max
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x0001003f);//gain sel ovrd vga & 2nd
     zn_set_vga_gain_sel_2nd(0x3f);
     zn_set_vga_gain_sel_ovrd_2nd(1);
 
-    //tia band width cfg RX0
-    zn_set_i_tia_stag1_isel_2nd(3);     // When to enable and When to disable
-    zn_set_i_tia_stg1_itrim_2nd(7);
-    zn_set_i_tia_dcoc_2ua_en_2nd(1);    // When to enable and When to disable
-    zn_set_q_tia_stag1_isel_2nd(3);
-    zn_set_q_tia_stg1_itrim_2nd(7);
-    zn_set_q_tia_dcoc_2ua_en_2nd(1);    // When to enable and When to disable
 
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0004ffc0);//lna, tia gain ovrd 2nd
-    zn_set_lna_stage2_vcm_sel_2nd(4);   // LNA
-    zn_set_lna_stage2_bias_sel_2nd(15);
-    zn_set_lna_stage1_bias_sel_2nd(7);
+    //tia gain ovrd at analog
+
+    zn_set_lna_stage1_agc_vord(1);
+    zn_set_lna_stage2_agc_vord(1);
+    zn_set_tia_agc_vord(1);
     zn_set_lna_stage1_agc_vord_2nd(1);
     zn_set_lna_stage2_agc_vord_2nd(1);
     zn_set_tia_agc_vord_2nd(1);
-
-
-    // sw to rx0
-    zn_set_aoa_mode_sel(0);         // How to use this function
-
-    //// set tia gain max 55 db max
-    //zn_set_tia_lna_gain(tia_gain_table[0]);
-    // set tia gain min -9  db max
-    zn_set_tia_lna_gain(tia_gain_table[12]);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);//lna stage1 gain setup max_db_set
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value & 0xffe7ffff);
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, reg_value | 0x00180000);//lna stage2 gain setup
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x000000bf);//Q_tia gain setup
+    // set tia gain max 55 db max
+    zn_set_tia_lna_gain(tia_gain_table[0]);
 
     //cfg tia cali wait time
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup & cali en close
     zn_set_tia_cal_wait_time(0x7f);
 
     //cfg analog top I channel
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, 0x00000102);//I_tia atest_en, cali clk en
-    zn_set_i_tia_atest_en(1);                       //  When to enable and when to disable
-    zn_set_rx_clk38p4_div_en(1);                    //  When to enable
+    zn_set_i_tia_atest_en(1);
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
-    zn_set_i_tia_dcoc_en(1);                        //  When to enable
-    zn_set_i_tia_keep_dcoc(1);                      //  When to enable
-    ////zn_set_i_tia_dcoc_2ua_en(1);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//cali en close
     //cfg I channel cali_en
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
     zn_set_i_tia_auto_calib_en(0);
     zn_set_i_tia_auto_calib_en(1);
 
@@ -7136,38 +7092,20 @@ void zn_calibration_pre(void)
     if((reg_value & 0x00000080) == 0x00000080)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12A0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12A0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
     }
 
     //close I channel cali_en
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en
     zn_set_i_tia_auto_calib_en(0);
-    //close I channel dcoc en at ana if regfile					// need it ?
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1034);
-    ////zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffc7f);
-    //zn_set_i_tia_dcoc_en(0);                    //  When to enable
-    //zn_set_i_tia_keep_dcoc(0);                  //  When to enable
-    //zn_set_i_tia_dcoc_2ua_en(0);                //  When to enable
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffeff); while at cali_pre is 0xfffffc7f
-    zn_set_i_tia_dcoc_en(0);                    //  When to enable
 
     //open Q channel analog top cfg
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00001002);//Q_tia atest_en, cali clk en
-    zn_set_i_tia_atest_en(0);                   //  When to enable
-    zn_set_q_tia_atest_en(1);                   //  When to enable and When to disable
-    ////zn_set_rx_clk38p4_div_en(1);
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value|0x06000001);//Q_tia_dcoc_en, keep_dococ_en;q_2u
-    zn_set_q_tia_dcoc_en(1);
-    zn_set_q_tia_keep_dcoc(1);
-    ////zn_set_q_tia_dcoc_2ua_en(1);
+    zn_set_i_tia_atest_en(0);
+    zn_set_q_tia_atest_en(1);
 
-    //cfg Q channel cali off
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
     //cfg Q channel cali en
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f2);
     zn_set_q_tia_auto_calib_en(0);
@@ -7178,61 +7116,25 @@ void zn_calibration_pre(void)
     if((reg_value & 0x00800000) == 0x00800000)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12A0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12A0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
     }
 
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
-    zn_set_q_tia_auto_calib_en(0);
-    ////close Q channel dcoc en at ana if regfile
-    ////reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
-    ////zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xf9fffffe);
-    //zn_set_q_tia_dcoc_en(0);                    //  When to enable
-    //zn_set_q_tia_keep_dcoc(0);                  //  When to enable
-    //zn_set_q_tia_dcoc_2ua_en(0);                //  When to enable
 
-    //close Q channel dcoc en at ana if regfile
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xfbffffff); while at cali_pre is 0xf9fffffe
-    zn_set_q_tia_dcoc_en(0);
+    zn_set_q_tia_auto_calib_en(0);
+    zn_set_q_tia_atest_en(0);
+
 
     //cfg RX1
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000);
-    zn_set_aoa_mode_sel(1);
 
-    // set tia gain min -9  db max
-    zn_set_tia_lna_gain_2nd(tia_gain_table[12]);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value & 0xffe7ffff);
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value | 0x00180000);//lna stage2 gain setup
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80); //d_i_tia_stag1_isel d_i_tia_stg1_itrim fb_res
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002f8);	//d_q_tia_stag1_isel d_q_tia_stg1_itrim fb_res
+    // set tia gain max
+    zn_set_tia_lna_gain_2nd(tia_gain_table[0]);
 
-    //cfg tia cali wait time
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup
-    ////zn_set_tia_cal_wait_time(0x7f);
-
-    //cfg analog top I channel
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-    ////zn_set_rx_clk38p4_div_en(1);
-
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x00000100);  //I_tia atest_en, cali clk en should en?
     zn_set_i_tia_atest_en_2nd(1);
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x104c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
-    zn_set_i_tia_dcoc_en_2nd(1);                        //  When to enable
-    zn_set_i_tia_keep_dcoc_2nd(1);                      //  When to enable
-    ////zn_set_i_tia_dcoc_2ua_en_2nd(1);
-
     //cfg I channel cali_en
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f4);
     zn_set_i_tia_auto_calib_en_2nd(0);
     zn_set_i_tia_auto_calib_en_2nd(1);
     while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00000080) != 0x00000080){};
@@ -7241,36 +7143,18 @@ void zn_calibration_pre(void)
     if((reg_value & 0x00000080) == 0x00000080)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12e0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12e0, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
     }
     //close I channel cali_en
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);
     zn_set_i_tia_auto_calib_en_2nd(0);
-    //close I channel dcoc en at ana if regfile
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X104c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value &0xfffffc7f);
-    zn_set_i_tia_dcoc_en_2nd(0);
 
-    //open Q channel analog top cfg
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-    ////zn_set_rx_clk38p4_div_en(1);
-
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1058, 0x00001000);//Q_tia atest_en,
-    zn_set_i_tia_atest_en_2nd(0);                   //  When to enable
+    zn_set_i_tia_atest_en_2nd(0);
     zn_set_q_tia_atest_en_2nd(1);
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1050);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, reg_value|0x00000007);//Q_tia_dcoc_en, keep_dococ_en;q_2u
-    zn_set_q_tia_dcoc_en_2nd(1);
-    zn_set_q_tia_keep_dcoc_2nd(1);
-    ////zn_set_q_tia_dcoc_2ua_en_2nd(1);
-
     //cfg Q channel cali en
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f8);
     zn_set_q_tia_auto_calib_en_2nd(0);
     zn_set_q_tia_auto_calib_en_2nd(1);
 
@@ -7281,118 +7165,63 @@ void zn_calibration_pre(void)
     if((reg_value & 0x00800000) == 0x00800000)
     {
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12e0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+        //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12e0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
     }
 
     //close tia agc ovrd
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c,reg_value&0xfffffe3f);
     zn_set_lna_stage1_agc_vord(0);
     zn_set_lna_stage2_agc_vord(0);
     zn_set_tia_agc_vord(0);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value&0xfffffe3f);
     zn_set_lna_stage1_agc_vord_2nd(0);
     zn_set_lna_stage2_agc_vord_2nd(0);
     zn_set_tia_agc_vord_2nd(0);
 
     //en agc sel tia word ovrd
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x003c0100);
     zn_set_i_agc_sel_tia_word_ovrd(1);
     zn_set_q_agc_sel_tia_word_ovrd(1);
     zn_set_i_agc_sel_tia_word_ovrd_2nd(1);
     zn_set_q_agc_sel_tia_word_ovrd_2nd(1);
     //close vga ovrd max
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
     zn_set_vga_gain_sel_ovrd(0);
     zn_set_vga_gain_sel_ovrd_2nd(0);
     //VGA
-    //ovrd tia max gain & cali_value
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd ana en & stage2
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x060000bf);//Q_tia gain setup
-
-
-    ////zn_set_lna_stage2_vcm_sel(4);   // LNA
-    ////zn_set_lna_stage2_bias_sel(15);
-    ////zn_set_lna_stage1_bias_sel(7);
+    //enable tia gain ovrd at analog & set tia gain max
     zn_set_lna_stage1_agc_vord(1);
     zn_set_lna_stage2_agc_vord(1);
     zn_set_tia_agc_vord(1);
-    //tia band width cfg
-    ////zn_set_i_tia_stag1_isel(3);
-    ////zn_set_i_tia_stg1_itrim(7);
-    //zn_set_i_tia_dcoc_2ua_en(1);
-    ////zn_set_q_tia_stag1_isel(3);
-    ////zn_set_q_tia_stg1_itrim(7);
-    //zn_set_q_tia_dcoc_2ua_en(1);
-    //zn_set_i_tia_dcoc_en(0);
-    //zn_set_i_tia_keep_dcoc(1);
-    //zn_set_q_tia_dcoc_en(0);
-    //zn_set_q_tia_keep_dcoc(1);
-    zn_set_tia_lna_gain(tia_gain_table[12]);
+    zn_set_tia_lna_gain(tia_gain_table[0]);
 
-
-
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80);//I_tia gain setup
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
     zn_set_lna_stage1_agc_vord_2nd(1);
     zn_set_lna_stage2_agc_vord_2nd(1);
     zn_set_tia_agc_vord_2nd(1);
-    zn_set_tia_lna_gain_2nd(tia_gain_table[12]);
+    zn_set_tia_lna_gain_2nd(tia_gain_table[0]);
 
     //ovrd cfg
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
     reg_value_temp = reg_value>>16;
     reg_value = reg_value<<16;
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
     reg_value_temp = reg_value>>16;
     reg_value = reg_value<<16;
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
     //en tia_calib_load_ovrd
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
     zn_set_i_tia_calib_load_ovrd(1);
     zn_set_q_tia_calib_load_ovrd(1);
     zn_set_i_tia_calib_load_ovrd_2nd(1);
     zn_set_q_tia_calib_load_ovrd_2nd(1);
 
-    //close vga_word_ovrd
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000000);
-    zn_set_i_vga_word_ovrd(0);
-    zn_set_q_vga_word_ovrd(0);
-    zn_set_i_vga_word_ovrd_2nd(0);
-    zn_set_q_vga_word_ovrd_2nd(0);
-    zn_set_i_agc_word_ovrd(0);
-    zn_set_q_agc_word_ovrd(0);
-    zn_set_i_agc_word_ovrd_2nd(0);
-    zn_set_q_agc_word_ovrd_2nd(0);
-
     //vga cal wait time
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f00000);//0x01000000, calibration time setup
     zn_set_vga_cal_wait_time(0x7f);
-
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00000002);//cali clk en, where is the bb clk 125M setup?
-    ////zn_set_i_tia_atest_en(0);       // When to enable
-    zn_set_q_tia_atest_en(0);           // When to enable
-    ////zn_set_rx_clk38p4_div_en(1);    // When to enable and When to disable
 
     dc_i_tmp = 15;
     dc_q_tmp = 15;
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
-    zn_set_aoa_mode_sel(0);         // How to use this function
 
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
     zn_set_q_vga_aux_ovrd_2nd(0);
@@ -7421,20 +7250,15 @@ void zn_calibration_pre(void)
     zn_set_i_vga_auto_calib_en(0);
 
     //set vga gain
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f10000);//gain sel ovrd
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f1003f);//gain sel ovrd
-    zn_set_vga_gain_sel(0x3f);
+
+    zn_set_vga_gain_sel(0x0);
     zn_set_vga_gain_sel_ovrd(1);
 
     for(int32_t j = 0; j < 30 ; j++)
     {
-        //iq_keep_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00000044 keep dcoc how to use?
+        //iq vag auto calib en
         zn_set_i_vga_auto_calib_en(0);
         zn_set_q_vga_auto_calib_en(0);
-
-        //iq vag auto calib en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000011);//keep dcoc, auto cali en,0x00000055
         zn_set_i_vga_auto_calib_en(1);
         zn_set_q_vga_auto_calib_en(1);
         //wait RX finished
@@ -7454,15 +7278,16 @@ void zn_calibration_pre(void)
             {
                 dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1170);
-                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1180, reg_value);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11b8, reg_value);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1180, reg_value);
+                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x11b8, reg_value);
             }
 
             if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
             {
                 dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1174);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f4,reg_value);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11bc,reg_value);
+                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f4,reg_value);
             }
 
             if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
@@ -7474,48 +7299,17 @@ void zn_calibration_pre(void)
     printf("RX0 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
     dc_i_tmp = 15;
     dc_q_tmp = 15;
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000);
-    zn_set_aoa_mode_sel(1);
 
-    //close iq auto cali
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
-    ////zn_set_q_vga_aux_ovrd_2nd(0);
-    ////zn_set_q_vga_aux_2nd(0);
-    ////zn_set_i_vga_aux_ovrd_2nd(0);
-    ////zn_set_i_vga_aux_2nd(0);
-    ////zn_set_q_vga_aux_ovrd(0);
-    ////zn_set_q_vga_aux(0);
-    ////zn_set_i_vga_aux_ovrd(0);
-    ////zn_set_i_vga_aux(0);
-    ////zn_set_q_vga_vcm_comp_en_2nd(0);
-    ////zn_set_q_vga_dcoc_keep_en_2nd(0);
-    ////zn_set_q_vga_dcoc_comp_en_2nd(0);
-    ////zn_set_q_vga_auto_calib_en_2nd(0);
-    ////zn_set_i_vga_vcm_comp_en_2nd(0);
-    ////zn_set_i_vga_dcoc_keep_en_2nd(0);
-    ////zn_set_i_vga_dcoc_comp_en_2nd(0);
-    ////zn_set_i_vga_auto_calib_en_2nd(0);
-    ////zn_set_q_vga_vcm_comp_en(0);
-    ////zn_set_q_vga_dcoc_keep_en(0);
-    ////zn_set_q_vga_dcoc_comp_en(0);
     zn_set_q_vga_auto_calib_en(0);
-    ////zn_set_i_vga_vcm_comp_en(0);
-    ////zn_set_i_vga_dcoc_keep_en(0);
-    ////zn_set_i_vga_dcoc_comp_en(0);
     zn_set_i_vga_auto_calib_en(0);
     //set vga gain
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x0ff20000);
-    zn_set_vga_gain_sel_2nd(0x3f);
+    zn_set_vga_gain_sel_2nd(0x0);
     zn_set_vga_gain_sel_ovrd_2nd(1);
     for(int32_t j = 0; j < 30 ; j++)
     {
-        //iq_keep_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00004400
+        //iq vag auto calib en
         zn_set_i_vga_auto_calib_en_2nd(0);
         zn_set_q_vga_auto_calib_en_2nd(0);
-        //iq vag auto calib en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00001100);//keep dcoc, auto cali en,0x00005500
         zn_set_i_vga_auto_calib_en_2nd(1);
         zn_set_q_vga_auto_calib_en_2nd(1);
 
@@ -7537,16 +7331,16 @@ void zn_calibration_pre(void)
             {
                 dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1178);
-                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f8, reg_value);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1230, reg_value);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x11f8, reg_value);
+                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1230, reg_value);
             }
 
             if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
             {
                 dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
                 reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x117c);
-                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1234,reg_value);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x126c, reg_value);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1234,reg_value);
+                //zn_write_32bit_reg(UWB_BASE_ADDR + 0x126c, reg_value);
             }
 
             if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
@@ -7557,34 +7351,8 @@ void zn_calibration_pre(void)
     }
 
     printf("RX1 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
-//    //cfg vga_word_ovrd
-//    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11b8);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f4);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
-//    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000003);
-//    zn_set_i_vga_word_ovrd(1);
-//    zn_set_q_vga_word_ovrd(1);
-//
-//    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1230);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1158 , reg_value);
-//    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x126c);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x115c , reg_value);
-//    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x0000000f);
-//    zn_set_i_vga_word_ovrd_2nd(1);
-//    zn_set_q_vga_word_ovrd_2nd(1);
-//
-//    //ovrd vga=0 vga_cali_value
-//    //cfg ovrd vga gain max
-//    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00033f3f);//gain sel ovrd vga & 2nd
-//    zn_set_vga_gain_sel(0x3f);
-//    zn_set_vga_gain_sel_ovrd(1);
-//    zn_set_vga_gain_sel_2nd(0x3f);
-//    zn_set_vga_gain_sel_ovrd_2nd(1);
-    //close tia_word_ovrd
+
+    //close tia_word_ovrd ready for tia calib
     zn_set_i_agc_sel_tia_word_ovrd(0);
     zn_set_q_agc_sel_tia_word_ovrd(0);
     zn_set_i_agc_sel_tia_word_ovrd_2nd(0);
@@ -7617,119 +7385,55 @@ void zn_tia_calibration(void)
 
 
     //cfg vga_word_ovrd
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11b8);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11b8);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1150 , reg_value);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f4);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f4);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1154 , reg_value);
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000003);
     zn_set_i_vga_word_ovrd(1);
     zn_set_q_vga_word_ovrd(1);
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1230);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1230);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1158 , reg_value);
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x126c);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x126c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x115c , reg_value);
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x0000000f);
     zn_set_i_vga_word_ovrd_2nd(1);
     zn_set_q_vga_word_ovrd_2nd(1);
 
-    //cfg ovrd vga gain max
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x00033f3f);//gain sel ovrd vga & 2nd
-    zn_set_vga_gain_sel(0x3f);
+    //cfg ovrd vga gain min
+    zn_set_vga_gain_sel(0x0);
     zn_set_vga_gain_sel_ovrd(1);
-    zn_set_vga_gain_sel_2nd(0x3f);
+    zn_set_vga_gain_sel_2nd(0x0);
     zn_set_vga_gain_sel_ovrd_2nd(1);
 
-     printf("rx0 tia cali begin:\n");
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna, tia gain ovrd
-    // sw to rx0
-    zn_set_aoa_mode_sel(0);         // How to use this function
-    //tia band width cfg
-    ////zn_set_i_tia_stag1_isel(3);     // When to enable and When to disable
-    ////zn_set_i_tia_stg1_itrim(7);
-    ////zn_set_i_tia_dcoc_2ua_en(1);    // When to enable and When to disable
-    ////zn_set_q_tia_stag1_isel(3);
-    ////zn_set_q_tia_stg1_itrim(7);
-    ////zn_set_q_tia_dcoc_2ua_en(1);    // When to enable and When to disable
-
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x0004ffc0);//lna & tia gain ovrd
-    ////zn_set_lna_stage2_vcm_sel(4);   // LNA
-    ////zn_set_lna_stage2_bias_sel(15);
-    ////zn_set_lna_stage1_bias_sel(7);
-    ////zn_set_lna_stage1_agc_vord(1);
-    ////zn_set_lna_stage2_agc_vord(1);
-    ////zn_set_tia_agc_vord(1);
-    //////zn_set_rx_clk38p4_div_en(1);
-
+    printf("rx0 tia cali begin:\n");
     for(int cali_case =0; cali_case<13; cali_case++)//13
     {
         zn_set_tia_lna_gain(tia_gain_table[cali_case]);
-        //cfg tia cali wait time
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup & cali en close
-        ////zn_set_tia_cal_wait_time(0x7f);
-        //cfg analog top I channel
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, 0x00000102);//I_tia atest_en, cali clk en
-        zn_set_i_tia_atest_en(1);                       //  When to enable and when to disable
-        ////zn_set_rx_clk38p4_div_en(1);                    //  When to enable
-
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
-        zn_set_i_tia_dcoc_en(1);                        //  When to enable
-        ////zn_set_i_tia_keep_dcoc(1);                      //  When to enable , always enable?
-        ////zn_set_i_tia_dcoc_2ua_en(1);
-        //close I channel cali_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en & close tia word ovrd
-        //cfg I channel cali_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f1);// digital cali en
+        zn_set_i_tia_atest_en(1);
         zn_set_i_tia_auto_calib_en(0);
         zn_set_i_tia_auto_calib_en(1);
 
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124) & 0x00000080) != 0x00000080){};
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-
-
         if((reg_value & 0x00000080) == 0x00000080)
         {
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
-            //printf("####0x1124 value :%x\n",reg_value);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
-            //printf("####0x%x value :%x\n",0x1270 + 4*cali_case,reg_value_temp);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
             //printf("####I:reg0x%x=0x%x.",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
         }
         //close I channel cali_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);// digital cali en
         zn_set_i_tia_auto_calib_en(0);
-        //close I channel dcoc en at ana if regfile					// need it ?
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1034);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, reg_value &0xfffffeff); while at cali_pre is 0xfffffc7f
-        zn_set_i_tia_dcoc_en(0);                    //  When to enable
+        //cali rising edge
+        zn_set_i_tia_atest_en(0);
+        zn_set_q_tia_atest_en(1);
 
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
-        //printf("0x1034 value :%x\n ",reg_value);
-
-        //open Q channel analog top cfg
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00001002);//Q_tia atest_en, cali clk en
-        zn_set_i_tia_atest_en(0);                   //  When to enable
-        zn_set_q_tia_atest_en(1);                   //  When to enable and When to disable
-        ////zn_set_rx_clk38p4_div_en(1);
-
-
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value|0x06000001);//Q_tia_dcoc_en, keep_dococ_en;q_2u
-        zn_set_q_tia_dcoc_en(1);
-        zn_set_q_tia_keep_dcoc(1);
-        ////zn_set_q_tia_dcoc_2ua_en(1);
-
-        //cfg Q channel cali off
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
-        //cfg Q channel cali en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f2);
         zn_set_q_tia_auto_calib_en(0);
         zn_set_q_tia_auto_calib_en(1);
 
@@ -7739,27 +7443,18 @@ void zn_tia_calibration(void)
         {
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1124);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
-            //printf("####reg0x%x value :%x\n ",0x1270 + 4*cali_case,reg_value_temp);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff)); 
             printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
         }
         //cfg Q channel cali off
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f0);
         zn_set_q_tia_auto_calib_en(0);
-        //close Q channel dcoc en at ana if regfile
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X1038);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, reg_value &0xfbffffff); while at cali_pre is 0xf9fffffe
-        zn_set_q_tia_dcoc_en(0);
-
-        //printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
+        zn_set_q_tia_atest_en(0);
 
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
         reg_value_temp = reg_value>>16;
         reg_value = reg_value<<16;
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
         //en tia_calib_load_ovrd
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
         zn_set_i_tia_calib_load_ovrd(1);
         zn_set_q_tia_calib_load_ovrd(1);
 
@@ -7861,79 +7556,27 @@ void zn_tia_calibration(void)
     for(int cali_case =0; cali_case<13; cali_case++)//13
     {
         zn_set_tia_lna_gain_2nd(tia_gain_table[cali_case]);
-        mdelay(10);
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000);
-        zn_set_aoa_mode_sel(1);
 
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0004ffc0);//lna, tia gain ovrd 2nd
-        ////zn_set_lna_stage2_vcm_sel_2nd(4);   // LNA
-        ////zn_set_lna_stage2_bias_sel_2nd(15);
-        ////zn_set_lna_stage1_bias_sel_2nd(7);
-        zn_set_lna_stage1_agc_vord_2nd(1);
-        zn_set_lna_stage2_agc_vord_2nd(1);
-        zn_set_tia_agc_vord_2nd(1);
-
-        //cfg tia cali wait time
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);//calibration time setup
-        ////zn_set_tia_cal_wait_time(0x7f);
-        //cfg analog top I channel
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-        ////zn_set_rx_clk38p4_div_en(1);
-
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x00000100);  //I_tia atest_en, cali clk en should en?
         zn_set_i_tia_atest_en_2nd(1);
-
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x104c);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value | 0x00000380);//I_tia_dcoc_en, keep_dococ_en, I_cali_2u
-        zn_set_i_tia_dcoc_en_2nd(1);                        //  When to enable
-        zn_set_i_tia_keep_dcoc_2nd(1);                      //  When to enable
-        ////zn_set_i_tia_dcoc_2ua_en_2nd(1);
-
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-        //printf("####before cali_en 0x1128 value :%x\n",reg_value);
-
         //cfg I channel cali_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f4);
         zn_set_i_tia_auto_calib_en_2nd(0);
         zn_set_i_tia_auto_calib_en_2nd(1);
 
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00000080) != 0x00000080);
 
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-        //printf("####I after 0x1128 value :%x\n",reg_value);
         if((reg_value & 0x00000080) == 0x00000080)
         {
-            //printf("rx1 I channel case:%d pass.\n",cali_case);
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-            //printf("####0x1128 to 12b0 value :%x\n",reg_value);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-
         }
         //close I channel cali_en
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x000007f0);
         zn_set_i_tia_auto_calib_en_2nd(0);
-        //close I channel dcoc en at ana if regfile
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0X104c);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, reg_value &0xfffffc7f);
-        zn_set_i_tia_dcoc_en_2nd(0);
 
-        //open Q channel analog top cfg
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1040);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1040, reg_value | 0x00000002);//cali clk en
-        ////zn_set_rx_clk38p4_div_en(1);
-
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1058, 0x00001000);//Q_tia atest_en,
-        zn_set_i_tia_atest_en_2nd(0);                   //  When to enable should close???
+        //Q_tia atest_en,
+        zn_set_i_tia_atest_en_2nd(0);
         zn_set_q_tia_atest_en_2nd(1);
-
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1050);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, reg_value|0x00000007);//Q_tia_dcoc_en, keep_dococ_en;q_2u
-        zn_set_q_tia_dcoc_en_2nd(1);
-        zn_set_q_tia_keep_dcoc_2nd(1);
-        ////zn_set_q_tia_dcoc_2ua_en_2nd(1);
 
         //cfg Q channel cali en
         //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120,0x000007f8);
@@ -7945,10 +7588,8 @@ void zn_tia_calibration(void)
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128) & 0x00800000) != 0x00800000);
 
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
-        //printf("####Q after 0x1128 value :%x\n",reg_value);
         if((reg_value & 0x00800000) == 0x00800000)
         {
-            //printf("rx1 Q channel case:%d pass.\n",cali_case);
             reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1128);
             reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
@@ -7960,8 +7601,6 @@ void zn_tia_calibration(void)
         reg_value = reg_value<<16;
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
         //en tia_calib_load_ovrd
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
         zn_set_i_tia_calib_load_ovrd_2nd(1);
         zn_set_q_tia_calib_load_ovrd_2nd(1);
 
@@ -8056,35 +7695,23 @@ void zn_tia_calibration(void)
         zn_set_q_tia_calib_load_ovrd_2nd(0);
     }
 //#endif
-    //close tia agc ovrd
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c,reg_value&0xfffffe3f);
+    //close tia gain ovrd at analog
     zn_set_lna_stage1_agc_vord(0);
     zn_set_lna_stage2_agc_vord(0);
     zn_set_tia_agc_vord(0);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value&0xfffffe3f);
     zn_set_lna_stage1_agc_vord_2nd(0);
     zn_set_lna_stage2_agc_vord_2nd(0);
     zn_set_tia_agc_vord_2nd(0);
 
     //en agc sel tia word ovrd
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, 0x003c0100);
-    ////zn_set_i_tia_calib_load_ovrd(0);
-    ////zn_set_q_tia_calib_load_ovrd(0);
-    ////zn_set_i_tia_calib_load_ovrd_2nd(0);
-    ////zn_set_q_tia_calib_load_ovrd_2nd(0);
     zn_set_i_agc_sel_tia_word_ovrd(1);
     zn_set_q_agc_sel_tia_word_ovrd(1);
     zn_set_i_agc_sel_tia_word_ovrd_2nd(1);
     zn_set_q_agc_sel_tia_word_ovrd_2nd(1);
 
-
-    //close vga ovrd min
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1144);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, reg_value & 0xfffcffff);//gain sel ovrd vga
+    //close vga gain sel ovrd
     zn_set_vga_gain_sel_ovrd(0);
-    //zn_set_vga_gain_sel_ovrd_2nd(0);
+    zn_set_vga_gain_sel_ovrd_2nd(0);
     printf("tia calibration end!\n");
 }
 
@@ -8106,127 +7733,54 @@ void zn_vga_calibration(void)
 
 
     //ovrd tia max gain & cali_value
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0000000f);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c, 0x001cffc0); //ovrd ana en & stage2
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1034, 0x00017f80);//I_tia gain setup
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1038, 0x060000bf);//Q_tia gain setup
-
-    ////zn_set_lna_stage2_vcm_sel(4);   // LNA
-    ////zn_set_lna_stage2_bias_sel(15);
-    ////zn_set_lna_stage1_bias_sel(7);
     zn_set_lna_stage1_agc_vord(1);
     zn_set_lna_stage2_agc_vord(1);
     zn_set_tia_agc_vord(1);
-    //tia band width cfg
-    ////zn_set_i_tia_stag1_isel(3);
-    ////zn_set_i_tia_stg1_itrim(7);
-    ////zn_set_i_tia_dcoc_2ua_en(1);
-    ////zn_set_q_tia_stag1_isel(3);
-    ////zn_set_q_tia_stg1_itrim(7);
-    ////zn_set_q_tia_dcoc_2ua_en(1);
-    //zn_set_i_tia_dcoc_en(0);            // When to enable
-    ////zn_set_i_tia_keep_dcoc(1);
-    //zn_set_q_tia_dcoc_en(0);
-    ////zn_set_q_tia_keep_dcoc(1);
-    zn_set_tia_lna_gain(tia_gain_table[12]);
+    zn_set_tia_lna_gain(tia_gain_table[0]);
 
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x0000000f);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x001cffc0); //ovrd ana en & stage2
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00017f80);//I_tia gain setup
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1050, 0x000002ff);//Q_tia gain setup
     zn_set_lna_stage1_agc_vord_2nd(1);
     zn_set_lna_stage2_agc_vord_2nd(1);
     zn_set_tia_agc_vord_2nd(1);
-    zn_set_tia_lna_gain_2nd(tia_gain_table[12]);
+    zn_set_tia_lna_gain_2nd(tia_gain_table[0]);
 
     //ovrd cfg
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12A0);
     reg_value_temp = reg_value>>16;
     reg_value = reg_value<<16;
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
 
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
-    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
+    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0);
+    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
     reg_value_temp = reg_value>>16;
     reg_value = reg_value<<16;
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
     //en tia_calib_load_ovrd
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value | 0x0003c000);
-    //printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
     zn_set_i_tia_calib_load_ovrd(1);
     zn_set_q_tia_calib_load_ovrd(1);
     zn_set_i_tia_calib_load_ovrd_2nd(1);
     zn_set_q_tia_calib_load_ovrd_2nd(1);
 
     //close vga_word_ovrd
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x00000000);
     zn_set_i_vga_word_ovrd(0);
     zn_set_q_vga_word_ovrd(0);
     zn_set_i_vga_word_ovrd_2nd(0);
     zn_set_q_vga_word_ovrd_2nd(0);
-    ////zn_set_i_agc_word_ovrd(0);
-    ////zn_set_q_agc_word_ovrd(0);
-    ////zn_set_i_agc_word_ovrd_2nd(0);
-    ////zn_set_q_agc_word_ovrd_2nd(0);
-
-    //vga cal wait time
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f00000);//0x01000000, calibration time setup
-    ////zn_set_vga_cal_wait_time(0x7f);
-
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1040, 0x00000002);//cali clk en, where is the bb clk 125M setup?
-    ////zn_set_i_tia_atest_en(0);       // When to enable
-    zn_set_q_tia_atest_en(0);           // When to enable , at last should be enable ?
-    ////zn_set_rx_clk38p4_div_en(1);    // When to enable and When to disable
-
 
     for(int cali_idx=0; cali_idx<15; cali_idx++)//15
     {
         dc_i_tmp = 15;
         dc_q_tmp = 15;
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx0
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
-        zn_set_aoa_mode_sel(0);         // How to use this function
 
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
-        ////zn_set_q_vga_aux_ovrd_2nd(0);
-        ////zn_set_q_vga_aux_2nd(0);
-        ////zn_set_i_vga_aux_ovrd_2nd(0);
-        ////zn_set_i_vga_aux_2nd(0);
-        ////zn_set_q_vga_aux_ovrd(0);
-        ////zn_set_q_vga_aux(0);
-        ////zn_set_i_vga_aux_ovrd(0);
-        ////zn_set_i_vga_aux(0);
-        ////zn_set_q_vga_vcm_comp_en_2nd(0);
-        //zn_set_q_vga_dcoc_keep_en_2nd(0);
-        ////zn_set_q_vga_dcoc_comp_en_2nd(0);
-        //zn_set_q_vga_auto_calib_en_2nd(0);
-        ////zn_set_i_vga_vcm_comp_en_2nd(0);
-        //zn_set_i_vga_dcoc_keep_en_2nd(0);
-        ////zn_set_i_vga_dcoc_comp_en_2nd(0);
-        //zn_set_i_vga_auto_calib_en_2nd(0);
-        ////zn_set_q_vga_vcm_comp_en(0);
-        zn_set_q_vga_dcoc_keep_en(0);
-        ////zn_set_q_vga_dcoc_comp_en(0);
-        zn_set_q_vga_auto_calib_en(0);
-        ////zn_set_i_vga_vcm_comp_en(0);
-        zn_set_i_vga_dcoc_keep_en(0);           // When to enable , at model sim it should be enable?
-        ////zn_set_i_vga_dcoc_comp_en(0);
-        zn_set_i_vga_auto_calib_en(0);
         //set vga gain
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x07f10000 + power_table[cali_idx]);//gain sel ovrd
         zn_set_vga_gain_sel(power_table[cali_idx]);
         zn_set_vga_gain_sel_ovrd(1);
 
         for(int32_t j = 0; j < 30 ; j++)
         {
-            //iq_keep_en
-            //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00000044
+            //iq vag auto calib en
             zn_set_i_vga_auto_calib_en(0);
             zn_set_q_vga_auto_calib_en(0);
-            //iq vag auto calib en
-            //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000011);//keep dcoc, auto cali en,0x00000055
             zn_set_i_vga_auto_calib_en(1);
             zn_set_q_vga_auto_calib_en(1);
             //wait RX finished
@@ -8274,49 +7828,15 @@ void zn_vga_calibration(void)
     {
         dc_i_tmp = 15;
         dc_q_tmp = 15;
-        //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c); // sw to rx1
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value | 0x20000000);
-        zn_set_aoa_mode_sel(1);         // How to use this function
 
-        //close iq auto cali
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
-        ////zn_set_q_vga_aux_ovrd_2nd(0);
-        ////zn_set_q_vga_aux_2nd(0);
-        ////zn_set_i_vga_aux_ovrd_2nd(0);
-        ////zn_set_i_vga_aux_2nd(0);
-        ////zn_set_q_vga_aux_ovrd(0);
-        ////zn_set_q_vga_aux(0);
-        ////zn_set_i_vga_aux_ovrd(0);
-        ////zn_set_i_vga_aux(0);
-        ////zn_set_q_vga_vcm_comp_en_2nd(0);
-        zn_set_q_vga_dcoc_keep_en_2nd(0);
-        ////zn_set_q_vga_dcoc_comp_en_2nd(0);
-        zn_set_q_vga_auto_calib_en_2nd(0);
-        ////zn_set_i_vga_vcm_comp_en_2nd(0);
-        zn_set_i_vga_dcoc_keep_en_2nd(0);
-        ////zn_set_i_vga_dcoc_comp_en_2nd(0);
-        zn_set_i_vga_auto_calib_en_2nd(0);
-        ////zn_set_q_vga_vcm_comp_en(0);
-        //zn_set_q_vga_dcoc_keep_en(0);
-        ////zn_set_q_vga_dcoc_comp_en(0);
-        //zn_set_q_vga_auto_calib_en(0);
-        ////zn_set_i_vga_vcm_comp_en(0);
-        //zn_set_i_vga_dcoc_keep_en(0);           // When to enable , at model sim it should be enable?
-        ////zn_set_i_vga_dcoc_comp_en(0);
-        //zn_set_i_vga_auto_calib_en(0);
-        //set vga gain
-        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x0ff20000 + (power_table[cali_idx]<<8));
         zn_set_vga_gain_sel_2nd(power_table[cali_idx]<<8);
         zn_set_vga_gain_sel_ovrd_2nd(1);
 
         for(int32_t j = 0; j < 30 ; j++)
         {
-            //iq_keep_en
-            //zn_write_32bit_reg(UWB_BASE_ADDR + 0X1140, 0x00000000);//keep dcoc, auto cali en,0x00004400
+            //iq vag auto calib en
             zn_set_i_vga_auto_calib_en_2nd(0);
             zn_set_q_vga_auto_calib_en_2nd(0);
-            //iq vag auto calib en
-            //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00001100);//keep dcoc, auto cali en,0x00005500
             zn_set_i_vga_auto_calib_en_2nd(1);
             zn_set_q_vga_auto_calib_en_2nd(1);
 
@@ -8361,51 +7881,34 @@ void zn_vga_calibration(void)
         printf("Q:reg0x%x=0x%x.\n",0x1234 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234 + 4*cali_idx));
     }
 
-    //close tia agc ovrd
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x102c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102c,reg_value&0xfffffe3f);
+    // close tia gain ovrd at analog
     zn_set_lna_stage1_agc_vord(0);
     zn_set_lna_stage2_agc_vord(0);
     zn_set_tia_agc_vord(0);
-//    reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1044);
-//    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, reg_value&0xfffffe3f);
     zn_set_lna_stage1_agc_vord_2nd(0);
     zn_set_lna_stage2_agc_vord_2nd(0);
     zn_set_tia_agc_vord_2nd(0);
-
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1120, reg_value & 0xfffc3fff);
-    //printf("reg0x%x=0x%x.\n",0x1120,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1120));
+    // close tia word ovrd
     zn_set_i_tia_calib_load_ovrd(0);
     zn_set_q_tia_calib_load_ovrd(0);
     zn_set_i_tia_calib_load_ovrd_2nd(0);
     zn_set_q_tia_calib_load_ovrd_2nd(0);
 
     //cfg agc_gain_ovrd and close vga_gain_sel
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1144, 0x010c0000);
     zn_set_vga_gain_sel_ovrd(0);
     zn_set_vga_gain_sel_ovrd_2nd(0);
     zn_set_agc_gain_ovrd(1);
     zn_set_agc_gain_ovrd_2nd(1);
 
     //cfg agc_word_ovrd
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x114c, 0x000000f0);
     zn_set_i_agc_word_ovrd(1);
     zn_set_q_agc_word_ovrd(1);
     zn_set_i_agc_word_ovrd_2nd(1);
     zn_set_q_agc_word_ovrd_2nd(1);
-    ////zn_set_i_vga_word_ovrd(0);
-    ////zn_set_q_vga_word_ovrd(0);
-    ////zn_set_i_vga_word_ovrd_2nd(0);
-    ////zn_set_q_vga_word_ovrd_2nd(0);
 
     //sw to rx0
-    //reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x105c);
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, reg_value & 0xdfffffff);
     zn_set_aoa_mode_sel(0);
-    //cfg adc_tune_ch2 to reduce the generation of -16
-    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x70000000);
-    zn_set_i_adc_cmp_dly_ctrl_2nd(7);
+
 
     printf("vga calibration end!\n");
 }

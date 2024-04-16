@@ -1648,7 +1648,7 @@ void zn_analog_regs_init(void)
                 zn_write_32bit_reg(UWB_BASE_ADDR + 0x05bc, 0x02);//digital_clk_rx_en
                 
         // rx0 AGC config
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x03D0, 0x02500404);//agc on
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x03D0, 0x03500404);//agc on
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x03D4, 0x000801f4);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x03D8, 0x00660020);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x03DC, 0x03041333);
@@ -1672,7 +1672,7 @@ void zn_analog_regs_init(void)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x05FC, 0x00160800);//AGC out Gain over,default:off 1dB
     
     //RX1
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x03F4, 0x02500404);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x03F4, 0x03500404);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x03F8, 0x000801f4);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x03FC, 0x00660020);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x0400, 0x03041333);
@@ -1741,7 +1741,7 @@ void zn_analog_regs_init(void)
     zn_set_i_tia_keep_dcoc_2nd(1);
     zn_set_q_tia_keep_dcoc_2nd(1);
     //cfg adc_tune_ch2 to reduce the generation of -16
-    zn_set_i_adc_cmp_dly_ctrl_2nd(7);
+    zn_set_i_adc_cmp_dly_ctrl_2nd(8);
 
 //    zn_or_32bit_reg(SYSCTRL_BASE_ADDR + 0x0c, (1 << 4));
 //    mdelay(SETTING_DELAY);
@@ -7137,7 +7137,6 @@ void zn_calibration_pre(void)
     zn_set_q_tia_auto_calib_en(0);
     zn_set_q_tia_atest_en(0);
 
-
     //cfg RX1
 
     // set tia gain max
@@ -7181,6 +7180,8 @@ void zn_calibration_pre(void)
         //reg_value_temp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12e0);
         //zn_write_32bit_reg(UWB_BASE_ADDR + 0x12e0, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
     }
+    zn_set_q_tia_auto_calib_en_2nd(0);
+    zn_set_q_tia_atest_en_2nd(0);
 
     //close tia agc ovrd
     zn_set_lna_stage1_agc_vord(0);
@@ -7198,6 +7199,7 @@ void zn_calibration_pre(void)
     //close vga ovrd max
     zn_set_vga_gain_sel_ovrd(0);
     zn_set_vga_gain_sel_ovrd_2nd(0);
+    
     //VGA
     //enable tia gain ovrd at analog & set tia gain max
     zn_set_lna_stage1_agc_vord(1);
@@ -7230,7 +7232,7 @@ void zn_calibration_pre(void)
 
     //vga cal wait time
     zn_set_vga_cal_wait_time(0x7f);
-
+   
     dc_i_tmp = 15;
     dc_q_tmp = 15;
 
@@ -7268,10 +7270,12 @@ void zn_calibration_pre(void)
     for(int32_t j = 0; j < 30 ; j++)
     {
         //iq vag auto calib en
-        zn_set_i_vga_auto_calib_en(0);
-        zn_set_q_vga_auto_calib_en(0);
-        zn_set_i_vga_auto_calib_en(1);
-        zn_set_q_vga_auto_calib_en(1);
+//        zn_set_i_vga_auto_calib_en(0);
+//        zn_set_q_vga_auto_calib_en(0);
+//        zn_set_i_vga_auto_calib_en(1);
+//        zn_set_q_vga_auto_calib_en(1);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000011);
         //wait RX finished
         mdelay(10);
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0x30) != 0x30);
@@ -7308,26 +7312,29 @@ void zn_calibration_pre(void)
         }
     }
     printf("RX0 cali pre ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,\n",dc_i_tmp,dc_q_tmp);
-    dc_i_tmp = 15;
-    dc_q_tmp = 15;
 
     zn_set_q_vga_auto_calib_en(0);
     zn_set_i_vga_auto_calib_en(0);
+    
     //set vga gain
     zn_set_vga_gain_sel_2nd(0x0);
     zn_set_vga_gain_sel_ovrd_2nd(1);
+
     for(int32_t j = 0; j < 30 ; j++)
     {
         //iq vag auto calib en
-        zn_set_i_vga_auto_calib_en_2nd(0);
-        zn_set_q_vga_auto_calib_en_2nd(0);
-        zn_set_i_vga_auto_calib_en_2nd(1);
-        zn_set_q_vga_auto_calib_en_2nd(1);
+//        zn_set_i_vga_auto_calib_en_2nd(0);
+//        zn_set_q_vga_auto_calib_en_2nd(0);
+//        zn_set_i_vga_auto_calib_en_2nd(1);
+//        zn_set_q_vga_auto_calib_en_2nd(1);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00001100);
 
         //wait RX finished
         mdelay(10);
         while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0xc0) != 0xc0){};
-
+        zn_dc_estimate(0);
+        zn_dc_estimate(2);
         reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148);
         if((reg_value & 0xc0) == 0xc0)
         {
@@ -7461,104 +7468,104 @@ void zn_tia_calibration(void)
         zn_set_q_tia_auto_calib_en(0);
         zn_set_q_tia_atest_en(0);
 
-        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
-        reg_value_temp = reg_value>>16;
-        reg_value = reg_value<<16;
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-        //en tia_calib_load_ovrd
-        zn_set_i_tia_calib_load_ovrd(1);
-        zn_set_q_tia_calib_load_ovrd(1);
+//        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case);
+//        reg_value_temp = reg_value>>16;
+//        reg_value = reg_value<<16;
+//        zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+//        //en tia_calib_load_ovrd
+//        zn_set_i_tia_calib_load_ovrd(1);
+//        zn_set_q_tia_calib_load_ovrd(1);
 
-        for(int32_t j = 0; j < 128 ; j++)
-        {
-                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-                i_n_value = (0xff000000 & reg_value)>>24;
-                i_p_value = (0x00ff0000 & reg_value)>>16;
-                dc_i = zn_dc_estimate(0);
-                dc_i += zn_dc_estimate(0);
-                dc_i = dc_i >> 1;
-                if(dc_i < -1)
-                {
-                      if(i_p_value == 0x7f || i_n_value == 0x00)
-                      {
-                          break;
-                      }
-                      else
-                      {
-                          i_p_value = i_p_value + 1;
-                          i_n_value = i_n_value - 1;
-                          reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-                          zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-                      }
-                }
-                if(dc_i > 1)
-                {
-                      if(i_p_value == 0x00 || i_n_value == 0x7f)
-                      {
-                            break;
-                      }
-                      i_p_value = i_p_value - 1;
-                      i_n_value = i_n_value + 1;
-                      reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-                      zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-                }
+//        for(int32_t j = 0; j < 128 ; j++)
+//        {
+//                reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
+//                i_n_value = (0xff000000 & reg_value)>>24;
+//                i_p_value = (0x00ff0000 & reg_value)>>16;
+//                dc_i = zn_dc_estimate(0);
+//                dc_i += zn_dc_estimate(0);
+//                dc_i = dc_i >> 1;
+//                if(dc_i < -1)
+//                {
+//                      if(i_p_value == 0x7f || i_n_value == 0x00)
+//                      {
+//                          break;
+//                      }
+//                      else
+//                      {
+//                          i_p_value = i_p_value + 1;
+//                          i_n_value = i_n_value - 1;
+//                          reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+//                          zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+//                      }
+//                }
+//                if(dc_i > 1)
+//                {
+//                      if(i_p_value == 0x00 || i_n_value == 0x7f)
+//                      {
+//                            break;
+//                      }
+//                      i_p_value = i_p_value - 1;
+//                      i_n_value = i_n_value + 1;
+//                      reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+//                      zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+//                }
 
-                if((dc_i <= 1) && (dc_i >= -1) )
-                {
-                      break;
-                }
-        }
-        for(int32_t j = 0; j < 128 ; j++)
-        {
-            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-            q_n_value = (0x0000ff00 & reg_value)>>8;
-            q_p_value = (0x000000ff & reg_value);
-            dc_q = zn_dc_estimate(1);
-            dc_q += zn_dc_estimate(1);
-            dc_q = dc_q >> 1;
-            if(dc_q < -1)
-            {
-                if(q_p_value == 0x7f || q_n_value == 0x00)
-                {
-                    break;
-                }
-                else
-                {
-                    q_p_value = q_p_value + 1;
-                    q_n_value = q_n_value - 1;
-                    reg_value_temp = (q_p_value) + (i_n_value << 8);
-                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-                }
-            }
-            if(dc_q > 1)
-            {
-                  if(q_p_value == 0x00 || q_n_value == 0x7f)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        q_p_value = q_p_value - 1;
-                        q_n_value = q_n_value + 1;
-                        reg_value_temp = (q_p_value) + (i_n_value << 8);
-                        zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-                    }
-            }
+//                if((dc_i <= 1) && (dc_i >= -1) )
+//                {
+//                      break;
+//                }
+//        }
+//        for(int32_t j = 0; j < 128 ; j++)
+//        {
+//            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
+//            q_n_value = (0x0000ff00 & reg_value)>>8;
+//            q_p_value = (0x000000ff & reg_value);
+//            dc_q = zn_dc_estimate(1);
+//            dc_q += zn_dc_estimate(1);
+//            dc_q = dc_q >> 1;
+//            if(dc_q < -1)
+//            {
+//                if(q_p_value == 0x7f || q_n_value == 0x00)
+//                {
+//                    break;
+//                }
+//                else
+//                {
+//                    q_p_value = q_p_value + 1;
+//                    q_n_value = q_n_value - 1;
+//                    reg_value_temp = (q_p_value) + (i_n_value << 8);
+//                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+//                }
+//            }
+//            if(dc_q > 1)
+//            {
+//                  if(q_p_value == 0x00 || q_n_value == 0x7f)
+//                    {
+//                        break;
+//                    }
+//                    else
+//                    {
+//                        q_p_value = q_p_value - 1;
+//                        q_n_value = q_n_value + 1;
+//                        reg_value_temp = (q_p_value) + (i_n_value << 8);
+//                        zn_write_32bit_reg(UWB_BASE_ADDR + 0x112c, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+//                    }
+//            }
 
 
-            if((dc_q <= 1) && (dc_q >= -1) )
-            {
-                  break;
-            }
-        }
-        printf("RX0 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
-        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
-        q_cali_value = (reg_value & 0x0000ffff)<<16;
-        i_cali_value = (reg_value & 0xffff0000)>>16;
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff));
-        printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
-        zn_set_i_tia_calib_load_ovrd(0);
-        zn_set_q_tia_calib_load_ovrd(0);
+//            if((dc_q <= 1) && (dc_q >= -1) )
+//            {
+//                  break;
+//            }
+//        }
+//        printf("RX0 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
+//        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x112c);
+//        q_cali_value = (reg_value & 0x0000ffff)<<16;
+//        i_cali_value = (reg_value & 0xffff0000)>>16;
+//        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff));
+//        printf("####:reg0x%x=0x%x.\n",0x1270 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1270 + 4*cali_case));
+//        zn_set_i_tia_calib_load_ovrd(0);
+//        zn_set_q_tia_calib_load_ovrd(0);
 
     }
 //#ifdef _AOA_EN
@@ -7606,104 +7613,107 @@ void zn_tia_calibration(void)
             zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
             printf("Q:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));
         }
+        zn_set_q_tia_auto_calib_en_2nd(0);
+        zn_set_q_tia_atest_en_2nd(0);
+        
 
-        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
-        reg_value_temp = reg_value>>16;
-        reg_value = reg_value<<16;
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
-        //en tia_calib_load_ovrd
-        zn_set_i_tia_calib_load_ovrd_2nd(1);
-        zn_set_q_tia_calib_load_ovrd_2nd(1);
+//        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case);
+//        reg_value_temp = reg_value>>16;
+//        reg_value = reg_value<<16;
+//        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0xffff0000)|(reg_value_temp&0x0000ffff));
+//        //en tia_calib_load_ovrd
+//        zn_set_i_tia_calib_load_ovrd_2nd(1);
+//        zn_set_q_tia_calib_load_ovrd_2nd(1);
 
-        for(int32_t j = 0; j < 128 ; j++)
-        {
-            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
-            i_n_value = (0xff000000 & reg_value)>>24;
-            i_p_value = (0x00ff0000 & reg_value)>>16;
-            dc_i = zn_dc_estimate(2);
-            dc_i += zn_dc_estimate(2);
-            dc_i = dc_i >> 1;
-            if(dc_i < -1)
-            {
-                if(i_p_value == 0x7f || i_n_value == 0x00)
-                {
-                    break;
-                }
-                else
-                {
-                    i_p_value = i_p_value + 1;
-                    i_n_value = i_n_value - 1;
-                    reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-                }
-            }
-            if(dc_i > 1)
-            {
-                if(i_p_value == 0x00 || i_n_value == 0x7f)
-                {
-                    break;
-                }
-                i_p_value = i_p_value - 1;
-                i_n_value = i_n_value + 1;
-                reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
-            }
+//        for(int32_t j = 0; j < 128 ; j++)
+//        {
+//            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
+//            i_n_value = (0xff000000 & reg_value)>>24;
+//            i_p_value = (0x00ff0000 & reg_value)>>16;
+//            dc_i = zn_dc_estimate(2);
+//            dc_i += zn_dc_estimate(2);
+//            dc_i = dc_i >> 1;
+//            if(dc_i < -1)
+//            {
+//                if(i_p_value == 0x7f || i_n_value == 0x00)
+//                {
+//                    break;
+//                }
+//                else
+//                {
+//                    i_p_value = i_p_value + 1;
+//                    i_n_value = i_n_value - 1;
+//                    reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+//                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+//                }
+//            }
+//            if(dc_i > 1)
+//            {
+//                if(i_p_value == 0x00 || i_n_value == 0x7f)
+//                {
+//                    break;
+//                }
+//                i_p_value = i_p_value - 1;
+//                i_n_value = i_n_value + 1;
+//                reg_value_temp = (i_p_value <<16) + (i_n_value <<24);
+//                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value&0x0000ffff)|(reg_value_temp&0xffff0000));
+//            }
 
-            if((dc_i <= 1) && (dc_i >= -1) )
-            {
-                  break;
-            }
-        }
-        for(int32_t j = 0; j < 128 ; j++)
-        {
-            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
-            q_n_value = (0x0000ff00 & reg_value)>>8;
-            q_p_value = (0x000000ff & reg_value);
-            dc_q = zn_dc_estimate(3);
-            dc_q += zn_dc_estimate(3);
-            dc_q = dc_q >> 1;
-            if(dc_q < -1)
-            {
-                if(q_p_value == 0x7f || q_n_value == 0x00)
-                {
-                    break;
-                }
-                else
-                {
-                    q_p_value = q_p_value + 1;
-                    q_n_value = q_n_value - 1;
-                    reg_value_temp = (q_p_value) + (i_n_value << 8);
-                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-                }
-            }
-            if(dc_q > 1)
-            {
-                if(q_p_value == 0x00 || q_n_value == 0x7f)
-                {
-                    break;
-                }
-                else
-                {
-                    q_p_value = q_p_value - 1;
-                    q_n_value = q_n_value + 1;
-                    reg_value_temp = (q_p_value) + (i_n_value << 8);
-                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
-                }
-            }
+//            if((dc_i <= 1) && (dc_i >= -1) )
+//            {
+//                  break;
+//            }
+//        }
+//        for(int32_t j = 0; j < 128 ; j++)
+//        {
+//            reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
+//            q_n_value = (0x0000ff00 & reg_value)>>8;
+//            q_p_value = (0x000000ff & reg_value);
+//            dc_q = zn_dc_estimate(3);
+//            dc_q += zn_dc_estimate(3);
+//            dc_q = dc_q >> 1;
+//            if(dc_q < -1)
+//            {
+//                if(q_p_value == 0x7f || q_n_value == 0x00)
+//                {
+//                    break;
+//                }
+//                else
+//                {
+//                    q_p_value = q_p_value + 1;
+//                    q_n_value = q_n_value - 1;
+//                    reg_value_temp = (q_p_value) + (i_n_value << 8);
+//                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+//                }
+//            }
+//            if(dc_q > 1)
+//            {
+//                if(q_p_value == 0x00 || q_n_value == 0x7f)
+//                {
+//                    break;
+//                }
+//                else
+//                {
+//                    q_p_value = q_p_value - 1;
+//                    q_n_value = q_n_value + 1;
+//                    reg_value_temp = (q_p_value) + (i_n_value << 8);
+//                    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1130, (reg_value_temp &0x0000ffff)|(reg_value &0xffff0000));
+//                }
+//            }
 
-            if((dc_q <= 1) && (dc_q >= -1) )
-            {
-                  break;
-            }
-        }
-        printf("RX1 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
-        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
-        q_cali_value = (reg_value & 0x0000ffff)<<16;
-        i_cali_value = (reg_value & 0xffff0000)>>16;
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff));
-        printf("####:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));
-        zn_set_i_tia_calib_load_ovrd_2nd(0);
-        zn_set_q_tia_calib_load_ovrd_2nd(0);
+//            if((dc_q <= 1) && (dc_q >= -1) )
+//            {
+//                  break;
+//            }
+//        }
+//        printf("RX1 tia case :%d,absolute value dc_i : %d , value dc_q : %d \n", cali_case , dc_i,dc_q);
+//        reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1130);
+//        q_cali_value = (reg_value & 0x0000ffff)<<16;
+//        i_cali_value = (reg_value & 0xffff0000)>>16;
+//        zn_write_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case, (q_cali_value&0xffff0000)|(i_cali_value&0x0000ffff));
+//        printf("####:reg0x%x=0x%x.\n",0x12b0 + 4*cali_case,zn_read_32bit_reg(UWB_BASE_ADDR + 0x12b0 + 4*cali_case));
+//        zn_set_i_tia_calib_load_ovrd_2nd(0);
+//        zn_set_q_tia_calib_load_ovrd_2nd(0);
     }
 //#endif
     //close tia gain ovrd at analog
@@ -7790,10 +7800,12 @@ void zn_vga_calibration(void)
         for(int32_t j = 0; j < 30 ; j++)
         {
             //iq vag auto calib en
-            zn_set_i_vga_auto_calib_en(0);
-            zn_set_q_vga_auto_calib_en(0);
-            zn_set_i_vga_auto_calib_en(1);
-            zn_set_q_vga_auto_calib_en(1);
+//            zn_set_i_vga_auto_calib_en(0);
+//            zn_set_q_vga_auto_calib_en(0);
+//            zn_set_i_vga_auto_calib_en(1);
+//            zn_set_q_vga_auto_calib_en(1);
+            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
+            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000011);
             //wait RX finished
             mdelay(10);
             while((zn_read_32bit_reg(UWB_BASE_ADDR + 0x1148) & 0x30) != 0x30);
@@ -7832,7 +7844,8 @@ void zn_vga_calibration(void)
         printf("RX0 vga case:%d ,absolute value dc_i_tmp : %d , value dc_q_tmp : %d ,",cali_idx,dc_i_tmp,dc_q_tmp);
         printf("I:reg0x%x=0x%x.   ",0x1180 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1180 + 4*cali_idx));
         printf("Q:reg0x%x=0x%x.\n",0x11bc + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x11bc + 4*cali_idx));
-    }   
+    }  
+//#ifdef _AOA_EN    
     //vga cali rx1 begin
     printf("rx1 vga calibration begin\n");
     for(int cali_idx=0; cali_idx<15; cali_idx++)//15
@@ -7846,10 +7859,12 @@ void zn_vga_calibration(void)
         for(int32_t j = 0; j < 30 ; j++)
         {
             //iq vag auto calib en
-            zn_set_i_vga_auto_calib_en_2nd(0);
-            zn_set_q_vga_auto_calib_en_2nd(0);
-            zn_set_i_vga_auto_calib_en_2nd(1);
-            zn_set_q_vga_auto_calib_en_2nd(1);
+//            zn_set_i_vga_auto_calib_en_2nd(0);
+//            zn_set_q_vga_auto_calib_en_2nd(0);
+//            zn_set_i_vga_auto_calib_en_2nd(1);
+//            zn_set_q_vga_auto_calib_en_2nd(1);
+            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00000000);
+            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1140, 0x00001100);
 
             //wait RX finished
             mdelay(10);
@@ -7891,6 +7906,7 @@ void zn_vga_calibration(void)
         printf("I:reg0x%x=0x%x. ",0x11f8 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x11f8 + 4*cali_idx));
         printf("Q:reg0x%x=0x%x.\n",0x1234 + 4*cali_idx,zn_read_32bit_reg(UWB_BASE_ADDR + 0x1234 + 4*cali_idx));
     }
+//#endif
 
     // close tia gain ovrd at analog
     zn_set_lna_stage1_agc_vord(0);

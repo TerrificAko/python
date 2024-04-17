@@ -7076,7 +7076,6 @@ void zn_calibration_pre(void)
     zn_set_vga_gain_sel_2nd(0x0);
     zn_set_vga_gain_sel_ovrd_2nd(1);
 
-
     //tia gain ovrd at analog
 
     zn_set_lna_stage1_agc_vord(1);
@@ -7113,7 +7112,6 @@ void zn_calibration_pre(void)
     zn_set_i_tia_auto_calib_en(0);
 
     //open Q channel analog top cfg
-
     zn_set_i_tia_atest_en(0);
     zn_set_q_tia_atest_en(1);
 
@@ -7138,7 +7136,6 @@ void zn_calibration_pre(void)
     zn_set_q_tia_atest_en(0);
 
     //cfg RX1
-
     // set tia gain max
     zn_set_tia_lna_gain_2nd(tia_gain_table[0]);
 
@@ -7315,7 +7312,10 @@ void zn_calibration_pre(void)
 
     zn_set_q_vga_auto_calib_en(0);
     zn_set_i_vga_auto_calib_en(0);
-    
+    //RX1
+    dc_i_tmp = 15;
+    dc_q_tmp = 15;
+
     //set vga gain
     zn_set_vga_gain_sel_2nd(0x0);
     zn_set_vga_gain_sel_ovrd_2nd(1);

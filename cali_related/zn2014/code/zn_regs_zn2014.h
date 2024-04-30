@@ -1152,6 +1152,170 @@ extern "C" {
 #define IP_NACC1_BIT_LEN                            (12U)                
 #define IP_NACC1_BIT_MASK                           0xfff00000U
 
+
+//******************************************************************************************************************/
+// Description: Bit definitions for register CALI
+
+#define ADDR_0X0818                             (UWB_BASE_ADDR + 0x0818)
+
+#define D_LNA_STAGE2_AGC_BIT_OFFSET             (29U)
+#define D_LNA_STAGE2_AGC_BIT_LEN                (2U)
+#define D_LNA_STAGE2_AGC_BIT_MASK               0x60000000U
+
+#define ADDR_0X0854                             (UWB_BASE_ADDR + 0x0854)
+
+
+#define D_LNA_STAGE2_AGC_2ND_BIT_OFFSET         (14U)
+#define D_LNA_STAGE2_AGC_2ND_BIT_LEN            (2U)
+#define D_LNA_STAGE2_AGC_2ND_BIT_MASK           0xc000U
+
+#define ADDR_0X1028                             (UWB_BASE_ADDR + 0x1028)
+
+#define CAL_WAIT_TIME_BIT_OFFSET                (0U)
+#define CAL_WAIT_TIME_BIT_LEN                   (8U)
+#define CAL_WAIT_TIME_BIT_MASK                  0xffU
+
+#define I_TIA_AUTO_CALIB_EN_BIT_OFFSET          (24U)
+#define I_TIA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define I_TIA_AUTO_CALIB_EN_BIT_MASK            0x1000000U
+
+#define Q_TIA_AUTO_CALIB_EN_BIT_OFFSET          (25U)
+#define Q_TIA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define Q_TIA_AUTO_CALIB_EN_BIT_MASK            0x2000000U
+
+#define I_TIA_CALIB_LOAD_OVRD_BIT_OFFSET        (26U)
+#define I_TIA_CALIB_LOAD_OVRD_BIT_LEN           (1U)
+#define I_TIA_CALIB_LOAD_OVRD_BIT_MASK          0x4000000U
+
+#define Q_TIA_CALIB_LOAD_OVRD_BIT_OFFSET        (27U)
+#define Q_TIA_CALIB_LOAD_OVRD_BIT_LEN           (1U)
+#define Q_TIA_CALIB_LOAD_OVRD_BIT_MASK          0x8000000U
+
+#define I_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (28U)
+#define I_TIA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
+#define I_TIA_AUTO_CALIB_EN_2ND_BIT_MASK        0x10000000U
+
+#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_OFFSET      (29U)
+#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_LEN         (1U)
+#define Q_TIA_AUTO_CALIB_EN_2ND_BIT_MASK        0x20000000U
+
+#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET    (30U)
+#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN       (1U)
+#define I_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK      0x40000000U
+
+#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_OFFSET    (31U)
+#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_LEN       (1U)
+#define Q_TIA_CALIB_LOAD_OVRD_2ND_BIT_MASK      0x80000000U
+
+#define ADDR_0X1030                             (UWB_BASE_ADDR + 0x1030)
+
+#define I_TIA_ATEST_EN_BIT_OFFSET              (16U)
+#define I_TIA_ATEST_EN_BIT_LEN                 (1U)
+#define I_TIA_ATEST_EN_BIT_MASK                0x10000U
+
+#define I_TIA_KEEP_DCOC_BIT_OFFSET              (17U)
+#define I_TIA_KEEP_DCOC_BIT_LEN                 (1U)
+#define I_TIA_KEEP_DCOC_BIT_MASK                0x20000U
+
+#define I_TIA_DCOC_EN_BIT_OFFSET                (18U)
+#define I_TIA_DCOC_EN_BIT_LEN                   (1U)
+#define I_TIA_DCOC_EN_BIT_MASK                  0x40000U
+
+#define Q_TIA_ATEST_EN_BIT_OFFSET              (19U)
+#define Q_TIA_ATEST_EN_BIT_LEN                 (1U)
+#define Q_TIA_ATEST_EN_BIT_MASK                0x80000U
+
+#define Q_TIA_KEEP_DCOC_BIT_OFFSET              (20U)
+#define Q_TIA_KEEP_DCOC_BIT_LEN                 (1U)
+#define Q_TIA_KEEP_DCOC_BIT_MASK                0x100000U
+
+#define Q_TIA_DCOC_EN_BIT_OFFSET                (21U)
+#define Q_TIA_DCOC_EN_BIT_LEN                   (1U)
+#define Q_TIA_DCOC_EN_BIT_MASK                  0x200000U
+
+#define I_TIA_ATEST_EN_2ND_BIT_OFFSET          (22U)
+#define I_TIA_ATEST_EN_2ND_BIT_LEN             (1U)
+#define I_TIA_ATEST_EN_2ND_BIT_MASK            0x400000U
+
+#define I_TIA_KEEP_DCOC_2ND_BIT_OFFSET          (23U)
+#define I_TIA_KEEP_DCOC_2ND_BIT_LEN             (1U)
+#define I_TIA_KEEP_DCOC_2ND_BIT_MASK            0x800000U
+
+#define I_TIA_DCOC_EN_2ND_BIT_OFFSET            (24U)
+#define I_TIA_DCOC_EN_2ND_BIT_LEN               (1U)
+#define I_TIA_DCOC_EN_2ND_BIT_MASK              0x1000000U
+
+#define Q_TIA_ATEST_EN_2ND_BIT_OFFSET          (25U)
+#define Q_TIA_ATEST_EN_2ND_BIT_LEN             (1U)
+#define Q_TIA_ATEST_EN_2ND_BIT_MASK            0x2000000U
+
+#define Q_TIA_KEEP_DCOC_2ND_BIT_OFFSET          (26U)
+#define Q_TIA_KEEP_DCOC_2ND_BIT_LEN             (1U)
+#define Q_TIA_KEEP_DCOC_2ND_BIT_MASK            0x4000000U
+
+#define Q_TIA_DCOC_EN_2ND_BIT_OFFSET            (27U)
+#define Q_TIA_DCOC_EN_2ND_BIT_LEN               (1U)
+#define Q_TIA_DCOC_EN_2ND_BIT_MASK              0x8000000U
+
+
+
+#define ADDR_0X1048                             (UWB_BASE_ADDR + 0x1048)
+
+#define I_VGA_AUTO_CALIB_EN_BIT_OFFSET          (0U)
+#define I_VGA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define I_VGA_AUTO_CALIB_EN_BIT_MASK            0x1U
+
+#define Q_VGA_AUTO_CALIB_EN_BIT_OFFSET          (4U)
+#define Q_VGA_AUTO_CALIB_EN_BIT_LEN             (1U)
+#define Q_VGA_AUTO_CALIB_EN_BIT_MASK            0x10U
+
+#define ADDR_0X1054                             (UWB_BASE_ADDR + 0x1054)
+
+#define D_Q_TIA_DCOC_2UA_en_BIT_OFFSET          (7U)
+#define D_Q_TIA_DCOC_2UA_en_BIT_LEN             (1U)
+#define D_Q_TIA_DCOC_2UA_en_BIT_MASK            0x80U
+
+#define D_I_TIA_DCOC_2UA_en_BIT_OFFSET          (8U)
+#define D_I_TIA_DCOC_2UA_en_BIT_LEN             (1U)
+#define D_I_TIA_DCOC_2UA_en_BIT_MASK            0x100U
+
+#define D_Q_TIA_DCOC_2UA_en_2nd_BIT_OFFSET      (9U)
+#define D_Q_TIA_DCOC_2UA_en_2nd_BIT_LEN         (1U)
+#define D_Q_TIA_DCOC_2UA_en_2nd_BIT_MASK        0x200U
+
+#define D_I_TIA_DCOC_2UA_en_2nd_BIT_OFFSET      (10U)
+#define D_I_TIA_DCOC_2UA_en_2nd_BIT_LEN         (1U)
+#define D_I_TIA_DCOC_2UA_en_2nd_BIT_MASK        0x400U
+
+#define D_RX_CLK38P4_DIV_EN_BIT_OFFSET          (14U)
+#define D_RX_CLK38P4_DIV_EN_BIT_LEN             (1U)
+#define D_RX_CLK38P4_DIV_EN_BIT_MASK            0x4000U
+
+#define D_LNA_STAGE1_BIAS_SEL_BIT_OFFSET        (20U)
+#define D_LNA_STAGE1_BIAS_SEL_BIT_LEN           (3U)
+#define D_LNA_STAGE1_BIAS_SEL_BIT_MASK          0x700000U
+
+#define D_LNA_STAGE1_FEED_R_SEL_BIT_OFFSET      (24U)
+#define D_LNA_STAGE1_FEED_R_SEL_BIT_LEN         (2U)
+#define D_LNA_STAGE1_FEED_R_SEL_BIT_MASK        0x3000000U
+
+#define ADDR_0X1058                             (UWB_BASE_ADDR + 0x1058)
+
+#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_OFFSET    (9U)
+#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_LEN       (3U)
+#define D_LNA_STAGE1_BIAS_SEL_2ND_BIT_MASK      0xe00U
+
+#define D_Q_VGA_CAL_SEL_BIT_OFFSET              (28U)
+#define D_Q_VGA_CAL_SEL_BIT_LEN                 (2U)
+#define D_Q_VGA_CAL_SEL_BIT_MASK                0x30000000U
+
+#define D_I_VGA_CAL_SEL_BIT_OFFSET              (30U)
+#define D_I_VGA_CAL_SEL_BIT_LEN                 (2U)
+#define D_I_VGA_CAL_SEL_BIT_MASK                0xc0000000U
+
+
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -1741,7 +1741,7 @@ void zn_analog_regs_init(void)
     zn_set_i_tia_keep_dcoc_2nd(1);
     zn_set_q_tia_keep_dcoc_2nd(1);
     //cfg adc_tune_ch2 to reduce the generation of -16
-    zn_set_i_adc_cmp_dly_ctrl_2nd(8);
+    //zn_set_i_adc_cmp_dly_ctrl_2nd(8);
 
 //    zn_or_32bit_reg(SYSCTRL_BASE_ADDR + 0x0c, (1 << 4));
 //    mdelay(SETTING_DELAY);
@@ -7935,6 +7935,8 @@ void zn_vga_calibration(void)
 
     //sw to rx0
     zn_set_aoa_mode_sel(0);
+    // close cali clk
+    zn_set_rx_clk38p4_div_en(0);
 
 
     printf("vga calibration end!\n");

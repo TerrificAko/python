@@ -326,7 +326,7 @@ void zn_set_d_q_vga_cal_sel(uint32_t d_q_vga_cal_sel)
 }
 
 
-void zn_set_lna_stage1_bias_sel(uint32_t lna_stage1_bias_sel)
+void zn_set_d_lna_stage1_bias_sel(uint32_t lna_stage1_bias_sel)
 {
     zn_set_reg_field_wr(ADDR_0X1054,
                         D_LNA_STAGE1_BIAS_SEL_BIT_MASK,
@@ -1662,13 +1662,14 @@ void zn_vga_fix_gain_cal(uint32_t *rx0_i, uint32_t *rx0_q, uint32_t *rx1_i, uint
     int32_t dc_q_tmp = 0;
     uint8_t index    = 0;
     //if for inside loop ,the cali should be in tx_en . trx_auto_en rf/clk_pll en
+    uint32_t reg_084c            = zn_read_32bit_reg(UWB_BASE_ADDR + 0x084C);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x084C, 0x82210000);
 
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x03000300); //set vga gain
     zn_set_d_rx_clk38p4_div_en(1);
 
     //LNA OFF
-    zn_set_lna_stage1_bias_sel(0);
+    zn_set_d_lna_stage1_bias_sel(0);
     zn_set_d_lna_stage2_agc(0);
 
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x000000ff); // TIA - VGA calibration time setting
@@ -1724,7 +1725,7 @@ void zn_vga_fix_gain_cal(uint32_t *rx0_i, uint32_t *rx0_q, uint32_t *rx1_i, uint
     *rx0_i = reg_i;
     *rx0_q = reg_q;
     printf("fixed vga gain cal:dc_i =%d, dc_q=%d, I_reg=%X, Q_reg = %X\n", dc_i_tmp, dc_q_tmp, reg_i, reg_q);
-
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x084C, reg_084c);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x0000000f); //set vga cal word ????
     // turn off calibration clock
     //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01000780); //turn off cal clk
@@ -1984,7 +1985,7 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
         zn_set_q_tia_calib_load_ovrd_2nd(1);
 
         // RX0: LNA ON
-        zn_set_lna_stage1_bias_sel(7);
+        zn_set_d_lna_stage1_bias_sel(7);
         if(g_dirver_macro_ctrl.aoa_en)
         {
             //RX0 LNA stage2 OFF
@@ -2059,7 +2060,7 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
 
         // RX0: LNA OFF
 
-        zn_set_lna_stage1_bias_sel(0);
+        zn_set_d_lna_stage1_bias_sel(0);
         zn_set_d_lna_stage2_agc(0);
 
         for(int32_t i = 0; i < 15; i++)
@@ -2288,12 +2289,18 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
     if(g_dirver_macro_ctrl.aoa_en)
     {
         //RX1 LNA stage1 on
+        zn_set_d_lna_stage1_bias_sel(7);
+        zn_set_d_lna_stage2_agc(0);
         zn_set_d_lna_stage1_bias_sel_2nd(7);
+        zn_set_d_lna_stage2_agc_2nd(0);
     }
     else
     {
         //RX1 LNA stage1 off
-        zn_set_d_lna_stage1_bias_sel_2nd(0);
+        zn_set_d_lna_stage1_bias_sel(7);
+        zn_set_d_lna_stage2_agc(3);
+        zn_set_d_lna_stage1_bias_sel_2nd(0;
+        zn_set_d_lna_stage2_agc_2nd(0);
     }
     //RX0/1 LNA OFF at cali_gain reg
 

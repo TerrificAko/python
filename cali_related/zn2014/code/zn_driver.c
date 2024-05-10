@@ -2299,7 +2299,7 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
         //RX1 LNA stage1 off
         zn_set_d_lna_stage1_bias_sel(7);
         zn_set_d_lna_stage2_agc(3);
-        zn_set_d_lna_stage1_bias_sel_2nd(0;
+        zn_set_d_lna_stage1_bias_sel_2nd(0);
         zn_set_d_lna_stage2_agc_2nd(0);
     }
     //RX0/1 LNA OFF at cali_gain reg

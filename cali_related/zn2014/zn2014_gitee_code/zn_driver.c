@@ -254,6 +254,18 @@ void zn_init_global_config(void)
     s_global_zn_config.cb_rx_sfd_done = NULL;
     s_global_zn_config.cb_rx_phr_err = NULL;
 }
+/*************************************************************************************************************
+* Description: this function is used to init ZN reg bit config
+/*************************************************************************************************************
+void zn_reg_bit_wr(const FileConfig *fileConfig, uint32_t field_value)
+{
+uint32_t addr = fileConfig->baseAddress + UWB_BASE_ADDR;
+uint32_t reg_value = zn_read_32bit_reg(addr);
+uint32_t bitMask = ((1U << fileConfig->bitLength) - 1U) << fileConfig->bitOffset;
+reg_value &= ~bitMask;
+reg_value |= ((field_value << fileConfig->bitOffset) & bitMask);
+zn_write_32bit_reg(addr, reg_value);
+}
 
 /*************************************************************************************************************
 * Description: this function is used to init ZN config
@@ -276,39 +288,239 @@ void zn_analog_regs_init(void)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1644, 0x0c090c08); //CP_LED Param0 Configuration
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1648, 0x0a040c04); //CP_LED Param1 Configuration
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x164C, 0x0a0f0a06); //CP_LED Param2 Configuration
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x00090e10); //VGA_Cal_Sel_RX1
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x00000000); //VGA_Cal_Sel_RX2
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0800, 0x508f808f); //Frequenc offset
+    //VGA_Cal_Sel_RX1
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x00090e10); //VGA_Cal_Sel_RX1
+    zn_reg_bit_wr(&reg10_d_i_vga_cal_sel, 0);
+    zn_reg_bit_wr(&reg10_d_q_vga_cal_sel, 0);
+    zn_reg_bit_wr(&reg10_d_rx_ldo_v1p2_lna_endly, 0);
+    zn_reg_bit_wr(&reg10_d_rx_ldo_v1p2_lna_sel, 0);
+    zn_reg_bit_wr(&reg10_d_tx_sw_ldo_v1p2_sel, 0);
+    zn_reg_bit_wr(&reg10_d_bbf_atest_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_bbf_atest_sel_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_rx_vbgr_bias_sel, 0);
+    zn_reg_bit_wr(&reg10_d_pmu_atest_en, 0);
+    zn_reg_bit_wr(&reg10_d_rx_ldo1p8_sel, 0);
+    zn_reg_bit_wr(&reg10_d_bbf_buffer_iref_sel, 9);
+    zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 7);
+    zn_reg_bit_wr(&reg10_d_lna_stage1_feed_r_sel_2nd, 1);
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x09240000); //tia dcoc off
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60729304); //RX0 LNA stage2 ON
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); //RX1 LNA stage2 OFF
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0820, 0x40a02400); //tia q fb cap, 0b 80, res double
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0850, 0xfb0c0d00); //tia i fb cap, 87 04, res double, rx2
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0874, 0x477e061f); //tia q fb cap, 0b 80, res double, rx2
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x087c, 0x00203f00);
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x00000000); //VGA_Cal_Sel_RX2
+    zn_reg_bit_wr(&reg10_d_i_vga_cal_sel_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_q_vga_cal_sel_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_ldo_en, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_ldo_vout_sel, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_ldo_endly, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_ref_en, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_tpdt_en, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_vbatdt_en, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_adc_en, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_adc_testmode, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_atest_en, 0);
+    zn_reg_bit_wr(&reg10_d_sensor_atest_sel, 0);
+    zn_reg_bit_wr(&reg10_dout_sensor_adc_out, 0);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0800, 0x508f808f); //Frequenc offset
+    zn_reg_bit_wr(&reg08_d_clkpll_ndiv, 5);
+    zn_reg_bit_wr(&reg08_d_rfpll_enablemode_reg_overwrite, 0);
+    zn_reg_bit_wr(&reg08_d_xo_ldo_vout_sel, 0);
+    zn_reg_bit_wr(&reg08_d_dff_rstn_sel, 1);
+    zn_reg_bit_wr(&reg08_d_xo_endly_vco_ldo, 1);
+    zn_reg_bit_wr(&reg08_d_xo_swc_o, 15);
+    zn_reg_bit_wr(&reg08_d_clkpll_cp_ibias, 2);
+    zn_reg_bit_wr(&reg08_d_xo_swf, 2);
+    zn_reg_bit_wr(&reg08_d_clkpll_cp_iout_sel, 2);
+    zn_reg_bit_wr(&reg08_d_xo_swc_i, 15);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x09240000); //tia dcoc off
+    zn_reg_bit_wr(&reg10_q_tia_keep_dcoc_2nd, 0);
+    zn_reg_bit_wr(&reg10_i_tia_keep_dcoc_2nd, 0);
+    zn_reg_bit_wr(&reg10_q_tia_keep_dcoc, 0);
+    zn_reg_bit_wr(&reg10_i_tia_keep_dcoc, 0);
+    zn_reg_bit_wr(&reg10_q_tia_atest_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_i_tia_atest_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_q_tia_atest_en, 0);
+    zn_reg_bit_wr(&reg10_i_tia_atest_en, 0);
+    zn_reg_bit_wr(&reg10_q_tia_dcoc_en_2nd, 1);
+    zn_reg_bit_wr(&reg10_i_tia_dcoc_en_2nd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_dcoc_en, 1);
+    zn_reg_bit_wr(&reg10_i_tia_dcoc_en, 1);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60729304); //RX0 LNA stage2 ON
+    zn_reg_bit_wr(&reg08_d_lna_ldo_endly, 0);
+    zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 3);
+    zn_reg_bit_wr(&reg08_d_i_tia_fb_cap, 0);
+    zn_reg_bit_wr(&reg08_d_lna_fast_charge, 0);
+    zn_reg_bit_wr(&reg08_d_i_tia_stag1_isel, 3);
+    zn_reg_bit_wr(&reg08_d_i_tia_stg1_itrim, 4);
+    zn_reg_bit_wr(&reg08_d_i_tia_vcm_sel, 5);
+    zn_reg_bit_wr(&reg08_d_i_tia_fb_res, 4);
+    zn_reg_bit_wr(&reg08_d_clkpll_ld_delay_sel, 6);
+    zn_reg_bit_wr(&reg08_d_rfpll_vcocal7b_enable, 0);
+    zn_reg_bit_wr(&reg08_d_clkpll_vcocal5b_enable, 0);
+    zn_reg_bit_wr(&reg08_d_clkpll_lock_det_force_hi, 0);
+    zn_reg_bit_wr(&reg08_d_pll_atest_en, 0);
+    zn_reg_bit_wr(&reg08_d_pll_atest_sel, 4);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); //RX1 LNA stage2 OFF
+    zn_reg_bit_wr(&reg08_d_i_tia_stag1_isel_2nd, 2);    //??????
+    zn_reg_bit_wr(&reg08_d_vga_ldo_vout_sel_2nd, 4);
+    zn_reg_bit_wr(&reg08_d_i_vga_gain_sel_1_2nd, 4);
+    zn_reg_bit_wr(&reg08_d_q_tia_stag1_isel_2nd, 2);
+    zn_reg_bit_wr(&reg08_d_q_tia_stg1_itrim_2nd, 4);
+    zn_reg_bit_wr(&reg08_d_lna_ldo1_vout_sel_2nd, 4);
+    zn_reg_bit_wr(&reg08_d_lna_stage2_agc_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_lna_ldo2_vout_sel, 4);
+    zn_reg_bit_wr(&reg08_d_lna_stage2_vcm_sel_2nd, 2);
+    zn_reg_bit_wr(&reg08_d_i_adc_vref_tune_ch0, 0);
+    zn_reg_bit_wr(&reg08_d_tia_ldo_vout_sel_2nd, 4);
+
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0820, 0x40a02400); //tia q fb cap, 0b 80, res double
+    zn_reg_bit_wr(&reg08_pd_ldoh1p8_3p3, 0);
+    zn_reg_bit_wr(&reg08_d_i_vga_dcoc_sel_pn_1, 64);
+    zn_reg_bit_wr(&reg08_d_q_tia_vcm_sel, 5);
+    zn_reg_bit_wr(&reg08_d_q_tia_fb_cap, 0);
+    zn_reg_bit_wr(&reg08_d_q_tia_fb_res, 4);
+    zn_reg_bit_wr(&reg08_d_bbf_pkdt_bias_sel, 4);
+    zn_reg_bit_wr(&reg08_d_q_vga_dcoc_sel_nn_2_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_rx_rf_iref_en, 0);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0850, 0xfb0c0d00); //tia i fb cap, 87 04, res double, rx2
+    zn_reg_bit_wr(&reg08_d_i_tia_fb_cap_2nd, 31);
+    zn_reg_bit_wr(&reg08_d_bbf_pkdt_bias_sel_2nd, 3);
+    zn_reg_bit_wr(&reg08_d_q_tia_fb_res_2nd, 1);
+    zn_reg_bit_wr(&reg08_d_i_tia_stg1_itrim_2nd, 4);
+    zn_reg_bit_wr(&reg08_d_i_tia_fb_res_2nd, 1);
+    zn_reg_bit_wr(&reg08_d_i_tia_vcm_sel_2nd, 5);
+    zn_reg_bit_wr(&reg08_d_i_keep_dcoc_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_i_tia_dcoc_dac_seln_2nd, 0);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0874, 0x477e061f); //tia q fb cap, 0b 80, res double, rx2
+    zn_reg_bit_wr(&reg08_d_pulse_shaper_en, 0);
+    zn_reg_bit_wr(&reg08_d_ldoh3v_out_sel, 4);
+    zn_reg_bit_wr(&reg08_d_bbf_pkdt_vref_sel_2nd, 7);
+    zn_reg_bit_wr(&reg08_d_ldoh3v_out_selb, 3);
+    zn_reg_bit_wr(&reg08_d_rx_lo_hdsw_en, 15);
+    zn_reg_bit_wr(&reg08_d_q_adc_en, 0);
+    zn_reg_bit_wr(&reg08_d_buck_refgen_rfb_prg_1p1, 0);
+    zn_reg_bit_wr(&reg08_d_q_tia_dcoc_en_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_tia_ldo_1p2_en_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_bbf_pkdt_fc_en_2nd, 1);
+    zn_reg_bit_wr(&reg08_d_bbf_pkdt_en_2nd, 1);
+    zn_reg_bit_wr(&reg08_d_vga_ldo_en_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_i_vga_en_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_i_vga_dcoc_comp_en_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_q_tia_fb_cap_2nd, 31);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x087c, 0x00203f00);
+    zn_reg_bit_wr(&reg08_d_buck_bleeder_res_1p1, 0);
+    zn_reg_bit_wr(&reg08_d_q_adc_vref_tune_ch1_06_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_q_adc_vref_tune_ch1_07_2nd, 0);
+    zn_reg_bit_wr(&reg08_d_buck_ivly_frc_rst_1p1, 0);
+    zn_reg_bit_wr(&reg08_d_adc_ldo_vout_1p2_sel_2nd, 4);
+    zn_reg_bit_wr(&reg08_d_buck_ipk_frc_rst_1p1, 0);
+    zn_reg_bit_wr(&reg08_d_rx_ldo_v1p2_endly, 0);
+    zn_reg_bit_wr(&reg08_d_buck_ilim_sel_1p1, 63);
+    zn_reg_bit_wr(&reg08_d_buck_ipeak_sel_1p1, 0);
+    zn_reg_bit_wr(&reg08_d_buck_ivaly_sel_1p1, 0);
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1900, 0x2AFFCFC8);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1908, 0x40fe8022);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x191c, 0x00000007);
 
     //tx config
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1814, 0x00030000); //tx clk 125M 500M
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0824, 0x76392000); //tx_500M pulse 2ns
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0824, 0x76392000); //tx_500M pulse 2ns
+    zn_reg_bit_wr(&reg08_d_rfpll_vco_core_en, 0);
+    zn_reg_bit_wr(&reg08_d_tx_mode_sel, 1);
+    zn_reg_bit_wr(&reg08_d_tx_dco_ldo_v1p2_sel, 6);
+    zn_reg_bit_wr(&reg08_d_tx_main_ldo_v1p2_sel, 6);
+    zn_reg_bit_wr(&reg08_d_tx_pa_cw_out, 0);
+    zn_reg_bit_wr(&reg08_d_tx_pa_phase_swap, 0);
+    zn_reg_bit_wr(&reg08_d_tx_pa_gain_sel, 7);
+    zn_reg_bit_wr(&reg08_d_tx_dco_loop_dly_ctrl, 1);
+    zn_reg_bit_wr(&reg08_d_tx_dco_pfd_dly_ctrl, 1);
+    zn_reg_bit_wr(&reg08_d_tx_dco_vbn_bypass, 0);
+    zn_reg_bit_wr(&reg08_d_tx_atest, 0);
+    zn_reg_bit_wr(&reg08_d_tx_atest_en, 0);
+    zn_reg_bit_wr(&reg08_d_tx_rstn_sel, 0);
+    zn_reg_bit_wr(&reg08_d_tx_dco_vbn_rdac, 0);
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x181c, 0x00000201);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1878, 0x00000000);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, 0xfc001000);
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x105c, 0xfc001000);
+    zn_reg_bit_wr(&reg08_d_reg_redun0, 252);
+    zn_reg_bit_wr(&reg08_d_reg_redun1, 0);
+    zn_reg_bit_wr(&reg08_d_reg_redun2, 16);
+    zn_reg_bit_wr(&reg08_d_tx_dly_ctrl, 0);
+    zn_reg_bit_wr(&reg08_d_tx_lo_en, 0);
+    zn_reg_bit_wr(&reg08_d_pmu_atest_sel, 0);
+
+    //cali cfg initial
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780);     //  cfg d_lna_stage1_feed_r_sel & 2ua_en
+    zn_reg_bit_wr(&reg10_d_lna_stage1_feed_r_sel, 1);
+    zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel, 7);
+    zn_reg_bit_wr(&reg10_d_bbf_atest_sel, 0);
+    zn_reg_bit_wr(&reg10_d_bbf_atest_en, 0);
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 0);
+    zn_reg_bit_wr(&reg10_d_rx_lo_en, 0);
+    zn_reg_bit_wr(&reg10_d_rx_lo_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_bbf_output_buffer_en, 0);
+    zn_reg_bit_wr(&reg10_d_I_tia_dcoc_2uA_en, 1);
+    zn_reg_bit_wr(&reg10_d_Q_tia_dcoc_2uA_en, 1);
+    zn_reg_bit_wr(&reg10_d_I_tia_dcoc_2uA_en_2nd, 1);
+    zn_reg_bit_wr(&reg10_d_Q_tia_dcoc_2uA_en_2nd, 1);
+    zn_reg_bit_wr(&reg10_d_pa_phase_swap_en, 0);
+    zn_reg_bit_wr(&reg10_d_pa_pulse_gen_mode2_en, 0);
+    zn_reg_bit_wr(&reg10_d_adc_en, 0);
+    zn_reg_bit_wr(&reg10_d_tx_ldo_v1p2_sel, 0);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x00000010);     //  clear tia ovrd cfg
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10);     //  d_i/q_vga_cal_sel & LNA CFG stage1
+    zn_reg_bit_wr(&reg10_d_i_vga_cal_sel, 1);
+    zn_reg_bit_wr(&reg10_d_q_vga_cal_sel, 1);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000);     //  d_i/q_vga_cal_sel_2nd
+    zn_reg_bit_wr(&reg10_d_i_vga_cal_sel_2nd, 1);
+    zn_reg_bit_wr(&reg10_d_q_vga_cal_sel_2nd, 1);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c);     //  d_i/q_vga_vcm_sel & 2nd
+    zn_reg_bit_wr(&reg10_d_i_vga_dcoc_comp_en, 0);
+    zn_reg_bit_wr(&reg10_d_q_adc_vref_tune_ch1_05_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_bbf_pkdt_vref_sel, 7);
+    zn_reg_bit_wr(&reg10_d_q_vga_dcoc_comp_en, 0);
+    zn_reg_bit_wr(&reg10_d_i_vga_en, 0);
+    zn_reg_bit_wr(&reg10_d_tia_ldo_vout_sel, 4);
+    zn_reg_bit_wr(&reg10_d_i_vga_vcm_sel, 7);
+    zn_reg_bit_wr(&reg10_d_ldol_dsm_mode_sel_1p1, 0);
+    zn_reg_bit_wr(&reg10_pd_bg_lp_3p3, 0);
+    zn_reg_bit_wr(&reg10_d_q_vga_vcm_sel, 7);
+    zn_reg_bit_wr(&reg10_d_i_vga_vcm_sel_2nd, 7);
+    zn_reg_bit_wr(&reg10_vga_dcoc_finish, 0);
+    zn_reg_bit_wr(&reg10_vga_dcoc_finish_2nd, 0);
+    zn_reg_bit_wr(&reg10_d_q_vga_vcm_sel_2nd, 7);
+    zn_reg_bit_wr(&reg10_d_vga_ldo_vout_sel, 4);
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304);     //  tia_i_bias cfg & RX0 LNA stage2 ON
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204);     //  RX1 LNA stage2 OFF
+
+    zn_reg_bit_wr(&reg10_i_tia_keep_dcoc, 1);
+    zn_reg_bit_wr(&reg10_i_tia_keep_dcoc_2nd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_keep_dcoc, 1);
+    zn_reg_bit_wr(&reg10_q_tia_keep_dcoc_2nd, 1);
 
     if(g_dirver_macro_ctrl.aoa_en)
     {
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x191c, 0x00000007); //pdoa digital config
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x0874, 0x477e861f); //pdoa digital config
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0874, 0x477e861f); //pdoa digital config
+        zn_reg_bit_wr(&reg08_d_buck_refgen_rfb_prg_1p1, 4);
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1900, 0x2a7fc7d2); //pdoa digital config
-        uint32_t reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x0854);
-        uint32_t lna_stage2_mask = 0xC000;
-        reg_value &= (~lna_stage2_mask);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, reg_value);  //RX1 LNA stage2 off
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00729304); //RX0 LNA stage2 OFF
-        
+        //uint32_t reg_value = zn_read_32bit_reg(UWB_BASE_ADDR + 0x0854);
+        //uint32_t lna_stage2_mask = 0xC000;
+        //reg_value &= (~lna_stage2_mask);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, reg_value);  //RX1 LNA stage2 off
+        zn_reg_bit_wr(&reg08_d_lna_stage2_agc_2nd, 0);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00729304); //RX0 LNA stage2 OFF
+        zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 0);
 
         if(g_dirver_macro_ctrl.aoa_2d_en)
         {
@@ -1777,15 +1989,23 @@ void zn_vga_fix_gain_cal(uint32_t *rx0_i, uint32_t *rx0_q, uint32_t *rx1_i, uint
     int32_t dc_i_tmp = 0; 
     int32_t dc_q_tmp = 0;
     uint8_t index    = 0; 
+	//if for inside loop ,the cali should be in tx_en . trx_auto_en rf/clk_pll en
+    uint32_t reg_084c            = zn_read_32bit_reg(UWB_BASE_ADDR + 0x084C);
+    zn_write_32bit_reg(UWB_BASE_ADDR + 0x084C, 0x82210000);
 
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x03000300); //set vga gain
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x0000000f); //set vga cal word
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1848, 0x00080504); //turn off AGC
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000003);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01004780); // turn on calibration clock
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x000000ff); // TIA - VGA calibration time setting
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273804); // VGA vcm settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01004780); // turn on calibration clock
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x000000ff); // TIA - VGA calibration time setting
+    // need cfg tia state ????
+
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 1);
+    zn_reg_bit_wr(&reg10_i_tia_calib_load_ovrd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_calib_load_ovrd, 1);
+    zn_reg_bit_wr(&reg10_i_tia_calib_load_ovrd_2nd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_calib_load_ovrd_2nd, 1);
+    zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
 
     // RX0:
     reg_i = 0;
@@ -1836,7 +2056,8 @@ void zn_vga_fix_gain_cal(uint32_t *rx0_i, uint32_t *rx0_q, uint32_t *rx1_i, uint
     LOG_INFO("fixed vga gain cal:dc_i =%d, dc_q=%d, I_reg=%X, Q_reg = %X", dc_i_tmp, dc_q_tmp, reg_i, reg_q);
 
     // turn off calibration clock
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01000780); //turn off cal clk
+    // zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01000780); //turn off cal clk
+	zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 0);
 }
 
 /*************************************************************************************************************
@@ -1959,52 +2180,98 @@ void tia_calibration()
     uint8_t  tia_word_n_2nd_q = 0;
 
     LOG_INFO("TIA CALC");
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x000000ff); // TIA - VGA calibration time setting
-
+    zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
     // TIA calibration:
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x00000010); // TIA - VGA calibration time setting
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01704780); // turn on calibration clock
-    mdelay(10);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x01C70000); //I channel setting
-    mdelay(10);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x11000010); //I channel auto en
-    mdelay(10);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0e380000); //Q channel setting
-    mdelay(10);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x22000010); //Q channel auto en
-    mdelay(10);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0db60000); // TIA settings after calibration
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
-    LOG_INFO("RX0 TIA CALIB Result: 0x%x", zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034));
-    LOG_INFO("RX1 TIA CALIB Result: 0x%x", zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038));
+    zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 1);
 
-    // load register
+    mdelay(10);
+    zn_reg_bit_wr(&reg10_i_tia_atest_en, 1);
+    zn_reg_bit_wr(&reg10_i_tia_dcoc_en, 1);
+    zn_reg_bit_wr(&reg10_i_tia_atest_en_2nd, 1);
+    zn_reg_bit_wr(&reg10_i_tia_dcoc_en_2nd, 1);
+
+    //mdelay(10);
+    zn_reg_bit_wr(&reg10_i_tia_auto_calib_en, 0);
+    zn_reg_bit_wr(&reg10_i_tia_auto_calib_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_i_tia_auto_calib_en, 1);
+    zn_reg_bit_wr(&reg10_i_tia_auto_calib_en_2nd, 1);
+
+    mdelay(10);
     reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
     reg1 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
     tia_word_p_i = reg0 & 0x7F;
     tia_word_n_i = (reg0 >> 8) & 0x7F;
-    tia_word_p_q = (reg0 >> 16) & 0x7F;
-    tia_word_n_q = (reg0 >> 24) & 0x7F;
     tia_word_p_2nd_i = reg1 & 0x7F;
     tia_word_n_2nd_i = (reg1 >> 8) & 0x7F;
+
+    zn_reg_bit_wr(&reg10_i_tia_atest_en, 0);
+    zn_reg_bit_wr(&reg10_i_tia_dcoc_en, 0);
+    zn_reg_bit_wr(&reg10_i_tia_atest_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_i_tia_dcoc_en_2nd, 0);
+
+    zn_reg_bit_wr(&reg10_q_tia_atest_en, 1);
+    zn_reg_bit_wr(&reg10_q_tia_dcoc_en, 1);
+    zn_reg_bit_wr(&reg10_q_tia_atest_en_2nd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_dcoc_en_2nd, 1);
+
+    zn_reg_bit_wr(&reg10_q_tia_auto_calib_en, 0);
+    zn_reg_bit_wr(&reg10_q_tia_auto_calib_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_q_tia_auto_calib_en, 1);
+    zn_reg_bit_wr(&reg10_q_tia_auto_calib_en_2nd, 1);
+
+
+    mdelay(10);
+    reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
+    reg1 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
+    tia_word_p_q = (reg0 >> 16) & 0x7F;
+    tia_word_n_q = (reg0 >> 24) & 0x7F;
     tia_word_p_2nd_q = (reg1 >> 16) & 0x7F;
     tia_word_n_2nd_q = (reg1 >> 24) & 0x7F;
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0xCC000010); // set TIA overwrite
-    reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
-    mask = 0xFF0000FF;
-    reg0 &= mask;
-    mask = (tia_word_n_i << 16) + (tia_word_p_i << 8);
-    reg0 ^= mask;
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg0);
-    reg0 = (tia_word_n_2nd_i << 24) + (tia_word_p_2nd_i << 16) + (tia_word_n_q << 8) + tia_word_p_q;
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x102C, reg0);
-    reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1030);
-    mask = 0xFFFF0000;
-    reg0 &= mask;
-    mask = (tia_word_n_2nd_q << 8) + tia_word_p_2nd_q;
-    reg0 ^= mask;
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, reg0);
+    // TIA settings after calibration
+    zn_reg_bit_wr(&reg10_q_tia_atest_en, 0);
+    zn_reg_bit_wr(&reg10_q_tia_dcoc_en, 0);
+    zn_reg_bit_wr(&reg10_q_tia_atest_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_q_tia_dcoc_en_2nd, 0);
+    reg0 = (tia_word_n_q << 24) + (tia_word_p_q << 16) + (tia_word_n_i << 8) + tia_word_p_i;
+    reg1 = (tia_word_n_2nd_q << 24) + (tia_word_p_2nd_q << 16) + (tia_word_n_2nd_i << 8) + tia_word_p_2nd_i;
+    LOG_INFO("RX0 TIA CALIB Result: 0x%x", reg0);
+    LOG_INFO("RX1 TIA CALIB Result: 0x%x", reg1);
+
+    // load register
+    //reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
+    //mask = 0xFF0000FF;
+    //reg0 &= mask;
+    //mask = (tia_word_n_i << 16) + (tia_word_p_i << 8);
+    //reg0 ^= mask;
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg0);
+    //reg0 = (tia_word_n_2nd_i << 24) + (tia_word_p_2nd_i << 16) + (tia_word_n_q << 8) + tia_word_p_q;
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x102C, reg0);
+    //reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1030);
+    //mask = 0xFFFF0000;
+    //reg0 &= mask;
+    //mask = (tia_word_n_2nd_q << 8) + tia_word_p_2nd_q;
+    //reg0 ^= mask;
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, reg0);
+    zn_reg_bit_wr(&reg10_i_tia_ovrd_p, tia_word_p_i);
+    zn_reg_bit_wr(&reg10_i_tia_ovrd_n, tia_word_n_i);
+    zn_reg_bit_wr(&reg10_q_tia_ovrd_p, tia_word_p_q);
+    zn_reg_bit_wr(&reg10_q_tia_ovrd_n, tia_word_n_q);
+    zn_reg_bit_wr(&reg10_i_tia_ovrd_p_2nd, tia_word_p_2nd_i);
+    zn_reg_bit_wr(&reg10_i_tia_ovrd_n_2nd, tia_word_n_2nd_i);
+    zn_reg_bit_wr(&reg10_q_tia_ovrd_p_2nd, tia_word_p_2nd_q);
+    zn_reg_bit_wr(&reg10_q_tia_ovrd_n_2nd, tia_word_n_2nd_q);
+
+    zn_reg_bit_wr(&reg10_i_tia_auto_calib_en, 0);
+    zn_reg_bit_wr(&reg10_i_tia_auto_calib_en_2nd, 0);
+    zn_reg_bit_wr(&reg10_q_tia_auto_calib_en, 0);
+    zn_reg_bit_wr(&reg10_q_tia_auto_calib_en_2nd, 0);
+    // set TIA ovrd
+    zn_reg_bit_wr(&reg10_i_tia_calib_load_ovrd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_calib_load_ovrd, 1);
+    zn_reg_bit_wr(&reg10_i_tia_calib_load_ovrd_2nd, 1);
+    zn_reg_bit_wr(&reg10_q_tia_calib_load_ovrd_2nd, 1);
 }
 
 void rx0_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data)
@@ -2021,27 +2288,35 @@ void rx0_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data
     int32_t  power_table[15] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F};
     uint32_t reg_1054        = is_lna_on ? 0x01704780 : 0x01004780;
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, reg_1054); // turn on calibration clock
-    reg_tmp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
-    reg_tmp = (reg_tmp & 0xFFFFFF00) + 0xFF;
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp); // TIA - VGA calibration time setting
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273804); // VGA vcm settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, reg_1054); // turn on calibration clock
+    //reg_tmp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
+    //reg_tmp = (reg_tmp & 0xFFFFFF00) + 0xFF;
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp); // TIA - VGA calibration time setting
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 1);
+    zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
+    //  only set once in the initialization of the analog
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273804); // VGA vcm settings
 
     if(is_lna_on)
     {
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel, 7);
         if(g_dirver_macro_ctrl.aoa_en)
         {
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00731304); // VGA vcm settings and RX0 LNA stage2 OFF
+            //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00731304); // VGA vcm settings and RX0 LNA stage2 OFF
+            zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 0);
         }
         else
         {
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); // VGA vcm settings and RX0 LNA stage2 ON
+            //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); // VGA vcm settings and RX0 LNA stage2 ON
+            zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 3);
         }
     }
     else
     {
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00731304); // VGA vcm settings and RX0 LNA stage2 OFF
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel, 0);
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00731304); // VGA vcm settings and RX0 LNA stage2 OFF
+        zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 0);
     }
 
     for(int32_t i = 0; i < 15; i++)
@@ -2053,7 +2328,9 @@ void rx0_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data
         addr_i = UWB_BASE_ADDR + 0x0C00 + (i << 2);
         addr_q = UWB_BASE_ADDR + 0x0C3C + (i << 2);
 
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x01000000 + (power_table[i] << 8));
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x01000000 + (power_table[i] << 8));
+        zn_reg_bit_wr(&reg10_vga_gain_sel_ovrd, 1);
+        zn_reg_bit_wr(&reg10_vga_gain_sel, (power_table[i] << 8));
 
         for(int32_t j = 0; j < 30; j++)
         {
@@ -2097,8 +2374,8 @@ void rx0_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data
     }
 
     // turn off calibration clock
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
-
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 0);
     LOG_INFO("=========RX0 LNA %s VGA calbration Done===========", is_lna_on ? "ON" : "OFF");
     LOG_INFO("++++++++++++++++++++++++++++++++++++++++++++++++++");
 }
@@ -2117,15 +2394,18 @@ void rx1_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data
     int32_t  power_table[15] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x0F, 0x17, 0x1F, 0x27, 0x2F, 0x37, 0x3F};
     uint32_t reg_1058        =  is_lna_on ? 0x50090e10 : 0x50090010;
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01704780); // turn on calibration clock
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, reg_1058); 
-    reg_tmp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
-    reg_tmp = (reg_tmp & 0xFFFFFF00) + 0xFF;
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp); // TIA - VGA calibration time setting
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000); // VGA calibration current settings
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000030);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c); // VGA vcm settings
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); // RX1 LNA stage2 OFF
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01704780); // turn on calibration clock
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, reg_1058);
+    //reg_tmp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
+    //reg_tmp = (reg_tmp & 0xFFFFFF00) + 0xFF;
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp); // TIA - VGA calibration time setting
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 1);
+    zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
+    //  only set once in the initialization of the analog
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000); // VGA calibration current settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000030);
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c); // VGA vcm settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); // RX1 LNA stage2 OFF
 
     for(int32_t i = 0; i < 15; i++)
     {
@@ -2136,7 +2416,9 @@ void rx1_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data
         addr_i = UWB_BASE_ADDR + 0x0D00 + (i << 2);
         addr_q = UWB_BASE_ADDR + 0x0D3C + (i << 2);
 
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x02000000 + (power_table[i] << 16));
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x02000000 + (power_table[i] << 16));
+        zn_reg_bit_wr(&reg10_vga_gain_sel_ovrd_2nd, 1);
+        zn_reg_bit_wr(&reg10_vga_gain_sel_2nd, (power_table[i] << 8));
 
         for(int32_t j = 0 ;j < 30 ; j++)
         {
@@ -2178,8 +2460,8 @@ void rx1_calibration(uint8_t is_lna_on, uint32_t *flash_data, uint32_t *cur_data
         LOG_INFO("i = %d, dc_i = %d, dc_q = %d, reg_i = %X, reg_q = %X", i ,dc_i_tmp, dc_q_tmp, reg_i, reg_q);
     }
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
-
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 0);
     LOG_INFO("=========RX1 LNA %s VGA calbration Done===========", is_lna_on ? "ON" : "OFF");
     LOG_INFO("++++++++++++++++++++++++++++++++++++++++++++++++++");
 }
@@ -2276,21 +2558,32 @@ void zn_calibration_init(uint8_t channel)
 
     __enable_irq();
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); // turn off calibration clock
-
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); // turn off calibration clock
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 0);
     if(g_dirver_macro_ctrl.aoa_en)
     {
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings, RX1 LNA stage1 on
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings, RX1 LNA stage1 on
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 7);
     }
     else
     {
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090010); // VGA calibration current settings, RX1 LNA stage1 off
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090010); // VGA calibration current settings, RX1 LNA stage1 off
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 0);
     }
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000); // VGA calibration current settings
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c); // VGA vcm settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000); // VGA calibration current settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c); // VGA vcm settings
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x000000F0);
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0C000000);
+    //vga  agc_sel_cali word
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x000000F0);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0C000000);
+    //vga  gain sel by agc
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0C000000);
+    zn_reg_bit_wr(&reg10_agc_gain_ovrd, 1);
+    zn_reg_bit_wr(&reg10_agc_gain_ovrd_2nd, 1);
+    zn_reg_bit_wr(&reg10_vga_gain_sel_ovrd, 1);
+    zn_reg_bit_wr(&reg10_vga_gain_sel_ovrd_2nd, 1);
+
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1848, 0x02080504);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1858, 0x00000000);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1860, 0x00280028);
@@ -2301,8 +2594,10 @@ void zn_calibration_init(uint8_t channel)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1940, 0x00280028);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1944, 0x00280808);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x192c, 0x001501ff);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); //RX0 LNA stage2 ON
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); //RX1 LNA stage2 OFF
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); //RX0 LNA stage2 ON
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); //RX1 LNA stage2 OFF
+    zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 3);
+    zn_reg_bit_wr(&reg08_d_lna_stage2_agc_2nd, 0);
 
     #ifdef _APPLE_TAG
     sys_ctrl_write(SOC_CLK_CFG, 0x20); //sys clk div 3 31.2M
@@ -2332,14 +2627,14 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
     int32_t reg_q                 = 0;
     int32_t dc_i_tmp              = 0;
     int32_t dc_q_tmp              = 0;
-    int32_t addr_i                = 0; 
+    int32_t addr_i                = 0;
     int32_t addr_q                = 0;
     int32_t rx1_i_addr[15]        = {0};
-    int32_t rx1_q_addr[15]        = {0}; 
-    int32_t rx2_i_addr[15]        = {0}; 
+    int32_t rx1_q_addr[15]        = {0};
+    int32_t rx2_i_addr[15]        = {0};
     int32_t rx2_q_addr[15]        = {0};
-    int32_t reg0                  = 0; 
-    int32_t reg1                  = 0; 
+    int32_t reg0                  = 0;
+    int32_t reg1                  = 0;
     int32_t reg_tmp               = 0;
     int32_t print_tmp             = 0;
     uint32_t mask                 = 0;
@@ -2350,16 +2645,16 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
     uint32_t flash_addr           = 0;
     uint8_t  flash_data[240]      = {0};
     uint8_t  change_32_to_8_len   = 0;
-    uint8_t tia_word_p_i          = 0; 
-    uint8_t tia_word_n_i          = 0; 
-    uint8_t tia_word_p_q          = 0; 
-    uint8_t tia_word_n_q          = 0; 
-    uint8_t tia_word_p_2nd_i      = 0; 
-    uint8_t tia_word_n_2nd_i      = 0; 
-    uint8_t tia_word_p_2nd_q      = 0; 
+    uint8_t tia_word_p_i          = 0;
+    uint8_t tia_word_n_i          = 0;
+    uint8_t tia_word_p_q          = 0;
+    uint8_t tia_word_n_q          = 0;
+    uint8_t tia_word_p_2nd_i      = 0;
+    uint8_t tia_word_n_2nd_i      = 0;
+    uint8_t tia_word_p_2nd_q      = 0;
     uint8_t tia_word_n_2nd_q      = 0;
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00101f00);
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x104c, 0x00101f00);
 
     for(int32_t i = 0; i < 15; i++)
     {
@@ -2384,38 +2679,68 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
     if((g_vga_ctrl == VGA_ONCE_POWERON) || 0xffffffff == flash_wr_flag)
     {
         LOG_INFO("TIA CALC\r\n");
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x000000ff); // TIA - VGA calibration time setting
-        
-        // TIA calibration:
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x00000010); // TIA - VGA calibration time setting
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01704780); // turn on calibration clock
-        mdelay(10);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x01C70000); //I channel setting
-        mdelay(10);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x11000010); //I channel auto en
-        mdelay(10);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0e380000); //Q channel setting
-        mdelay(10);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0x22000010); //Q channel auto en
-        mdelay(10);
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, 0x0db60000); // TIA settings after calibration
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
-        LOG_INFO("RX0 TIA CALIB Result: 0x%x", zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034));
-        LOG_INFO("RX1 TIA CALIB Result: 0x%x", zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038));
 
-        // load register
+
+        zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
+        // TIA calibration:
+        zn_reg_bit_wr(&reg10_cal_wait_time, 0xff);
+        zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 1);
+
+        mdelay(10);
+        zn_reg_bit_wr(&reg10_i_tia_atest_en, 1);
+        zn_reg_bit_wr(&reg10_i_tia_dcoc_en, 1);
+        zn_reg_bit_wr(&reg10_i_tia_atest_en_2nd, 1);
+        zn_reg_bit_wr(&reg10_i_tia_dcoc_en_2nd, 1);
+
+        //mdelay(10);
+        zn_reg_bit_wr(&reg10_i_tia_auto_calib_en, 0);
+        zn_reg_bit_wr(&reg10_i_tia_auto_calib_en_2nd, 0);
+        zn_reg_bit_wr(&reg10_i_tia_auto_calib_en, 1);
+        zn_reg_bit_wr(&reg10_i_tia_auto_calib_en_2nd, 1);
+
+        mdelay(10);
         reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
         reg1 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
         tia_word_p_i = reg0 & 0x7F;
         tia_word_n_i = (reg0 >> 8) & 0x7F;
-        tia_word_p_q = (reg0 >> 16) & 0x7F;
-        tia_word_n_q = (reg0 >> 24) & 0x7F;
         tia_word_p_2nd_i = reg1 & 0x7F;
         tia_word_n_2nd_i = (reg1 >> 8) & 0x7F;
+
+        zn_reg_bit_wr(&reg10_i_tia_atest_en, 0);
+        zn_reg_bit_wr(&reg10_i_tia_dcoc_en, 0);
+        zn_reg_bit_wr(&reg10_i_tia_atest_en_2nd, 0);
+        zn_reg_bit_wr(&reg10_i_tia_dcoc_en_2nd, 0);
+
+        zn_reg_bit_wr(&reg10_q_tia_atest_en, 1);
+        zn_reg_bit_wr(&reg10_q_tia_dcoc_en, 1);
+        zn_reg_bit_wr(&reg10_q_tia_atest_en_2nd, 1);
+        zn_reg_bit_wr(&reg10_q_tia_dcoc_en_2nd, 1);
+
+        zn_reg_bit_wr(&reg10_q_tia_auto_calib_en, 0);
+        zn_reg_bit_wr(&reg10_q_tia_auto_calib_en_2nd, 0);
+        zn_reg_bit_wr(&reg10_q_tia_auto_calib_en, 1);
+        zn_reg_bit_wr(&reg10_q_tia_auto_calib_en_2nd, 1);
+
+
+        mdelay(10);
+        reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1034);
+        reg1 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1038);
+        tia_word_p_q = (reg0 >> 16) & 0x7F;
+        tia_word_n_q = (reg0 >> 24) & 0x7F;
         tia_word_p_2nd_q = (reg1 >> 16) & 0x7F;
         tia_word_n_2nd_q = (reg1 >> 24) & 0x7F;
 
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, 0xCC000010); // set TIA overwrite
+        // TIA settings after calibration
+        zn_reg_bit_wr(&reg10_q_tia_atest_en, 0);
+        zn_reg_bit_wr(&reg10_q_tia_dcoc_en, 0);
+        zn_reg_bit_wr(&reg10_q_tia_atest_en_2nd, 0);
+        zn_reg_bit_wr(&reg10_q_tia_dcoc_en_2nd, 0);
+        reg0 = (tia_word_n_q << 24) + (tia_word_p_q << 16) + (tia_word_n_i << 8) + tia_word_p_i;
+        reg1 = (tia_word_n_2nd_q << 24) + (tia_word_p_2nd_q << 16) + (tia_word_n_2nd_i << 8) + tia_word_p_2nd_i;
+        LOG_INFO("RX0 TIA CALIB Result: 0x%x", reg0);
+        LOG_INFO("RX1 TIA CALIB Result: 0x%x", reg1);
+
+        // load register
         reg0 = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
         mask = 0xFF0000FF;
         reg0 &= mask;
@@ -2430,24 +2755,85 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
         mask = (tia_word_n_2nd_q << 8) + tia_word_p_2nd_q;
         reg0 ^= mask;
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1030, reg0);
-
+        // set TIA ovrd
+        zn_reg_bit_wr(&reg10_i_tia_calib_load_ovrd, 1);
+        zn_reg_bit_wr(&reg10_q_tia_calib_load_ovrd, 1);
+        zn_reg_bit_wr(&reg10_i_tia_calib_load_ovrd_2nd, 1);
+        zn_reg_bit_wr(&reg10_q_tia_calib_load_ovrd_2nd, 1);
         // RX0: LNA ON
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01704780); // turn on calibration clock
-        reg_tmp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
-        reg_tmp = (reg_tmp & 0xFFFFFF00) + 0xFF;
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp); // TIA - VGA calibration time setting
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273804); // VGA vcm settings
-
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel, 7);
         if(g_dirver_macro_ctrl.aoa_en)
         {
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00731304); // VGA vcm settings and RX0 LNA stage2 OFF
+            zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 0);
         }
         else
         {
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); // VGA vcm settings and RX0 LNA stage2 ON
+            zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 3);
+
         }
 
+        for(int32_t i = 0; i < 15; i++)
+        {
+            reg_i = 0;
+            reg_q = 0;
+            dc_i_tmp = 15;
+            dc_q_tmp = 15;
+            addr_i = UWB_BASE_ADDR + 0x0C00 + (i << 2);
+            addr_q = UWB_BASE_ADDR + 0x0C3C + (i << 2);
+            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x01000000 + (power_table[i] << 8) );
+
+            for(int32_t j = 0; j < 30 ; j++)
+            {
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000000); // auto calibration set to 0
+                mdelay(1);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000000); // code overwrite
+                mdelay(1);
+                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000011); // auto calibration on
+
+                dc_i = zn_dc_estimate(0);
+                dc_i += zn_dc_estimate(0);
+                dc_i = dc_i >> 1;
+                dc_q = zn_dc_estimate(1);
+                dc_q += zn_dc_estimate(1);
+                dc_q = dc_q >> 1;
+
+                if((dc_i < dc_i_tmp) && (dc_i > - dc_i_tmp))
+                {
+                    dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
+                    reg_i = zn_read_32bit_reg(UWB_BASE_ADDR + 0x0624);
+                }
+
+                if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
+                {
+                    dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
+                    reg_q = zn_read_32bit_reg(UWB_BASE_ADDR + 0x0628);
+                }
+
+                if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
+                {
+                    break;
+                }
+            }
+            // write into auto reg
+            //zn_write_32bit_reg(addr_i, reg_i);
+            //zn_write_32bit_reg(addr_q, reg_q);
+            cal_data_lna_on[i] = reg_i;
+            cal_data_lna_on[i + 15] = reg_q;
+
+            LOG_INFO("RX0: i = %d, dc_i = %d, dc_q = %d, reg_i = %X, reg_q = %X", i, dc_i_tmp, dc_q_tmp, reg_i, reg_q);
+
+            s_lna_on_cal_rx0[i] = reg_i;
+            s_lna_on_cal_rx0[i + 15] = reg_q;
+        }
+        // turn off calibration clock
+        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
+        LOG_INFO("===========================================");
+        LOG_INFO("=========RX0  LNA ON VGA calbration Done===========");
+
+        // RX0: LNA OFF
+
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel, 0);
+        zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 0);
         for(int32_t i = 0; i < 15; i++)
         {
             reg_i = 0;
@@ -2492,72 +2878,7 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
             }
             // write into auto reg
             zn_write_32bit_reg(addr_i, reg_i);
-            cal_data_lna_on[i] = reg_i;
             zn_write_32bit_reg(addr_q, reg_q);
-            cal_data_lna_on[i + 15] = reg_q;
-
-            LOG_INFO("RX0: i = %d, dc_i = %d, dc_q = %d, reg_i = %X, reg_q = %X", i, dc_i_tmp, dc_q_tmp, reg_i, reg_q);
-
-            s_lna_on_cal_rx0[i] = reg_i;
-            s_lna_on_cal_rx0[i + 15] = reg_q;
-        }
-        // turn off calibration clock
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); //turn off cal clk
-        LOG_INFO("===========================================");
-        LOG_INFO("=========RX0  LNA ON VGA calbration Done===========");
-
-        // RX0: LNA OFF
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01004780); // turn on calibration clock
-        reg_tmp = zn_read_32bit_reg(UWB_BASE_ADDR + 0x1028);
-        reg_tmp = (reg_tmp & 0xFFFFFF00) + 0xFF;
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp);    // TIA - VGA calibration time setting
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273804); // VGA vcm settings
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x00731304); // VGA vcm settings and RX0 LNA stage2 OFF
-
-        for(int32_t i = 0; i < 15; i++)
-        {
-            reg_i = 0;
-            reg_q = 0;
-            dc_i_tmp = 15;
-            dc_q_tmp = 15;
-            addr_i = UWB_BASE_ADDR + 0x0C00 + (i << 2);
-            addr_q = UWB_BASE_ADDR + 0x0C3C + (i << 2);
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x01000000 + (power_table[i] << 8) );
-
-            for(int32_t j = 0; j < 30 ; j++)
-            {
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000000); // auto calibration set to 0
-                mdelay(1);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000000); // code overwrite
-                mdelay(1);
-                zn_write_32bit_reg(UWB_BASE_ADDR + 0x1048, 0x00000011); // auto calibration on
-
-                dc_i = zn_dc_estimate(0);
-                dc_i += zn_dc_estimate(0);
-                dc_i = dc_i >> 1;
-                dc_q = zn_dc_estimate(1);
-                dc_q += zn_dc_estimate(1);
-                dc_q = dc_q >> 1;
-
-                if((dc_i < dc_i_tmp) && (dc_i > - dc_i_tmp))
-                {
-                    dc_i_tmp = (dc_i >= 0 ? dc_i : - dc_i);
-                    reg_i = zn_read_32bit_reg(UWB_BASE_ADDR + 0x0624);
-                }
-
-                if((dc_q < dc_q_tmp) && (dc_q > - dc_q_tmp))
-                {
-                    dc_q_tmp = (dc_q >= 0 ? dc_q : - dc_q);
-                    reg_q = zn_read_32bit_reg(UWB_BASE_ADDR + 0x0628);
-                }
-
-                if((dc_i_tmp <= 1) && (dc_i_tmp >= -1) && (dc_q_tmp <= 1) && (dc_q_tmp >= -1))
-                {
-                    break;
-                }
-            }
-            // write into auto reg
             cal_data_lna_off[i] = reg_i;
             cal_data_lna_off[i + 15] = reg_q;
             s_lna_off_cal_rx0[i] = reg_i;
@@ -2572,16 +2893,9 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
         if(g_dirver_macro_ctrl.aoa_en)
         {
             LOG_INFO("start RX1 VGA auto gain calibration");
-
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01704780); // turn on calibration clock
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); 
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp);    // TIA-VGA calibration time setting
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000); // VGA calibration current settings
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000030);
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c); // VGA vcm settings
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); // RX1 LNA stage2 OFF
-
             // RX1 LNA ON:
+            zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 7);
+            zn_reg_bit_wr(&reg08_d_lna_stage2_agc_2nd, 0);
             for(int32_t i = 0; i < 15; i++)
             {
                 reg_i = 0;
@@ -2624,9 +2938,9 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
                     }
                 }
                 // write into auto reg
-                zn_write_32bit_reg(addr_i, reg_i);
+                //zn_write_32bit_reg(addr_i, reg_i);
+                //zn_write_32bit_reg(addr_q, reg_q);
                 cal_data_lna_on[30 + i] = reg_i;
-                zn_write_32bit_reg(addr_q, reg_q);
                 cal_data_lna_on[45 + i] = reg_q;
                 LOG_INFO("i = %d, dc_i = %d, dc_q = %d, reg_i = %X, reg_q = %X", i ,dc_i_tmp, dc_q_tmp, reg_i, reg_q);
                 s_lna_on_cal_rx1[i] = reg_i;
@@ -2634,14 +2948,9 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
             }
             LOG_INFO("=========RX1 LNA ON VGA calbration Done===========");
 
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090010);  //RX1 LNA stage1 OFF
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1028, reg_tmp);     // TIA-VGA calibration time setting
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000);  // VGA calibration current settings
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x00000030);
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c);  // VGA vcm settings
-            zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204);  //RX1 LNA stage2 OFF
 
             // RX1 LNA OFF:
+            zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 0);
             for(int32_t i = 0; i < 15; i++)
             {
                 reg_i = 0;
@@ -2729,22 +3038,29 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
         zn_write_32bit_reg(UWB_BASE_ADDR + 0x1848, 0x02080504);
     }
     __enable_irq();
-
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1054, 0x01700780); // turn on calibration clock
+    // turn on calibration clock
+    zn_reg_bit_wr(&reg10_d_rx_clk38p4_div_en, 1);
 
     if(g_dirver_macro_ctrl.aoa_en)
     {
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings, RX1 LNA stage1 on
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090e10); // VGA calibration current settings, RX1 LNA stage1 on
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 7);
     }
     else
     {
-        zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090010); // VGA calibration current settings, RX1 LNA stage1 off
+        //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1058, 0x50090010); // VGA calibration current settings, RX1 LNA stage1 off
+        zn_reg_bit_wr(&reg10_d_lna_stage1_bias_sel_2nd, 0);
     }
 
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1060, 0x50000000); // VGA calibration current settings
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x082c, 0x07273f3c); // VGA vcm settings
+    //vga  agc_sel_cali word
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x0600, 0x000000F0);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0C000000);
+    //vga  gain sel by agc
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x1044, 0x0C000000);
+    zn_reg_bit_wr(&reg10_agc_gain_ovrd, 1);
+    zn_reg_bit_wr(&reg10_agc_gain_ovrd_2nd, 1);
+    zn_reg_bit_wr(&reg10_vga_gain_sel_ovrd, 1);
+    zn_reg_bit_wr(&reg10_vga_gain_sel_ovrd_2nd, 1);
+    //AGC CFG
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1848, 0x02080504);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1858, 0x00000000);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1860, 0x00280028);
@@ -2755,8 +3071,12 @@ void zn_vga_all_gain_cal(uint8_t channel_num)
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1940, 0x00280028);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x1944, 0x00280808);
     zn_write_32bit_reg(UWB_BASE_ADDR + 0x192c, 0x001501ff);
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); //RX0 LNA stage2 ON
-    zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); //RX1 LNA stage2 OFF
+
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0818, 0x60731304); //RX0 LNA stage2 ON
+    //zn_write_32bit_reg(UWB_BASE_ADDR + 0x0854, 0xa4a42204); //RX1 LNA stage2 OFF
+    zn_reg_bit_wr(&reg08_d_lna_stage2_agc, 3);
+    zn_reg_bit_wr(&reg08_d_lna_stage2_agc_2nd, 0);
+
 
     #ifdef _APPLE_TAG
     sys_ctrl_write(SOC_CLK_CFG, 0x20); //sys clk div 3 31.2M
